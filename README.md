@@ -72,3 +72,7 @@ pnpm --filter web dev
 ## Notes
 
 Prototype demonstrating system and protocol architecture for an omnichain smart-account wallet. Not audited; experimental. Shared as a portfolio artifact.
+
+## Related — The ORYA Wallet Product
+
+**Two repositories, one product.** This repo is the **platform and architecture** (microservices, smart-account infrastructure, omnichain integrations). The runnable product interface lives in **[plinkdev1/orya-wallet-app](https://github.com/plinkdev1/orya-wallet-app)** (private until release) — a fully navigable front-end prototype you can clone and run on mock data.
