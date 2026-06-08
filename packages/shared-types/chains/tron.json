@@ -1,0 +1,59 @@
+{
+  "vmFamily": "Tron",
+  "chains": [
+    {
+      "id": "tron:mainnet",
+      "name": "TRON Mainnet",
+      "symbol": "TRX",
+      "type": "tron",
+      "icon": "/icons/chains/tron.svg",
+      "rpcUrl": "https://api.tronstack.io",
+      "explorerUrl": "https://tronscan.org",
+      "nativeCurrency": {
+        "name": "Tronix",
+        "symbol": "TRX",
+        "decimals": 6
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 35,
+      "status": "healthy",
+      "gasConfig": {
+        "feeLimit": 100000000,
+        "energyPrice": 280
+      },
+      "features": {
+        "smartContracts": true,
+        "trc20": true,
+        "trc721": true
+      }
+    },
+    {
+      "id": "tron:shasta",
+      "name": "TRON Shasta Testnet",
+      "symbol": "TRX",
+      "type": "tron",
+      "icon": "/icons/chains/tron.svg",
+      "rpcUrl": "https://api.shasta.trongrid.io",
+      "explorerUrl": "https://shasta.tronscan.org",
+      "nativeCurrency": {
+        "name": "Tronix",
+        "symbol": "TRX",
+        "decimals": 6
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 36,
+      "status": "healthy",
+      "gasConfig": {
+        "feeLimit": 100000000,
+        "energyPrice": 280
+      },
+      "features": {
+        "smartContracts": true,
+        "trc20": true,
+        "trc721": true
+      }
+    }
+  ]
+}

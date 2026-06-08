@@ -1,0 +1,259 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: orya-postgres
+    environment:
+      POSTGRES_DB: orya_dev
+      POSTGRES_USER: orya_user
+      POSTGRES_PASSWORD: dev_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres-init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orya_user -d orya_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: orya-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass redis_password_123
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # pgAdmin (PostgreSQL Management UI)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: orya-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@orya.local
+      PGADMIN_DEFAULT_PASSWORD: admin_password_123
+      PGADMIN_CONFIG_PROXY_X_FOR_COUNT: 1
+      PGADMIN_CONFIG_PROXY_X_PROTO_COUNT: 1
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # Redis Commander (Redis Management UI)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: orya-redis-commander
+    environment:
+      REDIS_HOSTS: default:redis:6379
+      REDIS_PASSWORD: redis_password_123
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # NATS Event Bus (NEW - doc_26)
+  nats:
+    image: nats:latest
+    container_name: orya-nats
+    ports:
+      - "4222:4222"      # Client
+      - "6222:6222"      # Cluster
+      - "8222:8222"      # HTTP monitoring
+    command: -js -sd /data
+    volumes:
+      - nats_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8222/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # Prometheus (Metrics Collection)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: orya-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # Grafana (Dashboards)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: orya-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: grafana_password_123
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # Jaeger (Distributed Tracing)
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: orya-jaeger
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+    environment:
+      COLLECTOR_ZIPKIN_HTTP_PORT: "9411"
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # Elasticsearch (Log Storage) - Optional for full ELK stack
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.0
+    container_name: orya-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - orya-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Kibana (Log Visualization)
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.5.0
+    container_name: orya-kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - orya-network
+    restart: unless-stopped
+
+  # Chainbase Service
+  chainbase-service:
+    build:
+      context: ../services/chainbase-service
+      dockerfile: Dockerfile
+    container_name: orya-chainbase-service
+    ports:
+      - "8085:8085"
+    environment:
+      - DATABASE_URL=postgresql://orya_user:dev_password_123@postgres:5432/orya_dev
+      - REDIS_URL=redis://:redis_password_123@redis:6379
+      - RUST_LOG=info,chainbase_service=debug
+      - CHAINBASE_API_KEY=${CHAINBASE_API_KEY:-test_key}
+      - CHAINBASE_API_URL=https://api.chainbase.com/v1
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - orya-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8085/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Eigenlayer Service
+  eigenlayer-service:
+    build:
+      context: ../services/eigenlayer-service
+      dockerfile: Dockerfile
+    container_name: orya-eigenlayer-service
+    ports:
+      - "8086:8086"
+    environment:
+      - DATABASE_URL=postgresql://orya_user:dev_password_123@postgres:5432/orya_dev
+      - REDIS_URL=redis://:redis_password_123@redis:6379
+      - RUST_LOG=info,eigenlayer_service=debug
+      - ETHEREUM_RPC_URL=${ETHEREUM_RPC_URL:-http://localhost:8545}
+      - EIGENLAYER_STRATEGY_MANAGER=0x858646372CC42E1A627fcE94aa7A7033e7CF075A
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - orya-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8086/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  nats_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+
+networks:
+  orya-network:
+    driver: bridge

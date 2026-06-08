@@ -1,0 +1,36 @@
+{
+  "name": "evm-adapter",
+  "version": "0.1.0",
+  "description": "EVM blockchain adapter for ORŸA Wallet",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "ethereum",
+    "evm",
+    "polygon",
+    "arbitrum",
+    "base",
+    "optimism",
+    "adapter"
+  ],
+  "author": "ORŸA Team",
+  "license": "MIT",
+  "dependencies": {
+    "viem": "^2.0.0",
+    "ethers": "^6.10.0",
+    "axios": "^1.6.0",
+    "lodash": "^4.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  }
+}

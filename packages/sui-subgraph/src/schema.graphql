@@ -1,0 +1,128 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0")
+
+type Query {
+  suiWallet(userId: ID!, address: String!): SUIWallet
+  suiAddress(address: String!): SUIAddress
+  suiTransaction(digest: String!): SUITransaction
+  suiEvents(filter: EventFilterInput!): [SUIEvent!]!
+}
+
+type SUIWallet @key(fields: "userId chain") {
+  userId: ID!
+  chain: String!
+  address: String!
+  balance: SUIBalance!
+  coins: [SUICoin!]!
+  transactions(first: Int, after: String): TransactionConnection!
+  nfts: [SUIObject!]!
+  createdAt: String
+  updatedAt: String
+}
+
+type SUIBalance {
+  total: String!
+  coinType: String!
+  lockedBalance: String
+}
+
+type SUICoin {
+  coinType: String!
+  balance: String!
+  coinObjectCount: Int!
+}
+
+type TransactionConnection {
+  edges: [TransactionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TransactionEdge {
+  cursor: String!
+  node: SUITransaction!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type SUITransaction {
+  digest: String! @shareable
+  sender: String!
+  gasPrice: String!
+  gasBudget: String!
+  gasUsed: String
+  effects: TransactionEffects!
+  events: [SUIEvent!]!
+  timestamp: String!
+  status: TransactionStatus!
+}
+
+enum TransactionStatus {
+  SUCCESS
+  FAILURE
+  PENDING
+}
+
+type TransactionEffects {
+  status: String!
+  gasUsed: String!
+  computationCost: String!
+  storageCost: String!
+  storageRebate: String!
+  nonRefundableStorageFee: String!
+}
+
+type SUIEvent {
+  id: String!
+  packageId: String!
+  transactionModule: String!
+  transactionFunction: String!
+  eventType: String!
+  sender: String!
+  parsedJson: String
+  bcs: String
+  timestampMs: String!
+}
+
+type SUIObject {
+  objectId: String!
+  version: Int!
+  digest: String!
+  type: String!
+  owner: ObjectOwner!
+  previousTransaction: String
+  storageRebate: String!
+  display: ObjectDisplay
+}
+
+type ObjectOwner {
+  type: String!
+  address: String
+  objectId: String
+}
+
+type ObjectDisplay {
+  data: String
+  error: String
+}
+
+type SUIAddress {
+  address: String! @shareable
+  balance: SUIBalance!
+  coins: [SUICoin!]!
+  objects: [SUIObject!]!
+  transactions: [SUITransaction!]!
+}
+
+input EventFilterInput {
+  eventType: String
+  sender: String
+  transactionModule: String
+  limit: Int
+  cursor: String
+}

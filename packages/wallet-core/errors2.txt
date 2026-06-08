@@ -1,0 +1,195 @@
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+npm warn Unknown project config "strict-peer-dependencies". This will stop working in the next major version of npm.
+src/connectivity/reown_disabled/Analytics.ts(261,21): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/connectivity/reown_disabled/ChainAdapter.ts(1,10): error TS2305: Module '"@reown/appkit"' has no exported member 'AppKitNetwork'.
+src/connectivity/reown_disabled/config.example.ts(2,75): error TS2307: Cannot find module '@reown/appkit-networks/evm' or its corresponding type declarations.
+src/connectivity/reown_disabled/config.example.ts(3,31): error TS2307: Cannot find module '@reown/appkit-networks/solana' or its corresponding type declarations.
+src/connectivity/reown_disabled/ReownAdapter.ts(1,15): error TS2305: Module '"@reown/appkit"' has no exported member 'AppKitNetwork'.
+src/connectivity/reown_disabled/ReownAdapter.ts(11,8): error TS2307: Cannot find module '@reown/appkit-networks/evm' or its corresponding type declarations.
+src/connectivity/reown_disabled/ReownAdapter.ts(12,60): error TS2307: Cannot find module '@reown/appkit-networks/solana' or its corresponding type declarations.
+src/connectivity/reown_disabled/ReownAdapter.ts(640,21): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/connectivity/reown_disabled/ReownAdapter.ts(647,55): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/connectivity/reown_disabled/ReOwnConfig.ts(1,18): error TS2305: Module '"@reown/appkit"' has no exported member 'AppKitNetwork'.
+src/connectivity/reown_disabled/ReOwnConfig.ts(11,8): error TS2307: Cannot find module '@reown/appkit-networks/evm' or its corresponding type declarations.
+src/connectivity/reown_disabled/ReOwnConfig.ts(12,60): error TS2307: Cannot find module '@reown/appkit-networks/solana' or its corresponding type declarations.
+src/connectivity/reown_disabled/ReOwnWalletManager.ts(7,10): error TS2305: Module '"@reown/appkit"' has no exported member 'AppKitNetwork'.
+src/connectivity/reown_disabled/SessionManager.ts(46,21): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/connectivity/reown_disabled/SessionManager.ts(55,21): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/connectivity/reown_disabled/SigningQueue.ts(322,20): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/connectivity/reown_disabled/SigningQueue.ts(332,56): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/connectivity/TransactionRouter.ts(6,30): error TS2307: Cannot find module './reown/ReownAdapter' or its corresponding type declarations.
+src/connectivity/TransactionRouter.ts(7,37): error TS2307: Cannot find module './reown/sessionStore' or its corresponding type declarations.
+src/connectivity/WalletConnectAppKit.ts(120,34): error TS2345: Argument of type '{ projectId: string; metadata: { name: string; description: string; url: string; icons: string[]; }; }' is not assignable to parameter of type 'AppKitOptionsWithSdk'.
+  Type '{ projectId: string; metadata: { name: string; description: string; url: string; icons: string[]; }; }' is missing the following properties from type 'AppKitOptionsWithSdk': sdkVersion, networks
+src/connectivity/WalletProvider.tsx(20,35): error TS2307: Cannot find module './reown/ReownAdapter' or its corresponding type declarations.
+src/hooks/useAuth.ts(20,8): error TS2307: Cannot find module '../store/auth.slice' or its corresponding type declarations.
+src/hooks/usePrivyAAIntegration.ts(109,7): error TS2322: Type '"transfer"' is not assignable to type 'SessionKeyPermission'.
+src/hooks/useUpgradeWallet.ts(12,25): error TS2307: Cannot find module '../store/auth.slice' or its corresponding type declarations.
+src/index.ts(115,1): error TS2308: Module "./services" has already exported a member named 'DeFiPosition'. Consider explicitly re-exporting to resolve the ambiguity.
+src/index.ts(115,1): error TS2308: Module "./services" has already exported a member named 'MultiSigConfig'. Consider explicitly re-exporting to resolve the ambiguity.
+src/index.ts(115,1): error TS2308: Module "./services" has already exported a member named 'MultiSigWallet'. Consider explicitly re-exporting to resolve the ambiguity.
+src/index.ts(115,1): error TS2308: Module "./services" has already exported a member named 'Portfolio'. Consider explicitly re-exporting to resolve the ambiguity.
+src/index.ts(115,1): error TS2308: Module "./services" has already exported a member named 'SwapQuote'. Consider explicitly re-exporting to resolve the ambiguity.
+src/index.ts(115,1): error TS2308: Module "./services" has already exported a member named 'Transaction'. Consider explicitly re-exporting to resolve the ambiguity.
+src/index.ts(115,1): error TS2308: Module "./services" has already exported a member named 'TransactionProposal'. Consider explicitly re-exporting to resolve the ambiguity.
+src/services/chainHealthPollingService.ts(170,21): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/services/chainHealthPollingService.ts(186,51): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/services/chainHealthPollingService.ts(193,21): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(timeout: string | number | Timeout | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'string | number | Timeout | undefined'.
+      Type 'Timer' is missing the following properties from type 'Timeout': close, _onTimeout, [Symbol.dispose]
+  Overload 2 of 3, '(handle: number): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+  Overload 3 of 3, '(id: number | undefined): void', gave the following error.
+    Argument of type 'Timer' is not assignable to parameter of type 'number'.
+src/services/ChainHealthService.ts(7,15): error TS2724: '"@orya/shared-types"' has no exported member named 'ChainId'. Did you mean 'Chain'?
+src/services/ChainHealthService.ts(8,10): error TS2305: Module '"@orya/shared-types"' has no exported member 'getChain'.
+src/services/ChainHealthService.ts(207,9): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+  Overload 2 of 3, '(input: RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+  Overload 3 of 3, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+src/services/ChainHealthService.ts(241,9): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+  Overload 2 of 3, '(input: RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+  Overload 3 of 3, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+src/services/ChainHealthService.ts(275,9): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(input: string | URL | Request, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+  Overload 2 of 3, '(input: RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+  Overload 3 of 3, '(input: URL | RequestInfo, init?: RequestInit | undefined): Promise<Response>', gave the following error.
+    Object literal may only specify known properties, and 'timeout' does not exist in type 'RequestInit'.
+src/services/ika/dwallet-creation.service.ts(1,10): error TS2300: Duplicate identifier 'IkaClient'.
+src/services/ika/dwallet-creation.service.ts(3,35): error TS2300: Duplicate identifier 'IkaClient'.
+src/services/ika/dwallet-creation.service.ts(236,7): error TS2353: Object literal may only specify known properties, and 'dkgSecondRoundInput' does not exist in type '{ dWalletCap: string | TransactionObjectArgument; dkgSecondRoundRequestInput: DKGSecondRoundRequestInput; ikaCoin: TransactionObjectArgument; suiCoin: TransactionObjectArgument; }'.
+src/services/ika/dwallet-creation.service.ts(297,25): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/dwallet-creation.service.ts(298,28): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/dwallet-creation.service.ts(305,7): error TS2561: Object literal may only specify known properties, but 'signatures' does not exist in type 'ExecuteTransactionBlockParams'. Did you mean to write 'signature'?
+src/services/ika/enterprise-multisig.service.ts(263,40): error TS2339: Property 'getSuiClient' does not exist on type 'IkaClient'.
+src/services/ika/ika-client.service.ts(49,34): error TS2345: Argument of type 'IkaNetwork' is not assignable to parameter of type 'Network'.
+  Type '"devnet"' is not assignable to type 'Network'.
+src/services/ika/ika-client.service.ts(159,46): error TS2345: Argument of type 'IkaNetwork' is not assignable to parameter of type 'Network'.
+  Type '"devnet"' is not assignable to type 'Network'.
+src/services/ika/presign.service.ts(166,25): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/presign.service.ts(167,28): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/signing.service.ts(84,9): error TS2769: No overload matches this call.
+  Overload 1 of 3, '({ dWallet, messageApproval, hashScheme, verifiedPresignCap, presign, encryptedUserSecretKeyShare, message, ikaCoin, suiCoin, }: { dWallet: ZeroTrustDWallet; messageApproval: TransactionObjectArgument; hashScheme: Hash; verifiedPresignCap: TransactionObjectArgument; ... 4 more ...; suiCoin: TransactionObjectArgument; }): Promise<...>', gave the following error.
+    Type 'DWallet' is not assignable to type 'ZeroTrustDWallet'.
+      Type 'ImportedKeyDWallet' is not assignable to type 'ZeroTrustDWallet'.
+        Type 'ImportedKeyDWallet' is not assignable to type '{ kind: "zero-trust"; }'.
+          Types of property 'kind' are incompatible.
+            Type '"imported-key"' is not assignable to type '"zero-trust"'.
+  Overload 2 of 3, '({ dWallet, messageApproval, hashScheme, verifiedPresignCap, presign, secretShare, publicOutput, message, ikaCoin, suiCoin, }: { dWallet: ZeroTrustDWallet; messageApproval: TransactionObjectArgument; hashScheme: Hash; verifiedPresignCap: TransactionObjectArgument; ... 5 more ...; suiCoin: TransactionObjectArgument; }): Promise<...>', gave the following error.
+    Type 'DWallet' is not assignable to type 'ZeroTrustDWallet'.
+      Type 'ImportedKeyDWallet' is not assignable to type 'ZeroTrustDWallet'.
+        Type 'ImportedKeyDWallet' is not assignable to type '{ kind: "zero-trust"; }'.
+          Types of property 'kind' are incompatible.
+            Type '"imported-key"' is not assignable to type '"zero-trust"'.
+  Overload 3 of 3, '({ dWallet, messageApproval, hashScheme, verifiedPresignCap, presign, message, ikaCoin, suiCoin, }: { dWallet: SharedDWallet; messageApproval: TransactionObjectArgument; hashScheme: Hash; verifiedPresignCap: TransactionObjectArgument; presign: { ...; }; message: Uint8Array<...>; ikaCoin: TransactionObjectArgument; suiCoin: TransactionObjectArgument; }): Promise<...>', gave the following error.
+    Type 'DWallet' is not assignable to type 'SharedDWallet'.
+      Type 'ZeroTrustDWallet' is not assignable to type 'SharedDWallet'.
+        Type 'ZeroTrustDWallet' is not assignable to type '{ kind: "shared"; }'.
+          Types of property 'kind' are incompatible.
+            Type '"zero-trust"' is not assignable to type '"shared"'.
+src/services/ika/signing.service.ts(239,25): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/signing.service.ts(240,28): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/signing.service.ts(247,7): error TS2561: Object literal may only specify known properties, but 'signatures' does not exist in type 'ExecuteTransactionBlockParams'. Did you mean to write 'signature'?
+src/services/ika/user-keys.service.ts(13,7): error TS2740: Type 'Promise<UserShareEncryptionKeys>' is missing the following properties from type 'UserShareEncryptionKeys': #private, encryptionKey, decryptionKey, curve, and 9 more.
+src/services/ika/user-keys.service.ts(15,52): error TS2531: Object is possibly 'null'.
+src/services/ika/user-keys.service.ts(16,7): error TS2322: Type 'UserShareEncryptionKeys | null' is not assignable to type 'UserShareEncryptionKeys'.
+  Type 'null' is not assignable to type 'UserShareEncryptionKeys'.
+src/services/index.ts(21,1): error TS2308: Module './tatum' has already exported a member named 'ChainBalance'. Consider explicitly re-exporting to resolve the ambiguity.
+src/services/index.ts(25,1): error TS2308: Module './privy-ika-bridge' has already exported a member named 'HealthCheckResult'. Consider explicitly re-exporting to resolve the ambiguity.
+src/services/PaymentProviderAdapter.ts(47,3): error TS7061: A mapped type may not declare properties or methods.
+src/services/privy-aa-integration.ts(102,9): error TS2322: Type 'SessionKeyPermission[] | ("transfer" | "approve")[]' is not assignable to type 'SessionKeyPermission[]'.
+  Type '("transfer" | "approve")[]' is not assignable to type 'SessionKeyPermission[]'.
+    Type '"transfer" | "approve"' is not assignable to type 'SessionKeyPermission'.
+      Type '"transfer"' is not assignable to type 'SessionKeyPermission'.
+src/services/privy-aa-integration.ts(175,5): error TS2322: Type '"transfer"' is not assignable to type 'SessionKeyPermission'.
+src/services/privy-aa-integration.ts(212,11): error TS2322: Type 'string | undefined' is not assignable to type 'string | string[]'.
+  Type 'undefined' is not assignable to type 'string | string[]'.
+src/services/privy-aa-integration.ts(260,9): error TS2345: Argument of type '{ target: string[]; value: string[]; data: string[]; }' is not assignable to parameter of type 'ExecutionData'.
+  Types of property 'target' are incompatible.
+    Type 'string[]' is not assignable to type 'Address | Address[]'.
+      Type 'string[]' is not assignable to type 'Address[]'.
+        Type 'string' is not assignable to type 'Address'.
+          Type 'string' is not assignable to type '{ readonly __address: unique symbol; }'.
+src/services/tatum.ts(253,26): error TS2551: Property 'AVALANCHE' does not exist on type 'typeof Network'. Did you mean 'AVALANCHE_C'?
+src/services/tatum.ts(255,25): error TS2339: Property 'ARBITRUM' does not exist on type 'typeof Network'.
+src/services/tatum.ts(291,11): error TS2322: Type '{ hash: any; from_address: any; to_address: any; amount: any; fee: any; chainId: string; status: any; }[]' is not assignable to type 'TatumTransaction[]'.
+  Type '{ hash: any; from_address: any; to_address: any; amount: any; fee: any; chainId: string; status: any; }' is missing the following properties from type 'TatumTransaction': from, to
+src/services/walletconnect.ts(44,19): error TS2749: 'Web3Wallet' refers to a value, but is being used as a type here. Did you mean 'typeof Web3Wallet'?
+src/services/walletconnect.ts(45,17): error TS2749: 'Core' refers to a value, but is being used as a type here. Did you mean 'typeof Core'?
+src/standards/cosmos-standard.ts(1,15): error TS2724: '"@orya/shared-types"' has no exported member named 'ChainId'. Did you mean 'Chain'?
+src/sui/rpc-provider.ts(1,33): error TS2307: Cannot find module '@mysten/sui.js' or its corresponding type declarations.
+src/utils/derivation.ts(11,10): error TS2305: Module '"ethers"' has no exported member 'HDNode'.
+src/utils/derivation.ts(232,36): error TS2339: Property 'fromSeed' does not exist on type 'typeof Ed25519Keypair'.

@@ -1,0 +1,350 @@
+{
+  "bitcoin": {
+    "canonical_name": "bitcoin",
+    "filename": "bitcoin.svg",
+    "sha256": "f000e5daf646b004f5e83979fe16b351b28bb87c63bb7ac82f0fbb91eeffaba9",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/bitcoin.png",
+      "64": "png/64x64/bitcoin.png",
+      "128": "png/128x128/bitcoin.png"
+    }
+  },
+  "ethereum": {
+    "canonical_name": "ethereum",
+    "filename": "ethereum.svg",
+    "sha256": "086e89c2d3e8194d789480873940c0ebf7c63bc26e6a799309f4ae4c52bf9ea0",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/ethereum.png",
+      "64": "png/64x64/ethereum.png",
+      "128": "png/128x128/ethereum.png"
+    }
+  },
+  "binancecoin": {
+    "canonical_name": "binancecoin",
+    "filename": "binancecoin.svg",
+    "sha256": "f011fc995159850bb7d28468db339a03b9c62e2c2bdd6672b408271fb5201eb6",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/binancecoin.png",
+      "64": "png/64x64/binancecoin.png",
+      "128": "png/128x128/binancecoin.png"
+    }
+  },
+  "ripple": {
+    "canonical_name": "ripple",
+    "filename": "ripple.svg",
+    "sha256": "55ac72bd468cacba6923c76520da40fd7af75002c7e173c585a53e7430768263",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/ripple.png",
+      "64": "png/64x64/ripple.png",
+      "128": "png/128x128/ripple.png"
+    }
+  },
+  "litecoin": {
+    "canonical_name": "litecoin",
+    "filename": "litecoin.svg",
+    "sha256": "f5a43d88b681615ead258167c647dd232b20da3a944b3a7ae6b907b1be353a87",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/litecoin.png",
+      "64": "png/64x64/litecoin.png",
+      "128": "png/128x128/litecoin.png"
+    }
+  },
+  "cardano": {
+    "canonical_name": "cardano",
+    "filename": "cardano.svg",
+    "sha256": "396a915b94e7fce7878aecab7756093ae4a3ccb9ac0253634c2ed1dff8376bee",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/cardano.png",
+      "64": "png/64x64/cardano.png",
+      "128": "png/128x128/cardano.png"
+    }
+  },
+  "polkadot": {
+    "canonical_name": "polkadot",
+    "filename": "polkadot.svg",
+    "sha256": "894612c6a4d647d0a4fba82e2bbccea5758b64cf100a76b8aebb4364b157c5b5",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/polkadot.png",
+      "64": "png/64x64/polkadot.png",
+      "128": "png/128x128/polkadot.png"
+    }
+  },
+  "solana": {
+    "canonical_name": "solana",
+    "filename": "solana.svg",
+    "sha256": "98c1bb2998c4c9e3bd06adb65043bb7bfbf028337d81368476aa30cf7a4e78fb",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/solana.png",
+      "64": "png/64x64/solana.png",
+      "128": "png/128x128/solana.png"
+    }
+  },
+  "avalanche": {
+    "canonical_name": "avalanche",
+    "filename": "avalanche.svg",
+    "sha256": "34ed00beb22c54ac55845bfc4156e27151a5618dba10d719c220b68c1a6bb1ae",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/avalanche.png",
+      "64": "png/64x64/avalanche.png",
+      "128": "png/128x128/avalanche.png"
+    }
+  },
+  "tron": {
+    "canonical_name": "tron",
+    "filename": "tron.svg",
+    "sha256": "0f9ef17f85b4e0643c110af3ab5f1b13726e7dd28c472fec48fa306a876aa3a6",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/tron.png",
+      "64": "png/64x64/tron.png",
+      "128": "png/128x128/tron.png"
+    }
+  },
+  "dogecoin": {
+    "canonical_name": "dogecoin",
+    "filename": "dogecoin.svg",
+    "sha256": "251fe74cd58aff105b050bcf12db8f09dbc632ff23b32ef7f2764405b6c2b3d4",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/dogecoin.png",
+      "64": "png/64x64/dogecoin.png",
+      "128": "png/128x128/dogecoin.png"
+    }
+  },
+  "monero": {
+    "canonical_name": "monero",
+    "filename": "monero.svg",
+    "sha256": "71002ffa91d39311784aa09e1239a4d32f7b20d74e16edbc1a9807fd0ed10dc8",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/monero.png",
+      "64": "png/64x64/monero.png",
+      "128": "png/128x128/monero.png"
+    }
+  },
+  "chainlink": {
+    "canonical_name": "chainlink",
+    "filename": "chainlink.svg",
+    "sha256": "396a915b94e7fce7878aecab7756093ae4a3ccb9ac0253634c2ed1dff8376bee",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/chainlink.png",
+      "64": "png/64x64/chainlink.png",
+      "128": "png/128x128/chainlink.png"
+    }
+  },
+  "polygon": {
+    "canonical_name": "polygon",
+    "filename": "polygon.svg",
+    "sha256": "894612c6a4d647d0a4fba82e2bbccea5758b64cf100a76b8aebb4364b157c5b5",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/polygon.png",
+      "64": "png/64x64/polygon.png",
+      "128": "png/128x128/polygon.png"
+    }
+  },
+  "algorand": {
+    "canonical_name": "algorand",
+    "filename": "algorand.svg",
+    "sha256": "70a3d616fd2c2008ab626875e79c82e558c3d9fb28ef55b2f7d98d24ad4e8675",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/algorand.png",
+      "64": "png/64x64/algorand.png",
+      "128": "png/128x128/algorand.png"
+    }
+  },
+  "tezos": {
+    "canonical_name": "tezos",
+    "filename": "tezos.svg",
+    "sha256": "83390a8b792e9eeb5ed1ca3a718e2532d0905410ef26b4c9676eda6a38f2d80a",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/tezos.png",
+      "64": "png/64x64/tezos.png",
+      "128": "png/128x128/tezos.png"
+    }
+  },
+  "bitcoin-cash": {
+    "canonical_name": "bitcoin-cash",
+    "filename": "bitcoin-cash.svg",
+    "sha256": "f011fc995159850bb7d28468db339a03b9c62e2c2bdd6672b408271fb5201eb6",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/bitcoin-cash.png",
+      "64": "png/64x64/bitcoin-cash.png",
+      "128": "png/128x128/bitcoin-cash.png"
+    }
+  },
+  "stellar": {
+    "canonical_name": "stellar",
+    "filename": "stellar.svg",
+    "sha256": "69035130da5a21988d6c6de84edab42756d0597759ed594f7cb52737933f3057",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/stellar.png",
+      "64": "png/64x64/stellar.png",
+      "128": "png/128x128/stellar.png"
+    }
+  },
+  "filecoin": {
+    "canonical_name": "filecoin",
+    "filename": "filecoin.svg",
+    "sha256": "50b9aab8d08d9c7df0ad3e64f79a3eb8d9b528b6b5d829e143df6c1095df1e2e",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/filecoin.png",
+      "64": "png/64x64/filecoin.png",
+      "128": "png/128x128/filecoin.png"
+    }
+  },
+  "zcash": {
+    "canonical_name": "zcash",
+    "filename": "zcash.svg",
+    "sha256": "7e6e347efa011f282746828391bf85e2b4c139b90cbc633efc097a73a8f036f9",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/zcash.png",
+      "64": "png/64x64/zcash.png",
+      "128": "png/128x128/zcash.png"
+    }
+  },
+  "near": {
+    "canonical_name": "near",
+    "filename": "near.svg",
+    "sha256": "cfe873db3ac179fec3ead71c178d4d317f9cbcf5df170449c95334471efaad66",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/near.png",
+      "64": "png/64x64/near.png",
+      "128": "png/128x128/near.png"
+    }
+  },
+  "sui": {
+    "canonical_name": "sui",
+    "filename": "sui.svg",
+    "sha256": "98c1bb2998c4c9e3bd06adb65043bb7bfbf028337d81368476aa30cf7a4e78fb",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/sui.png",
+      "64": "png/64x64/sui.png",
+      "128": "png/128x128/sui.png"
+    }
+  },
+  "aptos": {
+    "canonical_name": "aptos",
+    "filename": "aptos.svg",
+    "sha256": "34ed00beb22c54ac55845bfc4156e27151a5618dba10d719c220b68c1a6bb1ae",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/aptos.png",
+      "64": "png/64x64/aptos.png",
+      "128": "png/128x128/aptos.png"
+    }
+  },
+  "optimism": {
+    "canonical_name": "optimism",
+    "filename": "optimism.svg",
+    "sha256": "fd29ad6d10aa14377096a3c7490a342dbe762c985c821c6d9c724e3ba8a65d5b",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/optimism.png",
+      "64": "png/64x64/optimism.png",
+      "128": "png/128x128/optimism.png"
+    }
+  },
+  "arbitrum": {
+    "canonical_name": "arbitrum",
+    "filename": "arbitrum.svg",
+    "sha256": "4d248e5f8f61d5293cfd07dd6f5ec3b0405145957110bae0c2d0e174c6143a43",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/arbitrum.png",
+      "64": "png/64x64/arbitrum.png",
+      "128": "png/128x128/arbitrum.png"
+    }
+  },
+  "fantom": {
+    "canonical_name": "fantom",
+    "filename": "fantom.svg",
+    "sha256": "50b9aab8d08d9c7df0ad3e64f79a3eb8d9b528b6b5d829e143df6c1095df1e2e",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/fantom.png",
+      "64": "png/64x64/fantom.png",
+      "128": "png/128x128/fantom.png"
+    }
+  },
+  "klaytn": {
+    "canonical_name": "klaytn",
+    "filename": "klaytn.svg",
+    "sha256": "a314bea3f2ceae900d4a90586e8ffd9957717505ec14d0123813736a557b5ef1",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/klaytn.png",
+      "64": "png/64x64/klaytn.png",
+      "128": "png/128x128/klaytn.png"
+    }
+  },
+  "hedera": {
+    "canonical_name": "hedera",
+    "filename": "hedera.svg",
+    "sha256": "154503687c62a5e858413c3345533ab1a37f4964ceff2d48bfc05976613352c7",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/hedera.png",
+      "64": "png/64x64/hedera.png",
+      "128": "png/128x128/hedera.png"
+    }
+  },
+  "cosmos": {
+    "canonical_name": "cosmos",
+    "filename": "cosmos.svg",
+    "sha256": "17d67e1251a30704f6b1a27409d55f653013e553e82a860d0228b8e21ed75d62",
+    "source": "fallback-generated",
+    "source_repo": "fallback",
+    "png": {
+      "32": "png/32x32/cosmos.png",
+      "64": "png/64x64/cosmos.png",
+      "128": "png/128x128/cosmos.png"
+    }
+  }
+}

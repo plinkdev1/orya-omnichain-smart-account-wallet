@@ -1,0 +1,44 @@
+{
+  "name": "@orya/copy-framework",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Microcopy token framework for ORŸA applications",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "default": "./dist/tokens.js"
+    },
+    "./resolver": {
+      "types": "./dist/resolver.d.ts",
+      "default": "./dist/resolver.js"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest",
+    "test:validate": "ts-node src/__tests__/validate.ts"
+  },
+  "dependencies": {
+    "@orya/shared-types": "workspace:*",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "typescript": "^5.3.3"
+  }
+}

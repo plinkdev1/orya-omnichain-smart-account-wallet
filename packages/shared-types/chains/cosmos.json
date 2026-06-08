@@ -1,0 +1,218 @@
+{
+  "vmFamily": "Cosmos",
+  "chains": [
+    {
+      "id": "cosmos:mainnet",
+      "name": "Cosmos Hub",
+      "symbol": "ATOM",
+      "type": "cosmos",
+      "icon": "/icons/chains/cosmos.svg",
+      "rpcUrl": "https://rpc.cosmos.directory/cosmoshub",
+      "explorerUrl": "https://www.mintscan.io/cosmos",
+      "nativeCurrency": {
+        "name": "Atom",
+        "symbol": "ATOM",
+        "decimals": 6
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 23,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "0.0025uatom",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": true,
+        "ibc": true
+      }
+    },
+    {
+      "id": "cosmos:testnet",
+      "name": "Cosmos Testnet",
+      "symbol": "ATOM",
+      "type": "cosmos",
+      "icon": "/icons/chains/cosmos.svg",
+      "rpcUrl": "https://rpc.sentry-01.theta-testnet.polkachu.com",
+      "explorerUrl": "https://testnet.mintscan.io/cosmos-testnet",
+      "nativeCurrency": {
+        "name": "Atom",
+        "symbol": "ATOM",
+        "decimals": 6
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 24,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "0.0025uatom",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": true,
+        "ibc": true
+      }
+    },
+    {
+      "id": "osmosis:mainnet",
+      "name": "Osmosis",
+      "symbol": "OSMO",
+      "type": "cosmos",
+      "icon": "/icons/chains/osmosis.svg",
+      "rpcUrl": "https://rpc.cosmos.directory/osmosis",
+      "explorerUrl": "https://www.mintscan.io/osmosis",
+      "nativeCurrency": {
+        "name": "Osmosis",
+        "symbol": "OSMO",
+        "decimals": 6
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 25,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "0.0025uosmo",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": true,
+        "ibc": true,
+        "dex": true
+      }
+    },
+    {
+      "id": "injective:mainnet",
+      "name": "Injective",
+      "symbol": "INJ",
+      "type": "cosmos",
+      "icon": "/icons/chains/injective.svg",
+      "rpcUrl": "https://lb.nodies.app/rpc/injective-mainnet",
+      "explorerUrl": "https://explorer.injective.network",
+      "nativeCurrency": {
+        "name": "Injective",
+        "symbol": "INJ",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 26,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "900000000inj",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": true,
+        "ibc": true,
+        "dex": true
+      }
+    },
+    {
+      "id": "stargaze:mainnet",
+      "name": "Stargaze",
+      "symbol": "STARS",
+      "type": "cosmos",
+      "icon": "/icons/chains/stargaze.svg",
+      "rpcUrl": "https://rpc.cosmos.directory/stargaze",
+      "explorerUrl": "https://www.mintscan.io/stargaze",
+      "nativeCurrency": {
+        "name": "Stargaze",
+        "symbol": "STARS",
+        "decimals": 6
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 27,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "0.0025ustars",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": true,
+        "ibc": true,
+        "nft": true
+      }
+    },
+    {
+      "id": "juno:mainnet",
+      "name": "Juno",
+      "symbol": "JUNO",
+      "type": "cosmos",
+      "icon": "/icons/chains/juno.svg",
+      "rpcUrl": "https://rpc.cosmos.directory/juno",
+      "explorerUrl": "https://www.mintscan.io/juno",
+      "nativeCurrency": {
+        "name": "Juno",
+        "symbol": "JUNO",
+        "decimals": 6
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 28,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "0.0025ujuno",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": true,
+        "ibc": true
+      }
+    },
+    {
+      "id": "neutron:mainnet",
+      "name": "Neutron",
+      "symbol": "NTRN",
+      "type": "cosmos",
+      "icon": "/icons/chains/neutron.svg",
+      "rpcUrl": "https://rpc.cosmos.directory/neutron",
+      "explorerUrl": "https://www.mintscan.io/neutron",
+      "nativeCurrency": {
+        "name": "Neutron",
+        "symbol": "NTRN",
+        "decimals": 6
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 29,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "0.0025untrn",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": true,
+        "ibc": true,
+        "interchain": true
+      }
+    },
+    {
+      "id": "dydx:mainnet",
+      "name": "dYdX",
+      "symbol": "DYDX",
+      "type": "cosmos",
+      "icon": "/icons/chains/dydx.svg",
+      "rpcUrl": "https://dydx-mainnet-lcd.allthatnode.com:1317",
+      "explorerUrl": "https://www.mintscan.io/dydx",
+      "nativeCurrency": {
+        "name": "dYdX",
+        "symbol": "DYDX",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 30,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": "12500000000adydx",
+        "gasLimit": 200000
+      },
+      "features": {
+        "cosmwasmEnabled": false,
+        "ibc": true,
+        "perpetuals": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "vmFamily": "MoveVM",
+  "chains": [
+    {
+      "id": "sui:mainnet",
+      "name": "Sui Mainnet",
+      "symbol": "SUI",
+      "type": "sui",
+      "icon": "/icons/chains/sui.svg",
+      "rpcUrl": "https://fullnode.mainnet.sui.io",
+      "explorerUrl": "https://explorer.sui.io",
+      "nativeCurrency": {
+        "name": "SUI",
+        "symbol": "SUI",
+        "decimals": 9
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 1,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": 1,
+        "gasBudget": 5000000,
+        "maxGasPrice": 100
+      },
+      "features": {
+        "sponsoredTransactions": true,
+        "programmableTransactions": true,
+        "objectModel": true
+      }
+    },
+    {
+      "id": "sui:testnet",
+      "name": "Sui Testnet",
+      "symbol": "SUI",
+      "type": "sui",
+      "icon": "/icons/chains/sui.svg",
+      "rpcUrl": "https://fullnode.testnet.sui.io",
+      "explorerUrl": "https://explorer.testnet.sui.io",
+      "nativeCurrency": {
+        "name": "SUI",
+        "symbol": "SUI",
+        "decimals": 9
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 2,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": 1,
+        "gasBudget": 5000000,
+        "maxGasPrice": 100
+      },
+      "features": {
+        "sponsoredTransactions": true,
+        "programmableTransactions": true,
+        "objectModel": true
+      }
+    },
+    {
+      "id": "sui:devnet",
+      "name": "Sui Devnet",
+      "symbol": "SUI",
+      "type": "sui",
+      "icon": "/icons/chains/sui.svg",
+      "rpcUrl": "https://fullnode.devnet.sui.io",
+      "explorerUrl": "https://explorer.devnet.sui.io",
+      "nativeCurrency": {
+        "name": "SUI",
+        "symbol": "SUI",
+        "decimals": 9
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 3,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": 1,
+        "gasBudget": 5000000,
+        "maxGasPrice": 100
+      },
+      "features": {
+        "sponsoredTransactions": true,
+        "programmableTransactions": true,
+        "objectModel": true
+      }
+    }
+  ]
+}

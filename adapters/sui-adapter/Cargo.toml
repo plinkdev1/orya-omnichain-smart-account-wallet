@@ -1,0 +1,29 @@
+[package]
+name = "sui-adapter"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+anyhow = "1.0"
+
+# SUI SDK
+sui-sdk = { version = "0.52", package = "sui" }
+sui-types = { version = "0.52", package = "sui-types" }
+sui-protocol-config = { version = "0.52", package = "sui-protocol-config" }
+
+# DeepBook Integration
+deepbook = "0.1"
+
+# HTTP Client
+reqwest = { version = "0.11", features = ["json"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+[dev-dependencies]
+tokio-test = "0.4"

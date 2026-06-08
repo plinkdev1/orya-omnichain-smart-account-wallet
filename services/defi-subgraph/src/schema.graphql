@@ -1,0 +1,259 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0")
+
+scalar DateTime
+scalar JSON
+
+enum StakingStatus {
+  ACTIVE
+  UNSTAKING
+  WITHDRAWN
+  PENDING
+}
+
+enum LendingStatus {
+  ACTIVE
+  LIQUIDATED
+  CLOSED
+  AT_RISK
+}
+
+enum YieldFarmingStatus {
+  ACTIVE
+  HARVESTED
+  COMPLETED
+  PENDING
+}
+
+type StakingOpportunity {
+  id: ID!
+  chainId: String!
+  protocol: String!
+  tokenAddress: String!
+  apy: Float!
+  tvl: Float!
+  lockPeriod: Int
+  minStake: String!
+  maxStake: String
+  rewardToken: String!
+  isActive: Boolean!
+  validatorAddress: String
+  metadata: JSON
+  createdAt: DateTime!
+}
+
+type StakingPosition @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  chainId: String!
+  protocol: String!
+  tokenAddress: String!
+  stakedAmount: String!
+  rewardsEarned: String!
+  rewardToken: String!
+  apy: Float!
+  stakedAt: DateTime!
+  unlockAt: DateTime
+  status: StakingStatus!
+  validatorAddress: String
+  metadata: JSON
+  updatedAt: DateTime!
+}
+
+type LendingMarket {
+  id: ID!
+  chainId: String!
+  protocol: String!
+  assetAddress: String!
+  assetName: String!
+  assetSymbol: String!
+  supplyApy: Float!
+  borrowApy: Float!
+  totalSupply: String!
+  totalBorrow: String!
+  utilizationRate: Float!
+  isActive: Boolean!
+  metadata: JSON
+  createdAt: DateTime!
+}
+
+type LendingPosition @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  chainId: String!
+  protocol: String!
+  collateralToken: String!
+  collateralAmount: String!
+  collateralAmountUSD: Float!
+  borrowToken: String!
+  borrowAmount: String!
+  borrowAmountUSD: Float!
+  healthFactor: Float!
+  supplyApy: Float!
+  borrowApy: Float!
+  status: LendingStatus!
+  metadata: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type YieldFarmingOpportunity {
+  id: ID!
+  chainId: String!
+  protocol: String!
+  farmAddress: String!
+  lpToken: String!
+  rewardTokens: [String!]!
+  apys: [Float!]!
+  tvl: Float!
+  isActive: Boolean!
+  metadata: JSON
+  createdAt: DateTime!
+}
+
+type YieldFarmingPosition @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  chainId: String!
+  protocol: String!
+  farmAddress: String!
+  lpTokenAmount: String!
+  lpTokenAmountUSD: Float!
+  rewardsEarned: [String!]!
+  rewardAmounts: [String!]!
+  apys: [Float!]!
+  status: YieldFarmingStatus!
+  depositedAt: DateTime!
+  metadata: JSON
+  updatedAt: DateTime!
+}
+
+type PositionSummary {
+  userId: ID!
+  chainId: String!
+  totalStakedUSD: Float!
+  totalBorrowedUSD: Float!
+  totalCollateralUSD: Float!
+  totalFarmingUSD: Float!
+  totalRewardsUSD: Float!
+  totalValueLockedUSD: Float!
+  healthFactor: Float!
+  riskLevel: String!
+}
+
+type RewardCalculation {
+  positionId: ID!
+  rewardToken: String!
+  estimatedReward: String!
+  estimatedRewardUSD: Float!
+  frequency: String!
+  nextClaimAt: DateTime
+}
+
+type ProtocolHealth {
+  protocol: String!
+  chainId: String!
+  isOperational: Boolean!
+  statusMessage: String
+  lastCheckedAt: DateTime!
+}
+
+type Transaction @key(fields: "id") {
+  id: ID!
+}
+
+extend type Query {
+  stakingOpportunities(chainId: String!, protocol: String): [StakingOpportunity!]!
+  stakingOpportunity(id: ID!): StakingOpportunity
+  
+  stakingPositions(userId: ID!, chainId: String): [StakingPosition!]!
+  stakingPosition(id: ID!): StakingPosition
+  
+  lendingMarkets(chainId: String!, protocol: String): [LendingMarket!]!
+  lendingMarket(id: ID!): LendingMarket
+  
+  lendingPositions(userId: ID!, chainId: String): [LendingPosition!]!
+  lendingPosition(id: ID!): LendingPosition
+  
+  yieldFarmingOpportunities(chainId: String!, protocol: String): [YieldFarmingOpportunity!]!
+  yieldFarmingOpportunity(id: ID!): YieldFarmingOpportunity
+  
+  yieldFarmingPositions(userId: ID!, chainId: String): [YieldFarmingPosition!]!
+  yieldFarmingPosition(id: ID!): YieldFarmingPosition
+  
+  positionSummary(userId: ID!, chainId: String): PositionSummary
+  
+  calculateRewards(positionId: ID!): RewardCalculation!
+  
+  protocolHealth(protocol: String!, chainId: String!): ProtocolHealth!
+}
+
+extend type Mutation {
+  stakeTokens(
+    chainId: String!
+    protocol: String!
+    amount: String!
+    validator: String
+  ): Transaction!
+  
+  unstakeTokens(
+    chainId: String!
+    protocol: String!
+    positionId: ID!
+    amount: String!
+  ): Transaction!
+  
+  claimRewards(
+    chainId: String!
+    protocol: String!
+    positionId: ID!
+  ): Transaction!
+  
+  depositLending(
+    chainId: String!
+    protocol: String!
+    assetAddress: String!
+    amount: String!
+  ): Transaction!
+  
+  borrowLending(
+    chainId: String!
+    protocol: String!
+    assetAddress: String!
+    amount: String!
+  ): Transaction!
+  
+  repayLending(
+    chainId: String!
+    protocol: String!
+    assetAddress: String!
+    amount: String!
+  ): Transaction!
+  
+  depositYieldFarming(
+    chainId: String!
+    protocol: String!
+    farmAddress: String!
+    lpTokenAmount: String!
+  ): Transaction!
+  
+  withdrawYieldFarming(
+    chainId: String!
+    protocol: String!
+    positionId: ID!
+    amount: String!
+  ): Transaction!
+  
+  harvestRewards(
+    chainId: String!
+    protocol: String!
+    positionId: ID!
+  ): Transaction!
+}
+
+extend type Subscription {
+  stakingPositionUpdated(userId: ID!): StakingPosition!
+  lendingPositionUpdated(userId: ID!): LendingPosition!
+  yieldFarmingPositionUpdated(userId: ID!): YieldFarmingPosition!
+  rewardsEarned(userId: ID!): RewardCalculation!
+}

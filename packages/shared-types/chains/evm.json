@@ -1,0 +1,420 @@
+{
+  "vmFamily": "EVM",
+  "chains": [
+    {
+      "id": "ethereum:mainnet",
+      "name": "Ethereum",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/ethereum.svg",
+      "rpcUrl": "https://eth-mainnet.g.alchemy.com/v2/",
+      "explorerUrl": "https://etherscan.io",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 4,
+      "status": "healthy",
+      "chainId": 1,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 2
+      },
+      "features": {
+        "eip1559": true,
+        "flashbots": true
+      }
+    },
+    {
+      "id": "ethereum:sepolia",
+      "name": "Ethereum Sepolia",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/ethereum.svg",
+      "rpcUrl": "https://eth-sepolia.g.alchemy.com/v2/",
+      "explorerUrl": "https://sepolia.etherscan.io",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 5,
+      "status": "healthy",
+      "chainId": 11155111,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 2
+      },
+      "features": {
+        "eip1559": true
+      }
+    },
+    {
+      "id": "polygon:mainnet",
+      "name": "Polygon",
+      "symbol": "MATIC",
+      "type": "evm",
+      "icon": "/icons/chains/polygon.svg",
+      "rpcUrl": "https://polygon-rpc.com",
+      "explorerUrl": "https://polygonscan.com",
+      "nativeCurrency": {
+        "name": "Matic",
+        "symbol": "MATIC",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 10,
+      "status": "healthy",
+      "chainId": 137,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 500,
+        "maxPriorityFeePerGas": 50
+      },
+      "features": {
+        "eip1559": true
+      }
+    },
+    {
+      "id": "arbitrum:mainnet",
+      "name": "Arbitrum One",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/arbitrum.svg",
+      "rpcUrl": "https://arb1.arbitrum.io/rpc",
+      "explorerUrl": "https://arbiscan.io",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 11,
+      "status": "healthy",
+      "chainId": 42161,
+      "gasConfig": {
+        "type": "arbitrum",
+        "maxSubmissionCost": 1000000000,
+        "gasPrice": 1,
+        "gasLimit": 21000
+      },
+      "features": {
+        "arbitrumNitro": true
+      }
+    },
+    {
+      "id": "arbitrum:nova",
+      "name": "Arbitrum Nova",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/arbitrum.svg",
+      "rpcUrl": "https://nova.arbitrum.io/rpc",
+      "explorerUrl": "https://nova.arbiscan.io",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 14,
+      "status": "healthy",
+      "chainId": 42170,
+      "gasConfig": {
+        "type": "arbitrum",
+        "maxSubmissionCost": 1000000000,
+        "gasPrice": 1,
+        "gasLimit": 21000
+      },
+      "features": {
+        "arbitrumNitro": true,
+        "dac": true
+      }
+    },
+    {
+      "id": "base:mainnet",
+      "name": "Base",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/base.svg",
+      "rpcUrl": "https://mainnet.base.org",
+      "explorerUrl": "https://basescan.org",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 12,
+      "status": "healthy",
+      "chainId": 8453,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 50,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true
+      }
+    },
+    {
+      "id": "optimism:mainnet",
+      "name": "Optimism",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/optimism.svg",
+      "rpcUrl": "https://mainnet.optimism.io",
+      "explorerUrl": "https://optimistic.etherscan.io",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 13,
+      "status": "healthy",
+      "chainId": 10,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 50,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true
+      }
+    },
+    {
+      "id": "zksync:mainnet",
+      "name": "zkSync Era",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/zksync.svg",
+      "rpcUrl": "https://mainnet.era.zksync.io",
+      "explorerUrl": "https://explorer.zksync.io",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 15,
+      "status": "healthy",
+      "chainId": 324,
+      "gasConfig": {
+        "type": "zksync",
+        "ergsPrice": 250000000,
+        "mainContractVerificationHash": ""
+      },
+      "features": {
+        "zk": true
+      }
+    },
+    {
+      "id": "linea:mainnet",
+      "name": "Linea",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/linea.svg",
+      "rpcUrl": "https://rpc.linea.build",
+      "explorerUrl": "https://lineascan.build",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 16,
+      "status": "healthy",
+      "chainId": 59144,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true,
+        "zk": true
+      }
+    },
+    {
+      "id": "scroll:mainnet",
+      "name": "Scroll",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/scroll.svg",
+      "rpcUrl": "https://rpc.scroll.io",
+      "explorerUrl": "https://scrollscan.com",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 17,
+      "status": "healthy",
+      "chainId": 534352,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true,
+        "zk": true
+      }
+    },
+    {
+      "id": "blast:mainnet",
+      "name": "Blast",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/blast.svg",
+      "rpcUrl": "https://rpc.blast.io",
+      "explorerUrl": "https://blastscan.io",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 18,
+      "status": "healthy",
+      "chainId": 81457,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true,
+        "blastPoints": true
+      }
+    },
+    {
+      "id": "manta:mainnet",
+      "name": "Manta Pacific",
+      "symbol": "ETH",
+      "type": "evm",
+      "icon": "/icons/chains/manta.svg",
+      "rpcUrl": "https://pacific-rpc.manta.network/http",
+      "explorerUrl": "https://pacific-explorer.manta.network",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 19,
+      "status": "healthy",
+      "chainId": 169,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true,
+        "zk": true
+      }
+    },
+    {
+      "id": "mantle:mainnet",
+      "name": "Mantle",
+      "symbol": "MNT",
+      "type": "evm",
+      "icon": "/icons/chains/mantle.svg",
+      "rpcUrl": "https://rpc.mantle.xyz",
+      "explorerUrl": "https://explorer.mantle.xyz",
+      "nativeCurrency": {
+        "name": "Mantle",
+        "symbol": "MNT",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 20,
+      "status": "healthy",
+      "chainId": 5000,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true
+      }
+    },
+    {
+      "id": "monad:mainnet",
+      "name": "Monad",
+      "symbol": "MON",
+      "type": "evm",
+      "icon": "/icons/chains/monad.svg",
+      "rpcUrl": "https://mainnet-rpc.monad.xyz",
+      "explorerUrl": "https://monad.xyz/explorer",
+      "nativeCurrency": {
+        "name": "Monad",
+        "symbol": "MON",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 21,
+      "status": "healthy",
+      "chainId": 10143,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true,
+        "highThroughput": true
+      }
+    },
+    {
+      "id": "hyperevm:mainnet",
+      "name": "HyperEVM",
+      "symbol": "HYPER",
+      "type": "evm",
+      "icon": "/icons/chains/hyperevm.svg",
+      "rpcUrl": "https://rpc.hyperevm.io",
+      "explorerUrl": "https://explorer.hyperevm.io",
+      "nativeCurrency": {
+        "name": "HyperEVM",
+        "symbol": "HYPER",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 22,
+      "status": "healthy",
+      "chainId": 17864,
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "eip1559": true,
+        "hyperscaling": true
+      }
+    }
+  ]
+}

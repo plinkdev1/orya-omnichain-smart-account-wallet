@@ -1,0 +1,193 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: orya-redis
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_APPENDONLY=yes
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  apollo-router:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: orya-apollo-router
+    ports:
+      - '4000:4000'
+      - '8081:8081'
+    environment:
+      NODE_ENV: development
+      PORT: '4000'
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      APOLLO_GRAPH_REF: ${APOLLO_GRAPH_REF:-orya-wallet@current}
+      APOLLO_KEY: ${APOLLO_KEY:-}
+      JWT_SECRET: ${JWT_SECRET:-your-jwt-secret-dev}
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID:-}
+      FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY:-}
+      FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL:-}
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8081/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - orya-network
+
+  # User Service Subgraph
+  user-service:
+    image: node:18-alpine
+    container_name: orya-user-service
+    ports:
+      - '4002:4002'
+    environment:
+      PORT: '4002'
+      NODE_ENV: development
+    working_dir: /app
+    volumes:
+      - ../packages/user-service:/app
+    command: ['npm', 'run', 'dev']
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+
+  # Wallet Service Subgraph
+  wallet-service:
+    image: node:18-alpine
+    container_name: orya-wallet-service
+    ports:
+      - '4001:4001'
+    environment:
+      PORT: '4001'
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    working_dir: /app
+    volumes:
+      - ../packages/wallet-service:/app
+    command: ['npm', 'run', 'dev']
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+
+  # Transaction Service Subgraph
+  transaction-service:
+    image: node:18-alpine
+    container_name: orya-transaction-service
+    ports:
+      - '4003:4003'
+    environment:
+      PORT: '4003'
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    working_dir: /app
+    volumes:
+      - ../packages/transaction-service:/app
+    command: ['npm', 'run', 'dev']
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+
+  # Protocol Service Subgraph
+  protocol-service:
+    image: node:18-alpine
+    container_name: orya-protocol-service
+    ports:
+      - '4004:4004'
+    environment:
+      PORT: '4004'
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    working_dir: /app
+    volumes:
+      - ../packages/protocol-service:/app
+    command: ['npm', 'run', 'dev']
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+
+  # DeFi Service Subgraph
+  defi-service:
+    image: node:18-alpine
+    container_name: orya-defi-service
+    ports:
+      - '4005:4005'
+    environment:
+      PORT: '4005'
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    working_dir: /app
+    volumes:
+      - ../packages/defi-service:/app
+    command: ['npm', 'run', 'dev']
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+
+  # Portfolio Service Subgraph
+  portfolio-service:
+    image: node:18-alpine
+    container_name: orya-portfolio-service
+    ports:
+      - '4006:4006'
+    environment:
+      PORT: '4006'
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    working_dir: /app
+    volumes:
+      - ../packages/portfolio-service:/app
+    command: ['npm', 'run', 'dev']
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+
+  # Fiat Service Subgraph
+  fiat-service:
+    image: node:18-alpine
+    container_name: orya-fiat-service
+    ports:
+      - '4007:4007'
+    environment:
+      PORT: '4007'
+      NODE_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    working_dir: /app
+    volumes:
+      - ../packages/fiat-service:/app
+    command: ['npm', 'run', 'dev']
+    depends_on:
+      - redis
+    networks:
+      - orya-network
+
+volumes:
+  redis-data:
+
+networks:
+  orya-network:
+    driver: bridge

@@ -1,0 +1,72 @@
+name: Rust CI
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'services/**'
+      - 'adapters/**'
+      - '.github/workflows/rust-ci.yml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'services/**'
+      - 'adapters/**'
+      - '.github/workflows/rust-ci.yml'
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: orya_test
+          POSTGRES_USER: orya_user
+          POSTGRES_PASSWORD: dev_password_123
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.75
+      
+      - name: Cache cargo registry
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Cache cargo build
+        uses: actions/cache@v3
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+      
+      - name: Format check
+        run: cd services && cargo fmt --all -- --check
+      
+      - name: Lint with Clippy
+        run: cd services && cargo clippy --workspace --all-targets -- -D warnings
+      
+      - name: Build
+        run: cd services && cargo build --workspace --release
+      
+      - name: Run tests
+        run: cd services && cargo test --workspace
+        env:
+          DATABASE_URL: postgres://orya_user:dev_password_123@localhost:5432/orya_test

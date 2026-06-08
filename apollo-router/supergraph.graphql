@@ -1,0 +1,685 @@
+"""
+ORYA Wallet SuperGraph - Unified GraphQL API
+Protocol-agnostic, multi-chain wallet with user-selectable protocols
+"""
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+"""
+Unified Query type across all subgraphs
+"""
+type Query {
+  "User queries"
+  me: User!
+  user(id: ID!): User
+  users(filter: UserFilter, pagination: Pagination): UserConnection!
+
+  "Wallet queries"
+  wallet(id: ID!): Wallet
+  wallets(userId: ID!): [Wallet!]!
+  walletByAddress(address: String!, chainId: String!): Wallet
+  balances(walletId: ID!): [Balance!]!
+  balance(walletId: ID!, tokenAddress: String!): Balance
+  totalPortfolioValue(userId: ID!): Float!
+  nfts(walletId: ID!, chainId: String): [NFT!]!
+
+  "Transaction queries"
+  transaction(id: ID!): Transaction
+  transactions(
+    walletId: ID
+    userId: ID
+    chainId: String
+    type: TransactionType
+    status: TransactionStatus
+    pagination: Pagination
+  ): TransactionConnection!
+  transactionHistory(walletId: ID!, timeRange: TimeRange): [Transaction!]!
+  estimateGas(
+    chainId: String!
+    from: String!
+    to: String!
+    amount: String!
+    tokenAddress: String!
+  ): GasEstimate!
+
+  "Protocol queries"
+  protocols(chainId: String!, feature: FeatureType!): [Protocol!]!
+  protocol(id: ID!): Protocol
+  protocolHealth(id: ID!): ProtocolHealth!
+  userProtocolPreferences(userId: ID!): [ProtocolPreference!]!
+  bestProtocolForIntent(intent: TransactionIntentInput!): Protocol!
+
+  "DeFi queries"
+  swapQuote(
+    chainId: String!
+    fromToken: String!
+    toToken: String!
+    amount: String!
+    protocol: String
+  ): SwapQuote!
+  stakingOpportunities(chainId: String!): [StakingOpportunity!]!
+  lendingMarkets(chainId: String!): [LendingMarket!]!
+
+  "Portfolio queries"
+  portfolio(userId: ID!): Portfolio!
+  portfolioValue(userId: ID!): PortfolioValue!
+  assetAllocation(userId: ID!): [AssetAllocation!]!
+
+  "Fiat queries"
+  fiatQuote(
+    fiatCurrency: String!
+    cryptoCurrency: String!
+    amount: Float!
+    type: FiatTransactionType!
+  ): FiatQuote!
+  fiatTransactions(userId: ID!, pagination: Pagination): FiatTransactionConnection!
+}
+
+"""
+Unified Mutation type across all subgraphs
+"""
+type Mutation {
+  "User mutations"
+  signup(email: String!, password: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  refreshToken(refreshToken: String!): AuthPayload!
+  updateProfile(input: UpdateProfileInput!): User!
+  updatePreferences(input: UserPreferencesInput!): User!
+  setAdvancedMode(enabled: Boolean!): User!
+  setProtocolPreference(
+    chainId: String!
+    feature: FeatureType!
+    protocolId: String!
+    fallbacks: [String!]
+  ): ProtocolPreference!
+  updateAutoSigningConfig(config: AutoSigningConfigInput!): User!
+  initiateKYC(provider: KYCProvider!): KYCSession!
+  submitKYCDocuments(sessionId: ID!, documents: [Upload!]!): KYCSubmission!
+
+  "Wallet mutations"
+  createWallet(chainId: String!, type: WalletType!): Wallet!
+  importWallet(chainId: String!, privateKey: String!): Wallet!
+  connectExternalWallet(
+    provider: String!
+    address: String!
+    signature: String!
+  ): Wallet!
+  syncWalletBalances(walletId: ID!): [Balance!]!
+
+  "Transaction mutations"
+  initiateSwap(intent: SwapIntentInput!): Transaction!
+  executeSwap(
+    chainId: String!
+    protocol: String!
+    fromToken: String!
+    toToken: String!
+    amount: String!
+    minOutputAmount: String!
+    maxSlippage: Float!
+  ): Transaction!
+  executeBridge(
+    sourceChain: String!
+    destinationChain: String!
+    token: String!
+    amount: String!
+    recipientAddress: String!
+  ): Transaction!
+  sendTransaction(
+    walletId: ID!
+    toAddress: String!
+    amount: String!
+    tokenAddress: String!
+    chainId: String!
+  ): Transaction!
+
+  "Fiat mutations"
+  initiateFiatOnramp(
+    amount: Float!
+    fiatCurrency: String!
+    cryptoCurrency: String!
+    walletId: ID!
+    provider: String!
+  ): FiatTransaction!
+  initiateFiatOfframp(
+    amount: String!
+    cryptoCurrency: String!
+    fiatCurrency: String!
+    walletId: ID!
+    provider: String!
+  ): FiatTransaction!
+}
+
+"""
+Unified Subscription type across all subgraphs
+"""
+type Subscription {
+  "User subscriptions"
+  userUpdated(userId: ID!): User!
+  kycStatusChanged(userId: ID!): KYCStatus!
+
+  "Wallet subscriptions"
+  balanceUpdated(walletId: ID!): Balance!
+  walletSynced(walletId: ID!): Wallet!
+
+  "Transaction subscriptions"
+  transactionStatusChanged(transactionId: ID!): Transaction!
+  transactionConfirmed(transactionId: ID!): Transaction!
+
+  "DeFi subscriptions"
+  priceUpdated(tokenAddress: String!, chainId: String!): Price!
+  swapQuoteUpdated(quoteId: ID!): SwapQuote!
+}
+
+"""
+User domain
+"""
+type User {
+  id: ID!
+  email: String!
+  privyId: String!
+  firebaseUid: String!
+  kycStatus: KYCStatus!
+  kycProvider: KYCProvider
+  advancedMode: Boolean!
+  preferences: UserPreferences!
+  wallets: [Wallet!]!
+  transactions: [Transaction!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserPreferences {
+  protocols: [ProtocolPreference!]!
+  autoSigning: AutoSigningConfig!
+  defaultChain: String!
+  hiddenTokens: [String!]!
+  favoriteProtocols: [String!]!
+}
+
+type ProtocolPreference {
+  chainId: String!
+  feature: FeatureType!
+  preferredProtocol: String!
+  fallbackProtocols: [String!]!
+  lastUpdated: DateTime!
+}
+
+type AutoSigningConfig {
+  enabled: Boolean!
+  thresholdUSD: Float!
+  whitelistedContracts: [String!]!
+  expiryHours: Int!
+  maxDailyAmountUSD: Float!
+  requireBiometric: Boolean!
+}
+
+type AuthPayload {
+  accessToken: String!
+  refreshToken: String!
+  user: User!
+  expiresIn: Int!
+}
+
+type KYCSession {
+  id: ID!
+  userId: ID!
+  provider: KYCProvider!
+  status: KYCStatus!
+  createdAt: DateTime!
+}
+
+type KYCSubmission {
+  id: ID!
+  sessionId: ID!
+  status: KYCStatus!
+  submittedAt: DateTime!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+"""
+Wallet domain
+"""
+type Wallet {
+  id: ID!
+  userId: ID!
+  user: User
+  type: WalletType!
+  chainType: String!
+  address: String!
+  publicKey: String
+  balances: [Balance!]!
+  nfts: [NFT!]!
+  transactions: [Transaction!]!
+  createdAt: DateTime!
+  lastSyncedAt: DateTime!
+}
+
+type Balance {
+  walletId: ID!
+  tokenAddress: String!
+  symbol: String!
+  decimals: Int!
+  amount: String!
+  amountUSD: Float!
+  lastUpdated: DateTime!
+}
+
+type NFT {
+  id: ID!
+  walletId: ID!
+  chainId: String!
+  contractAddress: String!
+  tokenId: String!
+  name: String
+  description: String
+  imageUrl: String
+  metadata: JSON
+}
+
+"""
+Transaction domain
+"""
+type Transaction {
+  id: ID!
+  userId: ID!
+  walletId: ID!
+  chainId: String!
+  type: TransactionType!
+  status: TransactionStatus!
+  fromAddress: String!
+  toAddress: String!
+  amount: String!
+  tokenSymbol: String!
+  tokenAddress: String!
+  fee: String!
+  feeUSD: Float!
+  hash: String
+  blockNumber: Int
+  protocol: String!
+  intent: TransactionIntent
+  metadata: JSON
+  createdAt: DateTime!
+  confirmedAt: DateTime
+}
+
+type TransactionIntent {
+  type: TransactionIntentType!
+  description: String!
+  inputToken: String!
+  outputToken: String!
+  minOutputAmount: String!
+  maxSlippage: Float!
+  deadline: DateTime!
+  routingPreference: RoutingPreference!
+}
+
+type GasEstimate {
+  chainId: String!
+  gasPrice: String!
+  gasLimit: String!
+  totalGas: String!
+  totalGasUSD: Float!
+  estimatedTime: Int!
+}
+
+type TransactionConnection {
+  edges: [TransactionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type TransactionEdge {
+  node: Transaction!
+  cursor: String!
+}
+
+"""
+Protocol domain
+"""
+type Protocol {
+  id: ID!
+  name: String!
+  chainId: String!
+  type: FeatureType!
+  version: String!
+  logoUrl: String!
+  isActive: Boolean!
+  isAudited: Boolean!
+  auditors: [String!]!
+  tier: ProtocolTier!
+  metadata: ProtocolMetadata!
+}
+
+type ProtocolMetadata {
+  website: String!
+  docs: String!
+  tvl: Float!
+  volume24h: Float!
+  fees: FeeStructure!
+  securityRating: Float!
+  supportedTokens: [String!]!
+}
+
+type FeeStructure {
+  swapFee: Float
+  lendingFee: Float
+  stakingFee: Float
+  withdrawalFee: Float
+}
+
+type ProtocolHealth {
+  id: ID!
+  status: HealthStatus!
+  uptime: Float!
+  responseTime: Float!
+  lastCheck: DateTime!
+}
+
+"""
+DeFi domain
+"""
+type SwapQuote {
+  id: ID!
+  fromToken: String!
+  toToken: String!
+  fromAmount: String!
+  toAmount: String!
+  price: String!
+  priceImpact: Float!
+  protocol: String!
+  fee: String!
+  expiresAt: DateTime!
+}
+
+type StakingOpportunity {
+  id: ID!
+  protocol: String!
+  chainId: String!
+  token: String!
+  apr: Float!
+  minStake: String!
+  lockupPeriod: Int
+  isActive: Boolean!
+}
+
+type LendingMarket {
+  id: ID!
+  protocol: String!
+  chainId: String!
+  asset: String!
+  supplyApy: Float!
+  borrowApy: Float!
+  totalSupply: String!
+  totalBorrow: String!
+  utilizationRate: Float!
+}
+
+type Price {
+  tokenAddress: String!
+  chainId: String!
+  price: Float!
+  priceUSD: Float!
+  change24h: Float!
+  change24hPercent: Float!
+  lastUpdated: DateTime!
+}
+
+"""
+Portfolio domain
+"""
+type Portfolio {
+  userId: ID!
+  totalValue: Float!
+  totalValueUSD: Float!
+  allocations: [AssetAllocation!]!
+  chains: [ChainPortfolio!]!
+  performance: PerformanceMetrics!
+}
+
+type PortfolioValue {
+  total: Float!
+  totalUSD: Float!
+  breakdown: [ValueBreakdown!]!
+}
+
+type AssetAllocation {
+  chainId: String!
+  symbol: String!
+  amount: String!
+  valueUSD: Float!
+  percentage: Float!
+}
+
+type ValueBreakdown {
+  category: String!
+  value: Float!
+  percentage: Float!
+}
+
+type ChainPortfolio {
+  chainId: String!
+  totalValue: Float!
+  walletCount: Int!
+  assets: [Balance!]!
+}
+
+type PerformanceMetrics {
+  roi24h: Float!
+  roi7d: Float!
+  roi30d: Float!
+  roiAllTime: Float!
+}
+
+"""
+Fiat domain
+"""
+type FiatQuote {
+  id: ID!
+  fiatCurrency: String!
+  cryptoCurrency: String!
+  fiatAmount: Float!
+  cryptoAmount: String!
+  exchangeRate: Float!
+  fee: Float!
+  total: Float!
+  expiresAt: DateTime!
+  provider: String!
+}
+
+type FiatTransaction {
+  id: ID!
+  userId: ID!
+  walletId: ID!
+  type: FiatTransactionType!
+  status: TransactionStatus!
+  fiatCurrency: String!
+  cryptoCurrency: String!
+  fiatAmount: Float!
+  cryptoAmount: String!
+  fee: Float!
+  provider: String!
+  createdAt: DateTime!
+  completedAt: DateTime
+}
+
+type FiatTransactionConnection {
+  edges: [FiatTransactionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type FiatTransactionEdge {
+  node: FiatTransaction!
+  cursor: String!
+}
+
+"""
+Common types and enums
+"""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+  totalCount: Int!
+}
+
+enum KYCStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum KYCProvider {
+  SUMSUB
+  PERSONA
+}
+
+enum FeatureType {
+  SWAP
+  STAKE
+  LEND
+  BRIDGE
+  AGGREGATOR
+}
+
+enum WalletType {
+  CUSTODIAL
+  SELF_CUSTODY
+  EXTERNAL
+  MPC
+}
+
+enum TransactionType {
+  SEND
+  RECEIVE
+  SWAP
+  STAKE
+  UNSTAKE
+  BRIDGE
+  FIAT_ONRAMP
+  FIAT_OFFRAMP
+}
+
+enum TransactionStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+  CANCELLED
+}
+
+enum TransactionIntentType {
+  SWAP
+  BRIDGE
+  STAKE
+  GENERIC
+}
+
+enum RoutingPreference {
+  BEST_PRICE
+  FASTEST
+  MOST_SECURE
+  USER_PREFERRED
+}
+
+enum ProtocolTier {
+  CORE
+  VERIFIED
+  COMMUNITY
+}
+
+enum HealthStatus {
+  HEALTHY
+  DEGRADED
+  UNHEALTHY
+}
+
+enum FiatTransactionType {
+  ONRAMP
+  OFFRAMP
+}
+
+enum TimeRange {
+  LAST_HOUR
+  LAST_24H
+  LAST_7D
+  LAST_30D
+  LAST_90D
+  ALL_TIME
+}
+
+"""
+Input types
+"""
+input UserFilter {
+  email: String
+  kycStatus: KYCStatus
+  advancedMode: Boolean
+}
+
+input Pagination {
+  first: Int
+  after: String
+  last: Int
+  before: String
+}
+
+input UpdateProfileInput {
+  email: String
+  displayName: String
+}
+
+input UserPreferencesInput {
+  defaultChain: String
+  hiddenTokens: [String!]
+  favoriteProtocols: [String!]
+}
+
+input AutoSigningConfigInput {
+  enabled: Boolean!
+  thresholdUSD: Float!
+  whitelistedContracts: [String!]
+  expiryHours: Int!
+  maxDailyAmountUSD: Float!
+  requireBiometric: Boolean!
+}
+
+input TransactionIntentInput {
+  type: TransactionIntentType!
+  description: String!
+  inputToken: String!
+  outputToken: String!
+  minOutputAmount: String!
+  maxSlippage: Float!
+  deadline: DateTime!
+  routingPreference: RoutingPreference!
+}
+
+input SwapIntentInput {
+  chainId: String!
+  fromToken: String!
+  toToken: String!
+  amount: String!
+  minOutputAmount: String!
+  maxSlippage: Float!
+  protocol: String
+}
+
+"""
+Scalars
+"""
+scalar DateTime
+scalar JSON
+scalar Upload

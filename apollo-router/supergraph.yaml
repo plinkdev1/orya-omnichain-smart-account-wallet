@@ -1,0 +1,26 @@
+federation_version: 2
+
+subgraphs:
+  sui-subgraph:
+    routing_url: http://localhost:4005
+    schema:
+      subgraph_url: http://localhost:4005/.well-known/apollo/server-health
+
+  users-subgraph:
+    routing_url: http://localhost:4001
+    schema:
+      subgraph_url: http://localhost:4001/.well-known/apollo/server-health
+
+include_subgraph_urls: false
+
+introspection:
+  disabled: false
+
+graph:
+  title: "ORYA Wallet SuperGraph"
+  description: "Multi-chain wallet GraphQL API with SUI blockchain support"
+
+plugins:
+  apollo:
+    apollo_graph_ref: "orya-wallet@current"
+    apollo_key: "${APOLLO_KEY}"

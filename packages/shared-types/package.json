@@ -1,0 +1,86 @@
+{
+  "name": "@orya/shared-types",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.types.d.ts",
+      "default": "./dist/auth.types.js"
+    },
+    "./wallet": {
+      "types": "./dist/wallet.types.d.ts",
+      "default": "./dist/wallet.types.js"
+    },
+    "./transaction": {
+      "types": "./dist/transaction.types.d.ts",
+      "default": "./dist/transaction.types.js"
+    },
+    "./chain": {
+      "types": "./dist/chain.types.d.ts",
+      "default": "./dist/chain.types.js"
+    },
+    "./defi": {
+      "types": "./dist/defi.types.d.ts",
+      "default": "./dist/defi.types.js"
+    },
+    "./portfolio": {
+      "types": "./dist/portfolio.types.d.ts",
+      "default": "./dist/portfolio.types.js"
+    },
+    "./common": {
+      "types": "./dist/common.types.d.ts",
+      "default": "./dist/common.types.js"
+    },
+    "./errors": {
+      "types": "./dist/errors.types.d.ts",
+      "default": "./dist/errors.types.js"
+    },
+    "./multi-sig": {
+      "types": "./dist/multi-sig.types.d.ts",
+      "default": "./dist/multi-sig.types.js"
+    },
+    "./account-abstraction": {
+      "types": "./dist/account-abstraction.types.d.ts",
+      "default": "./dist/account-abstraction.types.js"
+    },
+    "./advanced-features": {
+      "types": "./dist/advanced-features.types.d.ts",
+      "default": "./dist/advanced-features.types.js"
+    },
+    "./bridge": {
+      "types": "./dist/bridge.types.d.ts",
+      "default": "./dist/bridge.types.js"
+    },
+    "./chainbase": {
+      "types": "./dist/chainbase.types.d.ts",
+      "default": "./dist/chainbase.types.js"
+    },
+    "./eigenlayer": {
+      "types": "./dist/eigenlayer.types.d.ts",
+      "default": "./dist/eigenlayer.types.js"
+    },
+    "./chainRegistry": {
+      "types": "./dist/chainRegistry.d.ts",
+      "default": "./dist/chainRegistry.js"
+    },
+    "./chains": {
+      "types": "./dist/chains.d.ts",
+      "default": "./dist/chains.js"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "lint": "eslint src --ext .ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

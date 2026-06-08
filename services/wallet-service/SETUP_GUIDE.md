@@ -1,0 +1,425 @@
+# Wallet Service Setup Guide
+
+## Overview
+
+The Wallet Service is a critical microservice for the ORYA Wallet that handles:
+- **Wallet Creation** (OWNED, CONNECTED, HUMAN_NETWORK types)
+- **Privy MPC Integration** (embedded wallet management)
+- **Tatum Multi-Chain Integration** (for self-custodied wallets)
+- **Private Key Encryption** (AES-256-GCM)
+- **Wallet Management** (balance, address retrieval, deletion)
+
+## Architecture
+
+### Service Port
+- **Development**: `0.0.0.0:3003`
+- **Production**: Configurable via `SERVICE_PORT` environment variable
+
+### Wallet Types
+
+| Type | Provider | Use Case | Security |
+|------|----------|----------|----------|
+| **OWNED** | Tatum | Self-custodied wallets with private keys | Private keys encrypted with AES-256-GCM |
+| **HUMAN_NETWORK** | Privy | MPC embedded wallets | Keys managed by Privy's infrastructure |
+| **CONNECTED** | External | Connected external wallets | No private keys stored locally |
+
+### Technology Stack
+- **Framework**: Axum (async HTTP)
+- **Database**: PostgreSQL with sqlx
+- **Crypto**: AES-GCM, Base64
+- **External APIs**: Privy, Tatum
+- **Runtime**: Tokio async
+
+## Environment Configuration
+
+### Required Environment Variables
+
+Create a `.env` file in the wallet-service root:
+
+```env
+# Database
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/orya_wallet
+
+# Encryption Key (256-bit hex string - 64 characters)
+ENCRYPTION_KEY=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+
+# Privy Configuration
+PRIVY_API_KEY=your_privy_api_key_here
+PRIVY_BASE_URL=https://api.privy.io
+
+# Tatum Configuration
+TATUM_API_KEY=your_tatum_api_key_here
+TATUM_BASE_URL=https://api.tatum.io/v3
+
+# Service Configuration
+SERVICE_PORT=3003
+LOG_LEVEL=info
+
+# Database Pool
+DB_POOL_MIN=5
+DB_POOL_MAX=20
+```
+
+### Generating an Encryption Key
+
+```bash
+# Using OpenSSL
+openssl rand -hex 32
+
+# Using Rust (one-time)
+cargo run --example generate_key
+```
+
+## Database Setup
+
+### Step 1: Create Database
+
+```bash
+createdb orya_wallet
+```
+
+### Step 2: Run Migrations
+
+```bash
+# Using sqlx-cli
+sqlx migrate run
+
+# Or manually run migration files
+psql -U postgres -d orya_wallet -f services/migrations/001_init_schema.sql
+psql -U postgres -d orya_wallet -f services/migrations/002_wallet_service_enhancements.sql
+```
+
+### Migration Files
+
+- `001_init_schema.sql` - Core wallet schema
+- `002_wallet_service_enhancements.sql` - Privy/Tatum integration columns
+
+## API Endpoints
+
+### 1. Create Wallet
+```
+POST /wallet/create
+Content-Type: application/json
+
+{
+  "user_id": "user-uuid-here",
+  "wallet_name": "My Primary Wallet",
+  "chain": "ethereum",
+  "wallet_type": "OWNED",
+  "is_primary": true
+}
+```
+
+**Response (OWNED type)**:
+```json
+{
+  "wallet_id": "wallet-uuid",
+  "user_id": "user-uuid",
+  "wallet_name": "My Primary Wallet",
+  "chain": "ethereum",
+  "address": "0x742d35Cc6634C0532925a3b844Bc493d38f01e57",
+  "wallet_type": "OWNED",
+  "privy_wallet_id": null,
+  "recovery_phrase": ["word1", "word2", ..., "word12"],
+  "created_at": "2025-01-20T10:30:00Z"
+}
+```
+
+### 2. List User Wallets
+```
+GET /wallets/user/{user_id}?chain=ethereum
+
+Response:
+{
+  "wallets": [
+    {
+      "id": "wallet-id",
+      "user_id": "user-id",
+      "wallet_name": "My Wallet",
+      "chain": "ethereum",
+      "address": "0x742d35Cc6634C0532925a3b844Bc493d38f01e57",
+      "balance": "1000000000000000000",
+      "balance_usd": "2500.00",
+      "is_primary": true,
+      "created_at": "2025-01-20T10:30:00Z"
+    }
+  ],
+  "total_count": 1
+}
+```
+
+### 3. Get Wallet Details
+```
+GET /wallet/{wallet_id}
+
+Response: Single wallet object (same as list items)
+```
+
+### 4. Get Wallet Balance
+```
+GET /wallet/{wallet_id}/balance
+
+Response:
+{
+  "wallet_id": "wallet-id",
+  "address": "0x742d35Cc6634C0532925a3b844Bc493d38f01e57",
+  "chain": "ethereum",
+  "balance": "1000000000000000000",
+  "balance_usd": "2500.00",
+  "last_updated": "2025-01-20T10:35:00Z"
+}
+```
+
+### 5. Get Wallet Address
+```
+GET /wallet/{wallet_id}/address
+
+Response:
+{
+  "wallet_id": "wallet-id",
+  "address": "0x742d35Cc6634C0532925a3b844Bc493d38f01e57",
+  "chain": "ethereum"
+}
+```
+
+### 6. Delete Wallet
+```
+DELETE /wallet/{wallet_id}
+
+Response:
+{
+  "success": true,
+  "message": "Wallet deleted successfully"
+}
+```
+
+### 7. Health Check
+```
+GET /health
+
+Response:
+{
+  "status": "healthy",
+  "timestamp": "2025-01-20T10:40:00Z"
+}
+```
+
+## Supported Chains
+
+### For OWNED Wallets (Tatum)
+- `ethereum` - Ethereum Mainnet
+- `polygon` - Polygon
+- `bitcoin` - Bitcoin
+- `solana` - Solana
+
+### For HUMAN_NETWORK Wallets (Privy)
+- `sui` - SUI Blockchain (Privy primary support)
+- `ethereum` - Ethereum (via Privy)
+- `polygon` - Polygon (via Privy)
+- `solana` - Solana (via Privy)
+
+## Security Considerations
+
+### Private Key Management
+
+1. **OWNED Wallets**:
+   - Private keys generated by Tatum API
+   - Encrypted with AES-256-GCM before database storage
+   - Never stored in plaintext
+   - Recovery phrase returned ONLY during wallet creation
+
+2. **HUMAN_NETWORK Wallets**:
+   - Keys never stored locally
+   - Managed by Privy's MPC infrastructure
+   - Transactions signed via Privy API
+
+3. **CONNECTED Wallets**:
+   - No private keys stored
+   - External wallet addresses only
+
+### Encryption Details
+
+- **Algorithm**: AES-256-GCM
+- **Key Size**: 256 bits (32 bytes)
+- **Nonce Size**: 96 bits (12 bytes) - randomly generated
+- **Tag Size**: 128 bits (16 bytes)
+- **Encoding**: Base64 for storage
+
+### Recovery Phrase Handling
+
+⚠️ **IMPORTANT**: Recovery phrases are:
+- Returned ONLY on initial wallet creation (OWNED type)
+- Never retrievable after creation
+- User must save immediately after creation
+- No backup mechanism on backend
+
+## Building and Running
+
+### Prerequisites
+```bash
+# Rust toolchain
+rustup install stable
+
+# PostgreSQL
+# Install PostgreSQL 15+ or use Docker
+
+# Docker (optional)
+docker run -d -p 5432:5432 \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=orya_wallet \
+  postgres:15
+```
+
+### Build
+```bash
+# Build just wallet-service
+cargo build --package wallet-service --release
+
+# Run tests
+cargo test --package wallet-service
+
+# Check compilation
+cargo check --package wallet-service
+```
+
+### Run
+```bash
+# Development (with reload)
+cargo watch -x "run --package wallet-service"
+
+# Production
+./target/release/wallet-service
+```
+
+## Testing
+
+### Unit Tests
+```bash
+cargo test --package wallet-service --lib
+```
+
+### Integration Tests
+```bash
+cargo test --package wallet-service --test '*'
+```
+
+### Example Test Cases
+
+```rust
+#[tokio::test]
+async fn test_create_owned_wallet() {
+    // Tests OWNED wallet creation with Tatum
+}
+
+#[tokio::test]
+async fn test_create_privy_wallet() {
+    // Tests HUMAN_NETWORK wallet creation with Privy
+}
+
+#[tokio::test]
+async fn test_encryption_decryption() {
+    // Tests AES-256-GCM encryption/decryption
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**1. Database Connection Failed**
+```
+Error: connection refused
+Solution: Ensure PostgreSQL is running and DATABASE_URL is correct
+```
+
+**2. Encryption Key Invalid**
+```
+Error: Invalid encryption key length
+Solution: ENCRYPTION_KEY must be 64 hex characters (32 bytes)
+```
+
+**3. Privy/Tatum API Errors**
+```
+Error: Failed to create wallet via Tatum
+Solution: Verify API keys in .env and service availability
+```
+
+**4. Memory Allocation Error During Build**
+```
+Solution: Reduce parallel jobs with -j flag:
+  cargo build -j 2 --package wallet-service
+```
+
+## Database Schema
+
+### Wallets Table
+```sql
+CREATE TABLE wallets (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL REFERENCES users(id),
+  wallet_name VARCHAR(255) NOT NULL,
+  chain VARCHAR(50) NOT NULL,
+  address VARCHAR(255) NOT NULL UNIQUE,
+  public_key VARCHAR(255),
+  privy_wallet_id VARCHAR(255) UNIQUE,
+  wallet_type VARCHAR(50) NOT NULL CHECK (wallet_type IN ('OWNED', 'CONNECTED', 'HUMAN_NETWORK')),
+  encrypted_key_data TEXT,
+  balance VARCHAR(255) DEFAULT '0',
+  balance_usd VARCHAR(255) DEFAULT '0.00',
+  is_primary BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL,
+  UNIQUE(user_id, wallet_name)
+);
+```
+
+## Module Organization
+
+```
+wallet-service/
+├── src/
+│   ├── main.rs              # Entry point, router setup
+│   ├── models.rs            # Data models and schemas
+│   ├── db.rs                # Database operations
+│   ├── error.rs             # Error handling
+│   ├── crypto.rs            # AES-256-GCM encryption
+│   ├── privy.rs             # Privy API integration
+│   ├── tatum.rs             # Tatum API integration
+│   └── handlers/
+│       ├── mod.rs           # Handler module exports
+│       ├── wallet.rs        # Wallet CRUD operations
+│       ├── health.rs        # Health check
+│       └── metrics.rs       # Prometheus metrics
+├── tests/
+│   └── integration_tests.rs # Integration tests
+├── Cargo.toml               # Dependencies
+└── README.md                # Quick reference
+```
+
+## Next Steps
+
+1. **Deploy to local**: `cargo run --release`
+2. **Test endpoints**: Use Postman or curl
+3. **Monitor logs**: Watch tracing output
+4. **Verify integration**: Check with API Gateway
+5. **Load testing**: Use k6 or Apache JMeter
+
+## Related Tasks
+
+- **TASK 2.4**: Implement Transaction Signing (uses wallet keys)
+- **TASK 2.5**: Implement Privy Advanced Features
+- **TASK 2.6**: Implement Balance & History Tracking
+
+## Support
+
+For issues or questions:
+1. Check logs: `RUST_LOG=debug cargo run`
+2. Review API documentation
+3. Check test files for usage examples
+4. Verify environment variables
+
+---
+
+**Last Updated**: 2025-01-20  
+**Status**: Ready for Development  
+**Port**: 3003

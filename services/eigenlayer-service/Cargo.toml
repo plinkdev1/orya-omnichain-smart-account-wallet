@@ -1,0 +1,39 @@
+[package]
+name = "eigenlayer-service"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "eigenlayer-service"
+path = "src/main.rs"
+
+[dependencies]
+tokio.workspace = true
+axum.workspace = true
+tower.workspace = true
+tower-http.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sqlx.workspace = true
+redis.workspace = true
+async-trait.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+dotenv.workspace = true
+reqwest.workspace = true
+prometheus.workspace = true
+opentelemetry.workspace = true
+opentelemetry-prometheus.workspace = true
+opentelemetry-jaeger.workspace = true
+
+ethers.workspace = true
+rust_decimal.workspace = true
+hex.workspace = true
+sha2.workspace = true

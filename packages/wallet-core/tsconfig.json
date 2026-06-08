@@ -1,0 +1,43 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": true,
+    "lib": ["ES2020", "DOM"],
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "paths": {
+      "@orya/wallet-core": ["./src"],
+      "@orya/wallet-core/*": ["./src/*"],
+      "@orya/wallet-core/domain": ["./src/domain"],
+      "@orya/wallet-core/domain/*": ["./src/domain/*"],
+      "@orya/wallet-core/services": ["./src/services"],
+      "@orya/wallet-core/services/*": ["./src/services/*"],
+      "@orya/wallet-core/hooks": ["./src/hooks"],
+      "@orya/wallet-core/hooks/*": ["./src/hooks/*"],
+      "@orya/wallet-core/store": ["./src/store"],
+      "@orya/wallet-core/store/*": ["./src/store/*"],
+      "@orya/wallet-core/storage": ["./src/storage"],
+      "@orya/wallet-core/storage/*": ["./src/storage/*"],
+      "@orya/wallet-core/utils": ["./src/utils"],
+      "@orya/wallet-core/utils/*": ["./src/utils/*"],
+      "@orya/shared-types": ["../shared-types/src"],
+      "@orya/shared-types/*": ["../shared-types/src/*"],
+      "@orya/shared-utils": ["../shared-utils/src"],
+      "@orya/shared-utils/*": ["../shared-utils/src/*"],
+      "@orya/design-tokens": ["../design-tokens/src"],
+      "@orya/design-tokens/*": ["../design-tokens/src/*"]
+    }
+  },
+  "references": [
+    { "path": "../shared-types" },
+    { "path": "../shared-utils" }
+  ],
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts", "src/connectivity/reown_disabled/**/*", "src/services/ika/**/*", "src/services/ika-mpc.ts", "src/services/multisig.ts", "src/services/walletconnect.ts", "src/services/privy-ika-bridge.ts", "src/hooks/useCreateDWallet.ts", "src/hooks/useSignWithDWallet.ts", "src/hooks/useWalletConnect.ts", "src/hooks/useEnhancedWallet.ts"]
+}

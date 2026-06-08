@@ -1,0 +1,148 @@
+[workspace]
+resolver = "2"
+members = [
+    # Core Services
+    "api-gateway",
+    "user-service",
+    "transaction-service",
+    "portfolio-service",
+    "defi-service",
+    "fraud-engine",
+    "notification-service",
+    "chainbase-service",
+    
+    # Card Payment System
+    "ledger-service",
+    "fx-routing-engine",
+    "fiat-bridge-service",
+    "payment-routing-service",
+    
+    # Wallet & Signing
+    "sui-mpc-aa-service",
+    "wallet-service",
+    
+    # New Services (Phase 2)
+    "staking-service",
+    "eigenlayer-service",
+    "analytics-service",
+    "security-service",
+    "crosschain-service",
+    "oracles-service",
+    "plugin-service",
+    "concierge-service",
+    
+    # Provider Adapters
+    "provider-adapters",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+authors = ["ORYA Team"]
+license = "MIT"
+
+[workspace.dependencies]
+# Core async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# GraphQL (5.0 is stable mid-version, 7.0 available but has breaking changes)
+async-graphql = "5.0"
+async-graphql-axum = "5.0"
+
+# Web framework
+axum = "0.7"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["trace", "cors", "catch-panic"] }
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "postgres", "json", "uuid", "chrono", "macros", "rust_decimal"] }
+
+# Cache
+redis = { version = "0.25", features = ["aio", "tokio-comp", "json"] }
+
+# RPC & Blockchain
+tonic = "0.10"
+prost = "0.12"
+tonic-build = "0.10"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_with = "3.4"
+
+# Async utilities
+async-trait = "0.1"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Logging & Tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Crypto
+sha2 = "0.10"
+hex = "0.4"
+hmac = "0.12"
+
+# Utils
+uuid = { version = "1.6", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+dotenv = "0.15"
+once_cell = "1.19"
+zerocopy = "0.7"
+rust_decimal = { version = "1.33", features = ["serde"] }
+rand = { version = "0.8", features = ["std", "std_rng"] }
+rand_core = { version = "0.6", features = ["std", "std_rng"] }
+getrandom = { version = "0.2", features = ["std", "js"] }
+
+# HTTP Client
+reqwest = { version = "0.11", features = ["json"] }
+
+
+
+# Message Bus (NATS)
+nats = "0.25"
+nats-server = "0.4"
+nuid = { version = "0.5", features = ["std"] }
+
+# Observability
+prometheus = "0.13"
+opentelemetry = "0.20"
+opentelemetry-prometheus = "0.13"
+opentelemetry-jaeger = { version = "0.19", features = ["rt-tokio"] }
+
+# Blockchain SDKs & Integrations
+# Sui
+sui-sdk = "0.57"
+sui-types = "0.57"
+sui-json-rpc-types = "0.57"
+
+# Ethereum & EVM
+ethers = "2.0"
+web3 = "0.21"
+
+# Solana
+solana-sdk = "1.18"
+solana-client = "1.18"
+
+# Bitcoin & BTCfi
+bitcoin = "0.32"
+bitcoincore-rpc = "0.18"
+secp256k1 = { version = "0.29", features = ["hashes", "rand-std"] }
+k256 = { version = "0.13", features = ["ecdsa", "hash2curve"] }
+
+# Wallet & Signing
+eth-keystore = "0.6"
+bip39 = "0.10"
+bip32 = "0.5"
+
+# Third-party integrations
+reqwest-eventsource = "0.6"
+
+# Testing
+tempfile = "3.8"
+mockall = "0.12"
+

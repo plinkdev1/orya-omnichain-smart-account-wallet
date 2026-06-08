@@ -1,0 +1,38 @@
+[package]
+name = "fiat-bridge-service"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+tokio.workspace = true
+axum.workspace = true
+tower.workspace = true
+tower-http.workspace = true
+async-graphql.workspace = true
+async-graphql-axum.workspace = true
+sqlx.workspace = true
+redis.workspace = true
+tonic.workspace = true
+prost.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+serde_with.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+sha2.workspace = true
+hex.workspace = true
+hmac.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+dotenv.workspace = true
+once_cell.workspace = true
+reqwest.workspace = true
+nats.workspace = true
+prometheus.workspace = true
+opentelemetry.workspace = true
+opentelemetry-prometheus.workspace = true
+opentelemetry-jaeger.workspace = true

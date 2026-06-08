@@ -1,0 +1,31 @@
+{
+  "name": "@orya/aa-provider-biconomy",
+  "version": "1.0.0",
+  "description": "Biconomy Account Abstraction provider implementation",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@orya/wallet-core": "workspace:*",
+    "@orya/shared-types": "workspace:*",
+    "@biconomy/account": "^4.5.7",
+    "ethers": "^6.0.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

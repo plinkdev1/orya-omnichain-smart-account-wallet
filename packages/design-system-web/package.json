@@ -1,0 +1,41 @@
+{
+  "name": "@orya/design-system-web",
+  "version": "1.0.0",
+  "description": "Web design system components - React/Next.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch"
+  },
+  "keywords": [
+    "design-system",
+    "react",
+    "components",
+    "orya"
+  ],
+  "author": "ORŸA Team",
+  "license": "MIT",
+  "dependencies": {
+    "@orya/design-tokens": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  }
+}

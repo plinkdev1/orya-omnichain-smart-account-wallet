@@ -1,0 +1,471 @@
+# ORYA GraphQL Federation Schema
+# API Gateway - Apollo Router
+# Generated: 2025-01-12
+
+"""Federation schema for ORYA Wallet"""
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0")
+
+"""User type (extended from user-service)"""
+type User @key(fields: "id") {
+  id: ID!
+  privyUserId: String!
+  email: String
+  username: String
+  profilePictureUrl: String
+  isKycVerified: Boolean!
+  kyc_verified_at: String
+  wallets: [Wallet!]!
+  portfolio: Portfolio
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""Wallet type (extended from wallet-service)"""
+type Wallet @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  user: User!
+  walletName: String!
+  walletType: WalletType!
+  chain: Chain!
+  publicAddress: String!
+  custodyType: CustodyType!
+  isPrimary: Boolean!
+  balanceCache: BalanceCache!
+  tokens: [TokenBalance!]!
+  transactions(limit: Int, offset: Int, status: TransactionStatus): [Transaction!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""Token Balance"""
+type TokenBalance {
+  token: Token!
+  balance: String!
+  balanceInUSD: Float!
+}
+
+"""Token type"""
+type Token @key(fields: "id") {
+  id: ID!
+  symbol: String!
+  chain: Chain!
+  contractAddress: String
+  decimals: Int!
+  name: String!
+  logoUrl: String
+  priceUSD: Float!
+  priceChange24h: Float
+  marketCapUSD: Float
+  volume24hUSD: Float
+  lastPriceUpdate: String
+}
+
+"""Balance Cache"""
+type BalanceCache {
+  usd: Float!
+  native: String!
+}
+
+"""Transaction type"""
+type Transaction @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  walletId: ID!
+  txHash: String
+  txType: TransactionType!
+  status: TransactionStatus!
+  fromAddress: String
+  toAddress: String
+  amount: String!
+  amountInUSD: Float!
+  tokenSymbol: String
+  feeAmount: String
+  feeInUSD: Float
+  chain: Chain!
+  gasUsed: String
+  blockNumber: Int
+  confirmations: Int
+  createdAt: String!
+  updatedAt: String!
+  completedAt: String
+}
+
+"""Portfolio type"""
+type Portfolio @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  user: User!
+  totalBalanceUSD: Float!
+  total24hChangeUSD: Float!
+  total24hChangePercent: Float!
+  totalPnLUSD: Float!
+  totalPnLPercent: Float!
+  assetAllocation: [AssetAllocation!]!
+  wallets: [Wallet!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+"""Asset Allocation"""
+type AssetAllocation {
+  token: Token!
+  percentageOfPortfolio: Float!
+  valueInUSD: Float!
+}
+
+"""Supported Chains"""
+enum Chain {
+  SUI
+  ETHEREUM
+  SOLANA
+  BTC
+  APTOS
+}
+
+"""Wallet Types"""
+enum WalletType {
+  EMBEDDED
+  IMPORTED
+  HARDWARE
+}
+
+"""Custody Types"""
+enum CustodyType {
+  MPC
+  CUSTODIAL
+  SELF
+}
+
+"""Transaction Types"""
+enum TransactionType {
+  SEND
+  RECEIVE
+  SWAP
+  DEPOSIT
+  WITHDRAW
+  STAKE
+  BRIDGE
+}
+
+"""Transaction Status"""
+enum TransactionStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+  CANCELLED
+}
+
+"""===== Chainbase Types ====="""
+
+type ChainbaseBalance {
+  chainId: String!
+  address: String!
+  balance: String!
+  decimals: Int!
+  symbol: String!
+  lastUpdated: DateTime!
+}
+
+type ChainbaseToken {
+  address: String!
+  chainId: String!
+  symbol: String!
+  name: String!
+  decimals: Int!
+  balance: String!
+  priceUSD: Float
+  logo: String
+}
+
+type ChainbaseTransaction {
+  hash: String!
+  chainId: String!
+  from: String!
+  to: String!
+  value: String!
+  timestamp: DateTime!
+  status: TransactionStatus!
+  blockNumber: Int!
+  gasUsed: String
+  gasPrice: String
+}
+
+type ChainbaseTVL {
+  protocol: String!
+  chainId: String!
+  tvl: String!
+  tvlUSD: Float!
+  timestamp: DateTime!
+}
+
+type ChainbaseAnalytics {
+  chainId: String!
+  address: String!
+  totalTransactions: Int!
+  totalValue: String!
+  firstTransaction: DateTime!
+  lastTransaction: DateTime!
+  uniqueContracts: Int!
+}
+
+type ChainInfo {
+  chainId: String!
+  name: String!
+  isTestnet: Boolean!
+  isSupported: Boolean!
+}
+
+type ChainbaseBalanceResponse {
+  balance: ChainbaseBalance!
+  tokens: [ChainbaseToken!]!
+}
+
+type ChainbaseTransactionsResponse {
+  transactions: [ChainbaseTransaction!]!
+  total: Int!
+  hasMore: Boolean!
+}
+
+scalar DateTime
+
+"""===== EigenLayer Types ====="""
+
+type EigenLayerStrategy {
+  address: String!
+  tokenAddress: String!
+  tokenSymbol: String!
+  totalShares: String!
+  underlyingToken: String!
+}
+
+type EigenLayerOperator {
+  address: String!
+  metadataURI: String!
+  delegationApprover: String!
+  stakerOptOutWindowBlocks: Int!
+  isActive: Boolean!
+  totalDelegated: String!
+}
+
+type EigenLayerRestakingPosition {
+  id: ID!
+  userId: String!
+  strategyAddress: String!
+  tokenAddress: String!
+  amount: String!
+  shares: String!
+  operatorAddress: String
+  stakedAt: DateTime!
+  status: RestakingStatus!
+  estimatedAPY: Float
+}
+
+enum RestakingStatus {
+  ACTIVE
+  QUEUED_WITHDRAWAL
+  WITHDRAWN
+}
+
+type EigenLayerSlashingEvent {
+  id: ID!
+  operatorAddress: String!
+  strategyAddress: String!
+  slashedAmount: String!
+  eventBlock: Int!
+  eventTimestamp: DateTime!
+  txHash: String!
+}
+
+type EigenLayerReward {
+  id: ID!
+  userId: String!
+  strategyAddress: String!
+  rewardAmount: String!
+  rewardToken: String!
+  earnedAt: DateTime!
+  claimed: Boolean!
+  claimedAt: DateTime
+}
+
+type RestakeResponse {
+  positionId: ID!
+  txHash: String!
+  shares: String!
+  estimatedAPY: Float!
+}
+
+type RestakingPositionsResponse {
+  positions: [EigenLayerRestakingPosition!]!
+  totalValueStaked: String!
+  totalRewardsEarned: String!
+}
+
+type QueueWithdrawalResponse {
+  withdrawalRoot: String!
+  completionTimestamp: DateTime!
+  txHash: String!
+}
+
+type CompleteWithdrawalResponse {
+  txHash: String!
+}
+
+type RewardsResponse {
+  rewards: [EigenLayerReward!]!
+  totalUnclaimed: String!
+}
+
+type ClaimRewardsResponse {
+  txHash: String!
+  totalClaimed: String!
+}
+
+type StrategyAPYResponse {
+  apy: Float!
+}
+
+"""Root Query"""
+type Query {
+  # User Queries
+  user(id: ID!): User
+  currentUser: User
+  userByEmail(email: String!): User
+  
+  # Wallet Queries
+  wallet(id: ID!): Wallet
+  walletsByUser(userId: ID!): [Wallet!]!
+  walletByAddress(address: String!, chain: Chain!): Wallet
+  
+  # Portfolio Queries
+  portfolio(userId: ID!): Portfolio
+  portfolioHistory(userId: ID!, days: Int): [PortfolioSnapshot!]!
+  
+  # Transaction Queries
+  transaction(id: ID!): Transaction
+  transactions(userId: ID!, limit: Int, offset: Int): [Transaction!]!
+  transactionsByWallet(walletId: ID!, limit: Int, offset: Int): [Transaction!]!
+  transactionByHash(txHash: String!): Transaction
+  
+  # Token Queries
+  token(symbol: String!, chain: Chain!): Token
+  tokens(chain: Chain): [Token!]!
+  tokenPrice(symbol: String!): Float
+  
+  # Chainbase Queries
+  chainbaseBalance(address: String!, chainId: String!): ChainbaseBalanceResponse!
+  chainbaseTransactions(address: String!, chainId: String!, limit: Int, offset: Int): ChainbaseTransactionsResponse!
+  chainbaseTVL(chainId: String!, protocol: String!): ChainbaseTVL!
+  chainbaseAnalytics(address: String!, chainId: String!): ChainbaseAnalytics!
+  chainbaseSupportedChains: [ChainInfo!]!
+  
+  # EigenLayer Queries
+  restakingPositions(userId: String!): RestakingPositionsResponse!
+  eigenLayerOperators(isActive: Boolean, minDelegated: String): [EigenLayerOperator!]!
+  eigenLayerRewards(userId: String!, claimed: Boolean): RewardsResponse!
+  eigenLayerStrategyAPY(strategyAddress: String!): StrategyAPYResponse!
+  eigenLayerSlashingEvents(operatorAddress: String, limit: Int): [EigenLayerSlashingEvent!]!
+  
+  # Health Check
+  health: HealthCheck!
+}
+
+"""Portfolio Snapshot for history"""
+type PortfolioSnapshot {
+  timestamp: String!
+  totalValueUSD: Float!
+  assetBreakdown: [AssetAllocation!]!
+}
+
+"""Health Check Response"""
+type HealthCheck {
+  status: String!
+  timestamp: String!
+  services: [ServiceHealth!]!
+}
+
+"""Service Health Status"""
+type ServiceHealth {
+  service: String!
+  status: String!
+  latency: Int
+}
+
+"""Root Mutation"""
+type Mutation {
+  # Wallet Mutations
+  createWallet(input: CreateWalletInput!): Wallet!
+  updateWallet(id: ID!, input: UpdateWalletInput!): Wallet!
+  deleteWallet(id: ID!): Boolean!
+  
+  # Transaction Mutations
+  createTransaction(input: CreateTransactionInput!): Transaction!
+  updateTransactionStatus(id: ID!, status: TransactionStatus!): Transaction!
+  
+  # User Mutations
+  updateUserProfile(input: UpdateUserProfileInput!): User!
+  
+  # Chainbase Mutations
+  syncChainbaseData(chainId: String!, address: String!): Boolean!
+  
+  # EigenLayer Mutations
+  restakeTokens(strategyAddress: String!, amount: String!, operatorAddress: String): RestakeResponse!
+  queueWithdrawal(positionId: ID!): QueueWithdrawalResponse!
+  completeWithdrawal(positionId: ID!): CompleteWithdrawalResponse!
+  claimRewards(rewardIds: [ID!]!): ClaimRewardsResponse!
+  delegateToOperator(operatorAddress: String!, signature: String!): Boolean!
+}
+
+"""Create Wallet Input"""
+input CreateWalletInput {
+  userId: ID!
+  walletName: String!
+  chain: Chain!
+  walletType: WalletType!
+  custodyType: CustodyType
+  publicAddress: String
+}
+
+"""Update Wallet Input"""
+input UpdateWalletInput {
+  walletName: String
+  isPrimary: Boolean
+  isArchived: Boolean
+}
+
+"""Create Transaction Input"""
+input CreateTransactionInput {
+  walletId: ID!
+  toAddress: String!
+  amount: String!
+  tokenSymbol: String!
+  txType: TransactionType!
+  metadata: String
+}
+
+"""Update User Profile Input"""
+input UpdateUserProfileInput {
+  email: String
+  username: String
+  profilePictureUrl: String
+}
+
+"""Subscription"""
+type Subscription {
+  # Real-time transaction updates
+  transactionUpdated(walletId: ID!): Transaction!
+  
+  # Real-time portfolio updates
+  portfolioUpdated(userId: ID!): Portfolio!
+  
+  # Real-time price updates
+  priceUpdated(symbol: String!): Token!
+}
+
+# Schema version
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}

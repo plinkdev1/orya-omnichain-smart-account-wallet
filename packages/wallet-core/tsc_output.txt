@@ -1,0 +1,55 @@
+src/hooks/useAuth.ts(20,8): error TS2307: Cannot find module '../store/auth.slice' or its corresponding type declarations.
+src/hooks/useUpgradeWallet.ts(12,25): error TS2307: Cannot find module '../store/auth.slice' or its corresponding type declarations.
+src/services/ika/dwallet-creation.service.ts(235,7): error TS2353: Object literal may only specify known properties, and 'dkgSecondRoundInput' does not exist in type '{ dWalletCap: string | TransactionObjectArgument; dkgSecondRoundRequestInput: DKGSecondRoundRequestInput; ikaCoin: TransactionObjectArgument; suiCoin: TransactionObjectArgument; }'.
+src/services/ika/dwallet-creation.service.ts(285,38): error TS2339: Property 'getSuiClient' does not exist on type 'IkaClient'.
+src/services/ika/dwallet-creation.service.ts(293,32): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/dwallet-creation.service.ts(315,38): error TS2339: Property 'getSuiClient' does not exist on type 'IkaClient'.
+src/services/ika/enterprise-multisig.service.ts(263,40): error TS2339: Property 'getSuiClient' does not exist on type 'IkaClient'.
+src/services/ika/ika-client.service.ts(49,34): error TS2345: Argument of type 'IkaNetwork' is not assignable to parameter of type 'Network'.
+  Type '"devnet"' is not assignable to type 'Network'.
+src/services/ika/ika-client.service.ts(159,46): error TS2345: Argument of type 'IkaNetwork' is not assignable to parameter of type 'Network'.
+  Type '"devnet"' is not assignable to type 'Network'.
+src/services/ika/presign.service.ts(165,32): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/signing.service.ts(85,9): error TS2769: No overload matches this call.
+  Overload 1 of 3, '({ dWallet, messageApproval, hashScheme, verifiedPresignCap, presign, encryptedUserSecretKeyShare, message, ikaCoin, suiCoin, }: { dWallet: ZeroTrustDWallet; messageApproval: TransactionObjectArgument; hashScheme: Hash; verifiedPresignCap: TransactionObjectArgument; ... 4 more ...; suiCoin: TransactionObjectArgument; }): Promise<...>', gave the following error.
+    Type 'DWallet' is not assignable to type 'ZeroTrustDWallet'.
+      Type 'ImportedKeyDWallet' is not assignable to type 'ZeroTrustDWallet'.
+        Type 'ImportedKeyDWallet' is not assignable to type '{ kind: "zero-trust"; }'.
+          Types of property 'kind' are incompatible.
+            Type '"imported-key"' is not assignable to type '"zero-trust"'.
+  Overload 2 of 3, '({ dWallet, messageApproval, hashScheme, verifiedPresignCap, presign, secretShare, publicOutput, message, ikaCoin, suiCoin, }: { dWallet: ZeroTrustDWallet; messageApproval: TransactionObjectArgument; hashScheme: Hash; verifiedPresignCap: TransactionObjectArgument; ... 5 more ...; suiCoin: TransactionObjectArgument; }): Promise<...>', gave the following error.
+    Type 'DWallet' is not assignable to type 'ZeroTrustDWallet'.
+      Type 'ImportedKeyDWallet' is not assignable to type 'ZeroTrustDWallet'.
+        Type 'ImportedKeyDWallet' is not assignable to type '{ kind: "zero-trust"; }'.
+          Types of property 'kind' are incompatible.
+            Type '"imported-key"' is not assignable to type '"zero-trust"'.
+  Overload 3 of 3, '({ dWallet, messageApproval, hashScheme, verifiedPresignCap, presign, message, ikaCoin, suiCoin, }: { dWallet: SharedDWallet; messageApproval: TransactionObjectArgument; hashScheme: Hash; verifiedPresignCap: TransactionObjectArgument; presign: { ...; }; message: Uint8Array<...>; ikaCoin: TransactionObjectArgument; suiCoin: TransactionObjectArgument; }): Promise<...>', gave the following error.
+    Type 'DWallet' is not assignable to type 'SharedDWallet'.
+      Type 'ZeroTrustDWallet' is not assignable to type 'SharedDWallet'.
+        Type 'ZeroTrustDWallet' is not assignable to type '{ kind: "shared"; }'.
+          Types of property 'kind' are incompatible.
+            Type '"zero-trust"' is not assignable to type '"shared"'.
+src/services/ika/signing.service.ts(124,24): error TS2551: Property 'SHA3_256' does not exist on type '{ readonly KECCAK256: 0; readonly SHA256: 1; }'. Did you mean 'SHA256'?
+src/services/ika/signing.service.ts(239,32): error TS2339: Property 'sign' does not exist on type 'UserShareEncryptionKeys'.
+src/services/ika/user-keys.service.ts(13,7): error TS2740: Type 'Promise<UserShareEncryptionKeys>' is missing the following properties from type 'UserShareEncryptionKeys': #private, encryptionKey, decryptionKey, curve, and 9 more.
+src/services/ika/user-keys.service.ts(15,52): error TS2531: Object is possibly 'null'.
+src/services/ika/user-keys.service.ts(16,7): error TS2322: Type 'UserShareEncryptionKeys | null' is not assignable to type 'UserShareEncryptionKeys'.
+  Type 'null' is not assignable to type 'UserShareEncryptionKeys'.
+src/services/walletconnect.ts(38,19): error TS2749: 'Web3Wallet' refers to a value, but is being used as a type here. Did you mean 'typeof Web3Wallet'?
+src/services/walletconnect.ts(60,9): error TS2322: Type 'Core' is not assignable to type 'ICore'.
+  Types of property 'opts' are incompatible.
+    Type 'import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/@walletconnect+types@2.22.4_2f4c2759d7bd05bc3e8b171f0b83aaec/node_modules/@walletconnect/types/dist/types/core/core").CoreTypes.Options | undefined' is not assignable to type 'import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/@walletconnect+types@2.17.1_286b57e3eaab327fe21fa17ba4014021/node_modules/@walletconnect/types/dist/types/core/core").CoreTypes.Options | undefined'.
+      Type 'import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/@walletconnect+types@2.22.4_2f4c2759d7bd05bc3e8b171f0b83aaec/node_modules/@walletconnect/types/dist/types/core/core").CoreTypes.Options' is not assignable to type 'import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/@walletconnect+types@2.17.1_286b57e3eaab327fe21fa17ba4014021/node_modules/@walletconnect/types/dist/types/core/core").CoreTypes.Options'.
+        Types of property 'logger' are incompatible.
+          Type 'string | import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/pino@10.0.0/node_modules/pino/pino").Logger | undefined' is not assignable to type 'string | import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/pino@7.11.0/node_modules/pino/pino").Logger | undefined'.
+            Type 'Logger' is not assignable to type 'string | Logger | undefined'.
+              Type 'import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/pino@10.0.0/node_modules/pino/pino").Logger' is not assignable to type 'import("E:/Users/ORYA Wallet/orya-wallet-repo/node_modules/.pnpm/pino@7.11.0/node_modules/pino/pino").Logger'.
+                Type 'Logger' is not assignable to type 'LoggerExtras<LoggerOptions>'.
+                  The types returned by 'child(...)' are incompatible between these types.
+                    Type 'Logger<string, boolean>' is not assignable to type 'Logger<LoggerOptions & ChildOptions>'.
+                      Type 'Logger<string, boolean>' is not assignable to type 'LoggerExtras<LoggerOptions & ChildOptions>'.
+                        The types returned by 'flush(...)' are incompatible between these types.
+                          Type 'void' is not assignable to type '() => void'.
+src/sui/rpc-provider.ts(1,33): error TS2307: Cannot find module '@mysten/sui.js' or its corresponding type declarations.
+src/utils/derivation.ts(11,10): error TS2305: Module '"ethers"' has no exported member 'HDNode'.
+src/utils/derivation.ts(232,36): error TS2339: Property 'fromSeed' does not exist on type 'typeof Ed25519Keypair'.

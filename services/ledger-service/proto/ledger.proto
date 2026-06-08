@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package ledger.v1;
+
+service LedgerService {
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
+}
+
+message CreateAccountRequest {
+  string user_id = 1;
+  string account_id = 2;
+  string chain = 3;
+  string currency = 4;
+  string initial_balance = 5;
+}
+
+message CreateAccountResponse {
+  string ledger_account_id = 1;
+  string user_id = 2;
+  string account_id = 3;
+  string chain = 4;
+  string currency = 5;
+  string available_balance = 6;
+  string reserved_balance = 7;
+  string created_at = 8;
+}

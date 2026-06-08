@@ -1,0 +1,92 @@
+supergraph:
+  path: ./supergraph.graphql
+
+server:
+  bind: 0.0.0.0:4000
+  graphql:
+    path: /graphql
+    introspection: true
+  health_check:
+    enabled: true
+    listen: 0.0.0.0:8081
+    path: /health
+
+cors:
+  origins:
+    - http://localhost:3000
+    - http://localhost:19006
+    - http://localhost:3001
+    - http://localhost:5173
+  allow_credentials: true
+  allow_headers:
+    - Authorization
+    - Content-Type
+    - X-Apollo-Tracing
+    - X-Client-Version
+  allow_methods:
+    - GET
+    - POST
+    - OPTIONS
+  expose_headers:
+    - Content-Length
+    - Content-Type
+  max_age: 3600
+
+plugins:
+  apollo:
+    graph_ref: "${APOLLO_GRAPH_REF}"
+    apollo_key: "${APOLLO_KEY}"
+    include_executable_schema_hash: true
+
+  authentication:
+    jwt:
+      jwks:
+        - url: https://firebaseauth.googleapis.com/v1/jwks
+          poll_interval_in_secs: 3600
+      claims:
+        sub: "sub"
+        aud: "aud"
+      scopes:
+        authenticated: ["user"]
+        admin: ["admin"]
+      require_auth: false
+
+  rate_limiting:
+    enabled: true
+    storage: redis
+    max_requests: 100
+    window: 60s
+    key_generator: "ip_address"
+    rate_limit_headers:
+      - x-ratelimit-limit
+      - x-ratelimit-remaining
+      - x-ratelimit-reset
+
+  redis:
+    enabled: true
+    urls:
+      - "redis://${REDIS_HOST}:${REDIS_PORT}"
+    pool_size: 10
+    ttl: 300
+
+logging:
+  level: info
+  format: json
+
+telemetry:
+  metrics:
+    enabled: true
+    buckets:
+      - 0.001
+      - 0.005
+      - 0.01
+      - 0.05
+      - 0.1
+      - 0.5
+      - 1.0
+      - 5.0
+  traces:
+    enabled: true
+    sampler: adaptive
+
+subgraph_error_inclusion: all

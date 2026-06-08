@@ -1,0 +1,59 @@
+{
+  "vmFamily": "TonVM",
+  "chains": [
+    {
+      "id": "ton:mainnet",
+      "name": "TON Mainnet",
+      "symbol": "TON",
+      "type": "ton",
+      "icon": "/icons/chains/ton.svg",
+      "rpcUrl": "https://toncenter.com/api/v2/jsonRPC",
+      "explorerUrl": "https://tonviewer.com",
+      "nativeCurrency": {
+        "name": "Toncoin",
+        "symbol": "TON",
+        "decimals": 9
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 31,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": 1000000000,
+        "storageFeePerYear": 5000000000
+      },
+      "features": {
+        "smartContracts": true,
+        "jetton": true,
+        "nft": true
+      }
+    },
+    {
+      "id": "ton:testnet",
+      "name": "TON Testnet",
+      "symbol": "TON",
+      "type": "ton",
+      "icon": "/icons/chains/ton.svg",
+      "rpcUrl": "https://testnet.toncenter.com/api/v2/jsonRPC",
+      "explorerUrl": "https://testnet.tonviewer.com",
+      "nativeCurrency": {
+        "name": "Toncoin",
+        "symbol": "TON",
+        "decimals": 9
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 32,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": 1000000000,
+        "storageFeePerYear": 5000000000
+      },
+      "features": {
+        "smartContracts": true,
+        "jetton": true,
+        "nft": true
+      }
+    }
+  ]
+}

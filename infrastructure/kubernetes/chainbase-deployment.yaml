@@ -1,0 +1,142 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chainbase-service
+  namespace: orya
+  labels:
+    app: chainbase-service
+    version: v1
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: chainbase-service
+  template:
+    metadata:
+      labels:
+        app: chainbase-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8085"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: chainbase-service
+      containers:
+      - name: chainbase-service
+        image: orya/chainbase-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8085
+          protocol: TCP
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: chainbase-service-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: chainbase-service-secrets
+              key: redis-url
+        - name: CHAINBASE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: chainbase-service-secrets
+              key: chainbase-api-key
+        - name: CHAINBASE_API_URL
+          value: "https://api.chainbase.com/v1"
+        - name: RUST_LOG
+          value: "info,chainbase_service=debug"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - chainbase-service
+              topologyKey: kubernetes.io/hostname
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chainbase-service
+  namespace: orya
+  labels:
+    app: chainbase-service
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8085
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: chainbase-service
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: chainbase-service
+  namespace: orya
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: chainbase-service
+  namespace: orya
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: chainbase-service

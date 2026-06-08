@@ -1,0 +1,28 @@
+{
+  "name": "@orya/database",
+  "version": "0.0.1",
+  "description": "Orya Wallet - Database Layer with Prisma ORM",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:studio": "prisma studio",
+    "db:seed": "node dist/seed.js",
+    "db:reset": "prisma migrate reset --force",
+    "prisma:generate": "prisma generate",
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "prisma": "^5.7.0",
+    "typescript": "^5.3.2"
+  }
+}

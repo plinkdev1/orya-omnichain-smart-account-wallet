@@ -1,0 +1,57 @@
+{
+  "vmFamily": "Bitcoin",
+  "chains": [
+    {
+      "id": "bitcoin:mainnet",
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "type": "bitcoin",
+      "icon": "/icons/chains/bitcoin.svg",
+      "rpcUrl": "https://blockstream.info/api",
+      "explorerUrl": "https://blockstream.info",
+      "nativeCurrency": {
+        "name": "Bitcoin",
+        "symbol": "BTC",
+        "decimals": 8
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 8,
+      "status": "healthy",
+      "gasConfig": {
+        "feePerByte": 50
+      },
+      "features": {
+        "segwit": true,
+        "taproot": true,
+        "ordinals": true
+      }
+    },
+    {
+      "id": "bitcoin:testnet",
+      "name": "Bitcoin Testnet",
+      "symbol": "BTC",
+      "type": "bitcoin",
+      "icon": "/icons/chains/bitcoin.svg",
+      "rpcUrl": "https://testnet.blockstream.info/api",
+      "explorerUrl": "https://testnet.blockstream.info",
+      "nativeCurrency": {
+        "name": "Bitcoin",
+        "symbol": "BTC",
+        "decimals": 8
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 9,
+      "status": "healthy",
+      "gasConfig": {
+        "feePerByte": 50
+      },
+      "features": {
+        "segwit": true,
+        "taproot": true,
+        "ordinals": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "expo": {
+    "name": "ORYA Wallet",
+    "slug": "orya-wallet",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "orya",
+    "intentFilters": [
+      {
+        "action": "VIEW",
+        "autoVerify": true,
+        "data": [
+          {
+            "scheme": "https",
+            "host": "*.orya.app",
+            "pathPrefix": "/wallet"
+          },
+          {
+            "scheme": "orya"
+          }
+        ],
+        "category": ["BROWSABLE", "DEFAULT"]
+      }
+    ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#111111"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTabletMode": false,
+      "bundleIdentifier": "com.orya.wallet",
+      "associatedDomains": ["applinks:orya.app", "applinks:wallet.orya.app"]
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#111111"
+      },
+      "package": "com.orya.wallet",
+      "permissions": ["android.permission.INTERNET", "android.permission.CAMERA", "android.permission.CLIPBOARD_READ", "android.permission.CLIPBOARD_WRITE"],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "orya.app",
+              "pathPrefix": "/wallet"
+            },
+            {
+              "scheme": "https",
+              "host": "wallet.orya.app"
+            },
+            {
+              "scheme": "orya"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
+  }
+}

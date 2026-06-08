@@ -1,0 +1,91 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0")
+
+scalar DateTime
+scalar JSON
+
+enum WalletType {
+  CUSTODIAL
+  SELF_CUSTODY
+  EXTERNAL
+  MPC
+}
+
+type Wallet @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  user: User @external
+  type: WalletType!
+  chainType: String!
+  address: String!
+  publicKey: String
+  balances: [Balance!]!
+  nfts: [NFT!]!
+  transactions: [Transaction!]! @external
+  createdAt: DateTime!
+  lastSyncedAt: DateTime!
+}
+
+type Balance {
+  walletId: ID!
+  tokenAddress: String!
+  symbol: String!
+  decimals: Int!
+  amount: String!
+  amountUSD: Float!
+  lastUpdated: DateTime!
+}
+
+type NFT {
+  id: ID!
+  walletId: ID!
+  chainId: String!
+  contractAddress: String!
+  tokenId: String!
+  name: String
+  description: String
+  imageUrl: String
+  metadata: JSON
+}
+
+type GasEstimate {
+  chainId: String!
+  gasPrice: String!
+  gasLimit: String!
+  estimatedFee: String!
+  estimatedFeeUSD: Float!
+}
+
+extend type Query {
+  wallet(id: ID!): Wallet
+  wallets(userId: ID!): [Wallet!]!
+  walletByAddress(address: String!, chainId: String!): Wallet
+  balances(walletId: ID!): [Balance!]!
+  balance(walletId: ID!, tokenAddress: String!): Balance
+  totalPortfolioValue(userId: ID!): Float!
+  nfts(walletId: ID!, chainId: String): [NFT!]!
+  estimateGas(
+    chainId: String!
+    from: String!
+    to: String!
+    amount: String!
+    tokenAddress: String!
+  ): GasEstimate!
+}
+
+extend type Mutation {
+  createWallet(chainId: String!, type: WalletType!): Wallet!
+  importWallet(chainId: String!, privateKey: String!): Wallet!
+  connectExternalWallet(
+    provider: String!
+    address: String!
+    signature: String!
+  ): Wallet!
+  syncWalletBalances(walletId: ID!): [Balance!]!
+  deleteWallet(walletId: ID!): Boolean!
+}
+
+extend type Subscription {
+  balanceUpdated(walletId: ID!): Balance!
+  walletSynced(walletId: ID!): Wallet!
+}

@@ -1,0 +1,59 @@
+{
+  "vmFamily": "NEAR",
+  "chains": [
+    {
+      "id": "near:mainnet",
+      "name": "NEAR Mainnet",
+      "symbol": "NEAR",
+      "type": "near",
+      "icon": "/icons/chains/near.svg",
+      "rpcUrl": "https://rpc.mainnet.near.org",
+      "explorerUrl": "https://nearblocks.io",
+      "nativeCurrency": {
+        "name": "NEAR",
+        "symbol": "NEAR",
+        "decimals": 24
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 33,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": 100000000,
+        "attachedDeposit": 0
+      },
+      "features": {
+        "sharding": true,
+        "crossContract": true,
+        "fungibleToken": true
+      }
+    },
+    {
+      "id": "near:testnet",
+      "name": "NEAR Testnet",
+      "symbol": "NEAR",
+      "type": "near",
+      "icon": "/icons/chains/near.svg",
+      "rpcUrl": "https://rpc.testnet.near.org",
+      "explorerUrl": "https://testnet.nearblocks.io",
+      "nativeCurrency": {
+        "name": "NEAR",
+        "symbol": "NEAR",
+        "decimals": 24
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 34,
+      "status": "healthy",
+      "gasConfig": {
+        "gasPrice": 100000000,
+        "attachedDeposit": 0
+      },
+      "features": {
+        "sharding": true,
+        "crossContract": true,
+        "fungibleToken": true
+      }
+    }
+  ]
+}

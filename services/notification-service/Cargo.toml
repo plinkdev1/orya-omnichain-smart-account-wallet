@@ -1,0 +1,21 @@
+[package]
+name = "notification-service"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+tokio.workspace = true
+axum.workspace = true
+sqlx.workspace = true
+redis.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+dotenv.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+
+[[bin]]
+name = "notification-service"
+path = "src/main.rs"

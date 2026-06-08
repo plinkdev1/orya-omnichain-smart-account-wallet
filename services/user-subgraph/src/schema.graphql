@@ -1,0 +1,179 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0")
+
+scalar DateTime
+scalar JSON
+
+enum KYCStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum KYCProvider {
+  SUMSUB
+  PERSONA
+}
+
+enum FeatureType {
+  SWAP
+  STAKE
+  LEND
+  BRIDGE
+  AGGREGATOR
+}
+
+type User @key(fields: "id") {
+  id: ID!
+  email: String!
+  privyId: String!
+  firebaseUid: String!
+  kycStatus: KYCStatus!
+  kycProvider: KYCProvider
+  advancedMode: Boolean!
+  preferences: UserPreferences!
+  wallets: [Wallet!]! @external
+  transactions: [Transaction!]! @external
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserPreferences {
+  protocols: [ProtocolPreference!]!
+  autoSigning: AutoSigningConfig!
+  defaultChain: String!
+  hiddenTokens: [String!]!
+  favoriteProtocols: [String!]!
+}
+
+type ProtocolPreference {
+  chainId: String!
+  feature: FeatureType!
+  preferredProtocol: String!
+  fallbackProtocols: [String!]!
+  lastUpdated: DateTime!
+}
+
+type AutoSigningConfig {
+  enabled: Boolean!
+  thresholdUSD: Float!
+  whitelistedContracts: [String!]!
+  expiryHours: Int!
+  maxDailyAmountUSD: Float!
+  requireBiometric: Boolean!
+}
+
+type KYCSession {
+  id: ID!
+  userId: ID!
+  provider: KYCProvider!
+  sessionId: String!
+  status: String!
+  externalUrl: String
+  createdAt: DateTime!
+  expiresAt: DateTime!
+}
+
+type KYCSubmission {
+  id: ID!
+  sessionId: ID!
+  status: String!
+  documents: [String!]!
+  submittedAt: DateTime!
+}
+
+type AuthPayload {
+  user: User!
+  accessToken: String!
+  refreshToken: String!
+  expiresIn: Int!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+input UserFilter {
+  email: String
+  kycStatus: KYCStatus
+  advancedMode: Boolean
+  search: String
+}
+
+input Pagination {
+  first: Int
+  after: String
+  last: Int
+  before: String
+}
+
+input UpdateProfileInput {
+  email: String
+  advancedMode: Boolean
+}
+
+input UserPreferencesInput {
+  defaultChain: String
+  hiddenTokens: [String!]
+  favoriteProtocols: [String!]
+}
+
+input AutoSigningConfigInput {
+  enabled: Boolean!
+  thresholdUSD: Float!
+  whitelistedContracts: [String!]
+  expiryHours: Int!
+  maxDailyAmountUSD: Float!
+  requireBiometric: Boolean!
+}
+
+extend type Query {
+  me: User!
+  user(id: ID!): User
+  users(filter: UserFilter, pagination: Pagination): UserConnection!
+}
+
+extend type Mutation {
+  signup(email: String!, password: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  refreshToken(refreshToken: String!): AuthPayload!
+  
+  updateProfile(input: UpdateProfileInput!): User!
+  updatePreferences(input: UserPreferencesInput!): User!
+  
+  setAdvancedMode(enabled: Boolean!): User!
+  
+  setProtocolPreference(
+    chainId: String!
+    feature: FeatureType!
+    protocolId: String!
+    fallbacks: [String!]
+  ): ProtocolPreference!
+  
+  updateAutoSigningConfig(config: AutoSigningConfigInput!): User!
+  
+  initiateKYC(provider: KYCProvider!): KYCSession!
+  submitKYCDocuments(sessionId: ID!, documents: [Upload!]!): KYCSubmission!
+}
+
+extend type Subscription {
+  userUpdated(userId: ID!): User!
+  kycStatusChanged(userId: ID!): KYCStatus!
+}
+
+scalar Upload

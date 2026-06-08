@@ -1,0 +1,41 @@
+{
+  "name": "@orya/protocol-core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./interfaces": {
+      "types": "./dist/interfaces/index.d.ts",
+      "default": "./dist/interfaces/index.js"
+    },
+    "./registry": {
+      "types": "./dist/registry/index.d.ts",
+      "default": "./dist/registry/index.js"
+    },
+    "./preferences": {
+      "types": "./dist/preferences/index.d.ts",
+      "default": "./dist/preferences/index.js"
+    },
+    "./routing": {
+      "types": "./dist/routing/index.d.ts",
+      "default": "./dist/routing/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "lint": "eslint src --ext .ts"
+  },
+  "dependencies": {
+    "ethers": "^6.10.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

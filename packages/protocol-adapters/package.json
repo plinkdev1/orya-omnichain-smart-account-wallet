@@ -1,0 +1,51 @@
+{
+  "name": "@orya/protocol-adapters",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./zerox": {
+      "types": "./dist/zerox/index.d.ts",
+      "default": "./dist/zerox/index.js"
+    },
+    "./lifi": {
+      "types": "./dist/lifi/index.d.ts",
+      "default": "./dist/lifi/index.js"
+    },
+    "./oneinch": {
+      "types": "./dist/oneinch/index.d.ts",
+      "default": "./dist/oneinch/index.js"
+    },
+    "./symbiosis": {
+      "types": "./dist/symbiosis/index.d.ts",
+      "default": "./dist/symbiosis/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@orya/protocol-core": "workspace:*",
+    "@orya/shared-types": "workspace:*",
+    "@orya/shared-utils": "workspace:*",
+    "axios": "^1.6.0",
+    "ethers": "^6.9.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.10.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
+  }
+}

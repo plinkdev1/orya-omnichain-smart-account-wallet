@@ -1,0 +1,117 @@
+chains:
+  sui:
+    name: SUI
+    dirName: sui-adapter
+    language: rust
+    tier: 1
+    mainDEX: DeepBook
+    mainBridge: Wormhole
+    rpcProvider: SUI RPC
+
+  ethereum:
+    name: Ethereum
+    dirName: ethereum-adapter
+    language: typescript
+    tier: 1
+    mainDEX: 0x Protocol
+    mainBridge: Stargate
+    rpcProvider: Alchemy
+
+  solana:
+    name: Solana
+    dirName: solana-adapter
+    language: typescript
+    tier: 1
+    mainDEX: Jupiter
+    mainBridge: Wormhole
+    rpcProvider: Helius
+
+  aptos:
+    name: Aptos
+    dirName: aptos-adapter
+    language: rust
+    tier: 2
+    mainDEX: Econia
+    mainBridge: Wormhole
+    rpcProvider: Aptos RPC
+
+  movement:
+    name: Movement
+    dirName: movement-adapter
+    language: rust
+    tier: 2
+    mainDEX: Movement DEX
+    mainBridge: Wormhole
+    rpcProvider: Movement RPC
+
+  starknet:
+    name: Starknet
+    dirName: starknet-adapter
+    language: typescript
+    tier: 2
+    mainDEX: Ekubo
+    mainBridge: Portal
+    rpcProvider: Infura
+
+  near:
+    name: Near
+    dirName: near-adapter
+    language: typescript
+    tier: 2
+    mainDEX: Ref Finance
+    mainBridge: Rainbow Bridge
+    rpcProvider: Near RPC
+
+  cosmos:
+    name: Cosmos
+    dirName: cosmos-adapter
+    language: typescript
+    tier: 2
+    mainDEX: Osmosis
+    mainBridge: IBC
+    rpcProvider: Cosmos LCD
+
+  ton:
+    name: TON
+    dirName: ton-adapter
+    language: typescript
+    tier: 3
+    mainDEX: DeDust
+    mainBridge: Portal
+    rpcProvider: TON Center
+
+  flow:
+    name: Flow
+    dirName: flow-adapter
+    language: typescript
+    tier: 3
+    mainDEX: FlowSwap
+    mainBridge: Portal
+    rpcProvider: Flow Access
+
+  ronin:
+    name: Ronin
+    dirName: ronin-adapter
+    language: typescript
+    tier: 3
+    mainDEX: Katana
+    mainBridge: Ronin Bridge
+    rpcProvider: Ronin RPC
+
+  tron:
+    name: Tron
+    dirName: tron-adapter
+    language: typescript
+    tier: 4
+    mainDEX: SunSwap
+    mainBridge: Various
+    rpcProvider: Tron API
+
+  xrpl:
+    name: XRP Ledger
+    dirName: xrpl-adapter
+    language: typescript
+    tier: 4
+    mainDEX: XRPL DEX
+    mainBridge: Bridges
+    rpcProvider: XRPL RPC

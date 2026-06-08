@@ -1,0 +1,141 @@
+{
+  "vmFamily": "Substrate",
+  "chains": [
+    {
+      "id": "polkadot:mainnet",
+      "name": "Polkadot",
+      "symbol": "DOT",
+      "type": "substrate",
+      "icon": "/icons/chains/polkadot.svg",
+      "rpcUrl": "wss://rpc.polkadot.io",
+      "explorerUrl": "https://polkadot.subscan.io",
+      "nativeCurrency": {
+        "name": "Polkadot",
+        "symbol": "DOT",
+        "decimals": 10
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 40,
+      "status": "healthy",
+      "gasConfig": {
+        "weightPerGas": 1,
+        "existentialDeposit": 1000000000
+      },
+      "features": {
+        "parachains": true,
+        "xcmp": true,
+        "governance": true
+      }
+    },
+    {
+      "id": "kusama:mainnet",
+      "name": "Kusama",
+      "symbol": "KSM",
+      "type": "substrate",
+      "icon": "/icons/chains/kusama.svg",
+      "rpcUrl": "wss://kusama-rpc.polkadot.io",
+      "explorerUrl": "https://kusama.subscan.io",
+      "nativeCurrency": {
+        "name": "Kusama",
+        "symbol": "KSM",
+        "decimals": 12
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 41,
+      "status": "healthy",
+      "gasConfig": {
+        "weightPerGas": 1,
+        "existentialDeposit": 333333
+      },
+      "features": {
+        "parachains": true,
+        "xcmp": true,
+        "governance": true
+      }
+    },
+    {
+      "id": "astar:mainnet",
+      "name": "Astar",
+      "symbol": "ASTR",
+      "type": "substrate",
+      "icon": "/icons/chains/astar.svg",
+      "rpcUrl": "https://rpc.astar.network",
+      "explorerUrl": "https://astar.subscan.io",
+      "nativeCurrency": {
+        "name": "Astar",
+        "symbol": "ASTR",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 42,
+      "status": "healthy",
+      "gasConfig": {
+        "weightPerGas": 1,
+        "existentialDeposit": 0
+      },
+      "features": {
+        "parachains": true,
+        "xcmp": true,
+        "wasmSmartContracts": true
+      }
+    },
+    {
+      "id": "moonbeam:mainnet",
+      "name": "Moonbeam",
+      "symbol": "GLMR",
+      "type": "substrate",
+      "icon": "/icons/chains/moonbeam.svg",
+      "rpcUrl": "https://rpc.api.moonbeam.network",
+      "explorerUrl": "https://moonscan.io",
+      "nativeCurrency": {
+        "name": "Moonbeam",
+        "symbol": "GLMR",
+        "decimals": 18
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 43,
+      "status": "healthy",
+      "gasConfig": {
+        "type": "eip1559",
+        "maxFeePerGas": 100,
+        "maxPriorityFeePerGas": 1
+      },
+      "features": {
+        "parachains": true,
+        "xcmp": true,
+        "evmCompatible": true
+      }
+    },
+    {
+      "id": "equilibrium:mainnet",
+      "name": "Equilibrium",
+      "symbol": "EQ",
+      "type": "substrate",
+      "icon": "/icons/chains/equilibrium.svg",
+      "rpcUrl": "https://mainnet.equilibrium.io",
+      "explorerUrl": "https://equilibrium.subscan.io",
+      "nativeCurrency": {
+        "name": "Equilibrium",
+        "symbol": "EQ",
+        "decimals": 9
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 44,
+      "status": "healthy",
+      "gasConfig": {
+        "weightPerGas": 1,
+        "existentialDeposit": 0
+      },
+      "features": {
+        "parachains": true,
+        "xcmp": true,
+        "lending": true
+      }
+    }
+  ]
+}

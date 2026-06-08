@@ -1,0 +1,24 @@
+{
+  "name": "@orya/zkSync-aa-sdk",
+  "version": "0.0.1",
+  "description": "zkSync AA SDK - client library for interacting with Account Abstraction wallets",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "jest",
+    "typecheck": "npx tsc --noEmit",
+    "dev": "npx tsc --watch"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.0",
+    "ethers": "^6.8.0",
+    "zksync-web3": "^0.15.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.10.0",
+    "jest": "^29.7.0",
+    "typescript": "^5.3.2"
+  }
+}

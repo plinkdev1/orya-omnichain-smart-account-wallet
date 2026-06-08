@@ -1,0 +1,89 @@
+{
+  "vmFamily": "Cardano",
+  "chains": [
+    {
+      "id": "cardano:mainnet",
+      "name": "Cardano Mainnet",
+      "symbol": "ADA",
+      "type": "cardano",
+      "icon": "/icons/chains/cardano.svg",
+      "rpcUrl": "https://cardano-mainnet.blockfrost.io/api/v0",
+      "explorerUrl": "https://cexplorer.io",
+      "nativeCurrency": {
+        "name": "Lovelace",
+        "symbol": "ADA",
+        "decimals": 6
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 37,
+      "status": "healthy",
+      "gasConfig": {
+        "minFeeA": 44,
+        "minFeeB": 155381,
+        "maxTxSize": 16384
+      },
+      "features": {
+        "utxo": true,
+        "smartContracts": true,
+        "plutus": true
+      }
+    },
+    {
+      "id": "cardano:preprod",
+      "name": "Cardano Pre-Production",
+      "symbol": "tADA",
+      "type": "cardano",
+      "icon": "/icons/chains/cardano.svg",
+      "rpcUrl": "https://cardano-preprod.blockfrost.io/api/v0",
+      "explorerUrl": "https://preprod.cexplorer.io",
+      "nativeCurrency": {
+        "name": "Test Lovelace",
+        "symbol": "tADA",
+        "decimals": 6
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 38,
+      "status": "healthy",
+      "gasConfig": {
+        "minFeeA": 44,
+        "minFeeB": 155381,
+        "maxTxSize": 16384
+      },
+      "features": {
+        "utxo": true,
+        "smartContracts": true,
+        "plutus": true
+      }
+    },
+    {
+      "id": "cardano:preview",
+      "name": "Cardano Preview",
+      "symbol": "tADA",
+      "type": "cardano",
+      "icon": "/icons/chains/cardano.svg",
+      "rpcUrl": "https://cardano-preview.blockfrost.io/api/v0",
+      "explorerUrl": "https://preview.cexplorer.io",
+      "nativeCurrency": {
+        "name": "Test Lovelace",
+        "symbol": "tADA",
+        "decimals": 6
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 39,
+      "status": "healthy",
+      "gasConfig": {
+        "minFeeA": 44,
+        "minFeeB": 155381,
+        "maxTxSize": 16384
+      },
+      "features": {
+        "utxo": true,
+        "smartContracts": true,
+        "plutus": true
+      }
+    }
+  ]
+}

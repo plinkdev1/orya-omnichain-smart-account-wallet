@@ -1,0 +1,22 @@
+ORYA Blockchain Icon Fetcher Report
+============================================================
+
+Summary: Processed 29 chains: 0 fetched, 29 fallback
+
+Statistics:
+  • Total Chains: 29
+  • Fetched from Sources: 0
+  • Fallback Generated: 29
+  • Success Rate: 0.0%
+
+Locations:
+  • Icons: E:\Users\ORYA Wallet\orya-wallet-repo\apps\web\public\icons
+  • Manifest: E:\Users\ORYA Wallet\orya-wallet-repo\apps\web\public\icons\manifest.json
+  • Reports: E:\Users\ORYA Wallet\orya-wallet-repo\apps\web\public\icons\report
+
+Next Steps:
+  1. Review manifest.json
+  2. Convert SVGs to PNG: npm run fetch-icons:png
+  3. Integrate with React component
+
+Generated: 2025-11-03T01:54:47.657Z

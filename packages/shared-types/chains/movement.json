@@ -1,0 +1,59 @@
+{
+  "vmFamily": "MoveVM",
+  "chains": [
+    {
+      "id": "movement:mainnet",
+      "name": "Movement Mainnet",
+      "symbol": "MOVE",
+      "type": "movement",
+      "icon": "/icons/chains/movement.svg",
+      "rpcUrl": "https://mainnet.movement.xyz/api/v1/rpc",
+      "explorerUrl": "https://explorer.movement.xyz",
+      "nativeCurrency": {
+        "name": "Movement",
+        "symbol": "MOVE",
+        "decimals": 8
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 47,
+      "status": "healthy",
+      "gasConfig": {
+        "gasUnitPrice": 100,
+        "maxGasAmount": 100000
+      },
+      "features": {
+        "programmableObjects": true,
+        "moveCompatibility": true,
+        "cosmosInterop": true
+      }
+    },
+    {
+      "id": "movement:testnet",
+      "name": "Movement Testnet",
+      "symbol": "MOVE",
+      "type": "movement",
+      "icon": "/icons/chains/movement.svg",
+      "rpcUrl": "https://testnet.movement.xyz/api/v1/rpc",
+      "explorerUrl": "https://testnet.explorer.movement.xyz",
+      "nativeCurrency": {
+        "name": "Movement",
+        "symbol": "MOVE",
+        "decimals": 8
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 48,
+      "status": "healthy",
+      "gasConfig": {
+        "gasUnitPrice": 100,
+        "maxGasAmount": 100000
+      },
+      "features": {
+        "programmableObjects": true,
+        "moveCompatibility": true,
+        "cosmosInterop": true
+      }
+    }
+  ]
+}

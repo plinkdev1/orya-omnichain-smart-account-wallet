@@ -1,0 +1,142 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eigenlayer-service
+  namespace: orya
+  labels:
+    app: eigenlayer-service
+    version: v1
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: eigenlayer-service
+  template:
+    metadata:
+      labels:
+        app: eigenlayer-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8086"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: eigenlayer-service
+      containers:
+      - name: eigenlayer-service
+        image: orya/eigenlayer-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8086
+          protocol: TCP
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: eigenlayer-service-secrets
+              key: database-url
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: eigenlayer-service-secrets
+              key: redis-url
+        - name: ETHEREUM_RPC_URL
+          valueFrom:
+            secretKeyRef:
+              name: eigenlayer-service-secrets
+              key: ethereum-rpc-url
+        - name: EIGENLAYER_STRATEGY_MANAGER
+          value: "0x858646372CC42E1A627fcE94aa7A7033e7CF075A"
+        - name: RUST_LOG
+          value: "info,eigenlayer_service=debug"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+              - ALL
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - eigenlayer-service
+              topologyKey: kubernetes.io/hostname
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eigenlayer-service
+  namespace: orya
+  labels:
+    app: eigenlayer-service
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8086
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: eigenlayer-service
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: eigenlayer-service
+  namespace: orya
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: eigenlayer-service
+  namespace: orya
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: eigenlayer-service

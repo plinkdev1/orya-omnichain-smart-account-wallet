@@ -1,0 +1,51 @@
+[package]
+name = "wallet-service"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "wallet-service"
+path = "src/main.rs"
+
+[dependencies]
+tokio.workspace = true
+axum.workspace = true
+tower.workspace = true
+tower-http.workspace = true
+async-graphql.workspace = true
+async-graphql-axum.workspace = true
+sqlx.workspace = true
+redis.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+prometheus.workspace = true
+reqwest = { version = "0.11", features = ["json"] }
+dotenv.workspace = true
+rand.workspace = true
+nats.workspace = true
+tonic.workspace = true
+prost.workspace = true
+
+# Cryptography
+aes-gcm = "0.10"
+base64 = "0.21"
+hex = "0.4"
+ed25519-dalek = { version = "2.1", features = ["serde"] }
+blake2 = "0.10"
+sha2 = "0.10"
+getrandom = "0.2"
+
+
+
+[dev-dependencies]
+tempfile.workspace = true
+mockall.workspace = true

@@ -1,0 +1,58 @@
+    Checking api-gateway v0.1.0 (E:\Users\ORYA Wallet\orya-wallet-repo\services\api-gateway)
+warning: unused imports: `RateLimitConfig` and `RateLimitLayer`
+ --> api-gateway\src\middleware\mod.rs:4:22
+  |
+4 | pub use rate_limit::{RateLimitConfig, RateLimitLayer};
+  |                      ^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `RequestSigningConfig`, `generate_signature`, and `verify_signature`
+ --> api-gateway\src\middleware\mod.rs:5:27
+  |
+5 | pub use request_signing::{RequestSigningConfig, generate_signature, verify_signature};
+  |                           ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^
+
+error[E0277]: the trait bound `fn(State<...>, ...) -> ... {graphql_handler}: Handler<_, _>` is not satisfied
+   --> api-gateway\src\main.rs:59:33
+    |
+ 59 |         .route("/graphql", post(graphql_handler).get(graphiql))
+    |                            ---- ^^^^^^^^^^^^^^^ the trait `Handler<_, _>` is not implemented for fn item `fn(State<Schema<QueryRoot, ..., ...>>, ...) -> ... {graphql_handler}`
+    |                            |
+    |                            required by a bound introduced by this call
+    |
+    = note: Consider using `#[axum::debug_handler]` to improve the error message
+note: there are multiple different versions of crate `axum` in the dependency graph
+   --> C:\Users\MAXI KROOKED\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\axum-0.7.9\src\handler\mod.rs:134:1
+    |
+134 | pub trait Handler<T, S>: Clone + Send + Sized + 'static {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ this is the required trait
+    |
+   ::: api-gateway\src\main.rs:1:5
+    |
+  1 | use axum::{
+    |     ---- one version of crate `axum` used here, as a direct dependency of the current crate
+...
+ 10 | use async_graphql_axum::{GraphQLRequest, GraphQLResponse};
+    |     ------------------ one version of crate `axum` used here, as a dependency of crate `async_graphql_axum`
+    |
+   ::: C:\Users\MAXI KROOKED\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\axum-0.6.20\src\boxed.rs:66:1
+    |
+ 66 | pub(crate) trait ErasedIntoRoute<S, B, E>: Send {
+    | ----------------------------------------------- this is the found trait
+    = help: you can use `cargo tree` to explore your dependency tree
+note: required by a bound in `post`
+   --> C:\Users\MAXI KROOKED\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\axum-0.7.9\src\routing\method_routing.rs:443:1
+    |
+443 | top_level_handler_fn!(post, POST);
+    | ^^^^^^^^^^^^^^^^^^^^^^----^^^^^^^
+    | |                     |
+    | |                     required by a bound in this function
+    | required by this bound in `post`
+    = note: the full name for the type has been written to 'e:\Users\ORYA Wallet\orya-wallet-repo\services\target\debug\deps\api_gateway-62d38db923cc66d7.long-type-13357809293250275874.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+    = note: this error originates in the macro `top_level_handler_fn` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0277`.
+warning: `api-gateway` (bin "api-gateway") generated 2 warnings
+error: could not compile `api-gateway` (bin "api-gateway") due to 1 previous error; 2 warnings emitted

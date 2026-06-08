@@ -1,0 +1,35 @@
+{
+  "configurations": {
+    "ios.sim.debug": {
+      "device": {
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone 15"
+        }
+      },
+      "app": "ios.debug"
+    },
+    "ios.sim.release": {
+      "device": {
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone 15"
+        }
+      },
+      "app": "ios.release"
+    }
+  },
+  "apps": {
+    "ios.debug": {
+      "type": "ios.app",
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ORYA.app",
+      "build": "xcodebuild -workspace ios/ORYA.xcworkspace -scheme ORYA -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
+    },
+    "ios.release": {
+      "type": "ios.app",
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/ORYA.app",
+      "build": "xcodebuild -workspace ios/ORYA.xcworkspace -scheme ORYA -configuration Release -sdk iphonesimulator -derivedDataPath ios/build"
+    }
+  },
+  "testRunner": "jest"
+}

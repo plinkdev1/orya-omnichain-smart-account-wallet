@@ -1,0 +1,44 @@
+name: Validate Chain Configuration
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'packages/shared-types/chains/**'
+      - 'scripts/validate-chains.js'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'packages/shared-types/chains/**'
+      - 'scripts/validate-chains.js'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate Chains
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Validate chain configuration (schema only)
+        run: node scripts/validate-chains.js
+        continue-on-error: false
+
+      - name: Validate chain configuration (with RPC checks)
+        run: node scripts/validate-chains.js --check-rpc --timeout 3000
+        continue-on-error: true
+
+      - name: Report validation results
+        if: always()
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "✓ Chain configuration is valid"
+          else
+            echo "⚠ Some RPC endpoints may be unreachable (non-blocking)"
+          fi

@@ -1,0 +1,1804 @@
+I understand now - thank you for providing the context. The previous session was creating comprehensive planning and architecture documentation for the entire ORŸA project, and I stopped partway through (around Epic 4.6: Push Notifications in the remediation roadmap).
+
+I can see from the chat that you were working through:
+
+Complete audit documentation (17 MD files)
+Architecture design and strategy
+Services foundation planning
+Multi-phase remediation roadmap with detailed epics and tasks
+To continue properly, I need to clarify:
+
+What exactly should I resume with?
+
+Continue writing the remaining epics after 4.6 (was it going through Phase 4-5)?
+Complete the remediation roadmap documentation?
+Finish the other audit MD files that were being created?
+Same file structure?
+
+Output to E:\Users\ORYA-Wallet\orya-wallet-repo\md-js-json-py-files\ for .md files
+Use E:\Users\ORYA-Wallet\orya-wallet-repo\.zencoder\templates\ for template organization
+Same comprehensive planning style?
+Scope confirmation:
+
+Should I aim to complete the entire 8-12 week remediation roadmap with all phases?
+Include all epics, tasks, timelines, acceptance criteria, and deliverables?
+Please confirm and I'll pick up exactly where the previous session left off and complete the planning document.
+
+Plink Dev, 3m ago
+What exactly should I resume with? yes
+
+Continue writing the remaining epics after 4.6 (was it going through Phase 4-5)? yes
+
+Complete the remediation roadmap documentation? yes
+
+Finish the other audit MD files that were being created? yes
+
+Same file structure? yes
+
+Output to E:\Users\ORYA-Wallet\orya-wallet-repo\md-js-json-py-files\ for .md files yes
+
+Use E:\Users\ORYA-Wallet\orya-wallet-repo\.zencoder\templates\ for template organization yes
+
+Same comprehensive planning style? yes
+
+Scope confirmation:
+
+Should I aim to complete the entire 8-12 week remediation roadmap with all phases? yes
+
+Include all epics, tasks, timelines, acceptance criteria, and deliverables? yes
+
+Ask agent
+
+The user wants me to continue from where the previous session stopped. They've confirmed:
+
+
+
+
+
+
+
+Perfect. I'll resume the comprehensive planning and create all remaining documentation. Let me start by completing the remediation roadmap from Epic 4.6 onwards, plus finish all audit MD files.
+
+
+Good, so there are already some templates there. Now let me create the comprehensive remediation roadmap and all the audit files. I should create these in the md-js-json-py-files directory as the user specified, but organized/referenced in the .zencoder/templates directory.
+
+
+
+
+There are 350+ MD files already. The user wants me to complete the REMEDIATION-ROADMAP and finish the audit files. Let me create a comprehensive completion of the remediation roadmap document with all phases, epics, tasks, and deliverables. I'll create the key files that complete the planning.
+
+I'll now create the complete remediation roadmap with all phases, plus finish the core audit documentation. Creating comprehensive files:
+
+
+Good, the remediation roadmap file hasn't been created yet. Let me create a comprehensive document covering all phases 0-5 with complete epics, tasks, timelines, acceptance criteria, and deliverables. This will be a large comprehensive file.
+
+
+
+Creating comprehensive remediation roadmap and supporting documentation files:
+
+
+Good, now I need to create the comprehensive remediation roadmap and other key files. Let me create the main documents that continue from where the previous session left off.
+
+
+
+Creating the comprehensive remediation roadmap document with all phases and epics:
+
+cat > "e:\Users\ORYA-Wallet\orya-wallet-repo\md-js-json-py-files\COMPLETE-REMEDIATION-ROADMAP.md" << 'EOF'
+# ORŸA Wallet: Complete Multi-Phase Remediation Roadmap
+**8-12 Week Comprehensive Development Plan**
+
+---
+
+## Executive Summary
+
+This document defines the complete remediation and development roadmap for ORŸA Wallet, covering 8-12 weeks of structured development across 5 phases. The project is currently blocked by build failures and dependency conflicts, but has significant implemented functionality that needs to be enabled and integrated.
+
+### Current Status: 🔴 BROKEN (6-7 day regression)
+- **Build State**: 200+ TypeScript compilation errors
+- **Scope**: 40+ technology integrations across 20 categories
+- **Implemented but Disabled**: IKA, SwapService, Tatum, Moralis, BitqueryService, WalletConnect Pay
+- **Configured but Not Installed**: @dynamic-labs/sdk-react-core
+- **Scoped but Not Started**: Gelato, Hyperlane, Railgun, System9
+- **Admin Dashboard**: Shell with placeholder metrics
+
+### Estimated Timeline
+- **Phase 0 (Build Blockers)**: 1-2 days
+- **Phase 1 (Core Services)**: 1 week
+- **Phase 2 (Multi-Chain & DeFi)**: 1.5 weeks
+- **Phase 3 (Payments & Cards)**: 1.5 weeks
+- **Phase 4 (Advanced & Compliance)**: 1.5 weeks
+- **Phase 5 (Polish & Launch)**: 1-2 weeks
+- **Total**: 8-12 weeks
+
+---
+
+## PHASE 0: BUILD BLOCKERS (1-2 Days)
+
+**Objective**: Fix compilation errors and unblock the build pipeline
+
+### Epic 0.1: Fix AppKit/Reown Integration
+**Duration**: 3 hours
+**Priority**: 🔴 CRITICAL
+
+**Tasks**:
+1. **Fix @reown/appkit AppKitNetwork Export** (1.5 hours)
+   - Issue: `AppKitNetwork` export missing from @reown/appkit
+   - Files: `apps/web/lib/wallet/appkit-config.ts`
+   - Solution: Check @reown/appkit v4+ export structure
+   - Action: Update import to use correct export path or patch export
+   - Test: `pnpm --filter web typecheck`
+
+2. **Update AppKit Network Configuration** (1.5 hours)
+   - File: `apps/web/lib/wallet/appkit-config.ts:1-50`
+   - Update: NetworkConfig to use AppKit v4+ syntax
+   - Verify: All supported chains are defined
+   - Test: AppKit initializes without errors
+
+**Acceptance Criteria**:
+- ✅ @reown/appkit imports resolve correctly
+- ✅ AppKitNetwork export is accessible
+- ✅ Web app TypeScript compilation succeeds
+
+**Deliverables**:
+- Fixed `appkit-config.ts`
+- Updated chain configuration
+
+---
+
+### Epic 0.2: Fix ethers.js v6 Migration Issues
+**Duration**: 2 hours
+**Priority**: 🔴 CRITICAL
+
+**Tasks**:
+1. **Fix HDNode Removal** (1 hour)
+   - Issue: `HDNode` removed from ethers v6
+   - Files: `packages/wallet-core/src/services/mnemonic.ts`
+   - Solution: Use `Mnemonic` and `HDNodeWallet` from ethers v6
+   - Code Pattern:
+   ```typescript
+   // OLD (ethers v5)
+   const hdNode = ethers.utils.HDNode.fromMnemonic(mnemonic);
+   
+   // NEW (ethers v6)
+   const mnemonic = ethers.Mnemonic.fromPhrase(phrase);
+   const hdNode = ethers.HDNodeWallet.fromMnemonic(mnemonic, path);
+Test: Mnemonic derivation works
+Update All HD Wallet Operations (1 hour)
+Files: Grep for HDNode usage across packages
+Update: All occurrences to use v6 API
+Verify: Type checking passes
+Test: Wallet generation from seed
+Acceptance Criteria:
+
+✅ No HDNode references in codebase
+✅ All ethers v6 wallet operations work
+✅ Mnemonic and key derivation functional
+Deliverables:
+
+Updated mnemonic service
+Migration guide for ethers v6
+Epic 0.3: Fix shared-types Missing Exports
+Duration: 2 hours Priority: 🔴 CRITICAL
+
+Tasks:
+
+Export ChainId Enum (45 minutes)
+
+File: packages/shared-types/src/index.ts
+Add Export:
+export enum ChainId {
+  ETHEREUM = 1,
+  POLYGON = 137,
+  ARBITRUM = 42161,
+  OPTIMISM = 10,
+  SUI = 'sui',
+  SOLANA = 'solana',
+  COSMOS = 'cosmos',
+  // ... all chains
+}
+Verify: All services can import ChainId
+Test: Type checking on imports
+Export getChain Function (45 minutes)
+
+File: packages/shared-types/src/index.ts
+Add Export:
+export function getChain(chainId: ChainId | number | string): ChainInfo {
+  // implementation
+}
+Ensure: Consistent chain information across services
+Test: getChain resolves all supported chains
+Acceptance Criteria:
+
+✅ ChainId enum exported and usable
+✅ getChain function available globally
+✅ No "cannot find name ChainId" errors
+Deliverables:
+
+Updated shared-types exports
+Type definitions for all chains
+Epic 0.4: Fix wallet-core Index Exports
+Duration: 1.5 hours Priority: 🔴 CRITICAL
+
+Tasks:
+
+Resolve Export Ambiguities (45 minutes)
+
+File: packages/wallet-core/src/index.ts
+Issue: Multiple files exporting same types
+Solution: Create unified export file
+Pattern:
+// Re-export in priority order
+export * from './types/index.js';
+export * from './services/index.js';
+export * from './adapters/index.js';
+export * from './utils/index.js';
+Verify: No circular dependencies
+Remove Duplicate Exports (45 minutes)
+
+Search: Find all duplicate exports
+Action: Consolidate in index.ts
+Test: pnpm --filter wallet-core typecheck
+Acceptance Criteria:
+
+✅ Single export source for each type
+✅ No circular dependency warnings
+✅ All consumers can import correctly
+Deliverables:
+
+Consolidated index.ts
+Export resolution documentation
+Epic 0.5: Enable Disabled Services
+Duration: 1 hour Priority: 🟡 HIGH
+
+Tasks:
+
+Uncomment IKA Service (15 minutes)
+
+File: packages/wallet-core/src/services/index.ts
+Action: Uncomment IKA-related exports
+Verify: No type errors from IKA
+Note: IKA types may need fixing (see Phase 1)
+Enable SwapService (15 minutes)
+
+File: packages/wallet-core/src/services/swap.ts
+Action: Uncomment export
+Dependency: Requires 0x API setup (Phase 2)
+Uncomment Chainbase Service (15 minutes)
+
+File: packages/wallet-core/src/services/chainbase.ts
+Action: Export service
+Configuration: Add to service registry
+Enable Session Key Permissions (15 minutes)
+
+File: packages/wallet-core/src/types/session.ts
+Fix: Permission type definitions
+Verify: Type checking passes
+Acceptance Criteria:
+
+✅ All services exported from wallet-core
+✅ No compilation errors from enabled services
+✅ Services available in service registry
+Deliverables:
+
+Enabled service exports
+Updated service registry
+Phase 0 Verification Checklist
+# Run these commands to verify Phase 0 completion
+pnpm install                           # Clean install
+pnpm --filter wallet-core typecheck    # No type errors
+pnpm --filter web typecheck            # Web typecheck passes
+pnpm --filter mobile typecheck         # Mobile typecheck passes
+pnpm lint                              # No lint errors
+Go/No-Go: All 5 epics must pass before proceeding to Phase 1
+
+PHASE 1: CORE SERVICES (1 Week)
+Objective: Establish foundation services and enable admin dashboard
+
+Epic 1.1: Complete IKA MPC Integration
+Duration: 2 days Priority: 🔴 CRITICAL
+
+Tasks:
+
+Fix IKA Type Definitions (4 hours)
+
+File: packages/wallet-core/src/services/ika/types.ts
+Issues to fix:
+dWallet type definition
+MPC operation types
+Response types alignment
+Code Template:
+export interface dWallet {
+  address: string;
+  publicKey: string;
+  chainId: ChainId;
+  mpcParticipants: number;
+  threshold: number;
+  status: 'active' | 'pending' | 'revoked';
+}
+Verify: Types match IKA SDK v2+
+Implement dWallet Creation (8 hours)
+
+File: packages/wallet-core/src/services/ika/creation.ts (create new)
+Implement:
+async function createDWallet(config: {
+  userId: string;
+  participants: number;
+  threshold: number;
+  chains: ChainId[];
+}): Promise<dWallet> {
+  // Initialize IKA client
+  // Create MPC wallet
+  // Register with backend
+  // Return dWallet object
+}
+Verify: Returns valid dWallet
+Implement Enterprise Multisig (8 hours)
+
+File: packages/wallet-core/src/services/ika/multisig.ts (create new)
+Features:
+Multi-participant setup
+Threshold configuration
+Permission management
+Operation approval workflow
+Test: Create 2-of-3 multisig
+Transaction Signing (4 hours)
+
+File: packages/wallet-core/src/services/ika/signing.ts (create new)
+Implement:
+async function signTransaction(
+  dWallet: dWallet,
+  transaction: Transaction,
+  participant: string
+): Promise<Signature> {
+  // Create signing request
+  // Broadcast to participants
+  // Collect signatures
+  // Aggregate signature
+  return aggregatedSignature;
+}
+Acceptance Criteria:
+
+✅ dWallet creation works end-to-end
+✅ Multi-party signatures functional
+✅ Type checking passes
+✅ Unit tests pass
+Deliverables:
+
+IKA service implementation
+dWallet type definitions
+Transaction signing service
+Epic 1.2: Build Admin Dashboard Foundation
+Duration: 2 days Priority: 🔴 CRITICAL
+
+Tasks:
+
+Setup Dashboard Structure (8 hours)
+
+Location: apps/admin/app/
+Create modules:
+apps/admin/app/
+├── components/
+│   ├── Dashboard/
+│   ├── RpcManager/
+│   ├── ProviderManager/
+│   └── Navigation/
+├── pages/
+│   ├── rpc-management/
+│   ├── providers/
+│   ├── feature-flags/
+│   └── analytics/
+├── api/
+│   ├── rpc-config/
+│   ├── providers/
+│   └── metrics/
+└── lib/
+    └── admin-client.ts
+Setup: TypeScript, TailwindCSS, shadcn/ui
+Implement Real-time Metrics (8 hours)
+
+File: apps/admin/lib/metrics-client.ts (create new)
+Setup WebSocket connection
+Metrics to track:
+RPC health status
+Transaction success rate
+Active users
+Service uptime
+Code Pattern:
+export class MetricsClient {
+  private ws: WebSocket;
+  
+  subscribe(metrics: string[], callback: (data: MetricsUpdate) => void) {
+    // WebSocket subscription setup
+  }
+}
+Create Dashboard Landing Page (6 hours)
+
+File: apps/admin/app/page.tsx
+Display:
+System health overview
+Service status grid (40+ integrations)
+Recent transactions
+Error rate trends
+Responsive: Desktop first
+Setup Authentication (4 hours)
+
+File: apps/admin/middleware.ts (create new)
+Role-based access control
+Roles: SuperAdmin, ServiceAdmin, AnalyticsViewer
+MFA required for sensitive operations
+Acceptance Criteria:
+
+✅ Dashboard loads without errors
+✅ Real-time metrics update
+✅ Authentication works
+✅ Role-based access enforced
+Deliverables:
+
+Admin dashboard structure
+Real-time metrics system
+Authentication middleware
+Epic 1.3: Complete Chainbase Integration
+Duration: 1.5 days Priority: 🟡 HIGH
+
+Tasks:
+
+Implement Portfolio Queries (12 hours)
+
+File: packages/wallet-core/src/services/chainbase/portfolio.ts (create new)
+Queries:
+async function getPortfolio(address: string, chains: ChainId[]): Promise<Portfolio> {
+  // Multi-chain portfolio aggregation
+  return {
+    tokens: [],
+    nfts: [],
+    defiPositions: [],
+    totalValue: 0,
+  };
+}
+Support: All 30+ chains
+Implement Token Balances (8 hours)
+
+File: packages/wallet-core/src/services/chainbase/balances.ts (create new)
+Features:
+Multi-chain balance queries
+Token metadata
+Price information
+Real-time updates
+Setup Caching Layer (4 hours)
+
+File: packages/wallet-core/src/services/chainbase/cache.ts (create new)
+Use: Redis for caching
+TTL: 5 minutes for balances, 1 hour for metadata
+Acceptance Criteria:
+
+✅ Portfolio data accurate
+✅ Multi-chain queries work
+✅ Caching reduces API calls
+✅ Performance < 2s for typical query
+Deliverables:
+
+Portfolio service implementation
+Multi-chain balance queries
+Caching strategy
+Epic 1.4: Finalize zKYC/zkPass Integration
+Duration: 1 day Priority: 🟡 HIGH
+
+Tasks:
+
+Implement zKYC Verification (8 hours)
+
+File: packages/wallet-core/src/services/kyc/zkyc.ts
+Features:
+Zero-knowledge proof generation
+Privacy-preserving KYC
+Proof verification
+Code Pattern:
+async function generateZKYCProof(userCredentials: Credentials): Promise<ZKProof> {
+  // Generate proof without revealing data
+}
+
+async function verifyZKYCProof(proof: ZKProof): Promise<VerificationResult> {
+  // Verify proof on-chain or off-chain
+}
+Setup Feature Gating (8 hours)
+
+File: packages/wallet-core/src/services/kyc/feature-gates.ts
+Gates by KYC level:
+None: Basic features
+Lite: Standard trading
+Full: All features
+Enterprise: White-glove + API access
+Code Pattern:
+export async function checkFeatureAccess(userId: string, feature: Feature): Promise<boolean> {
+  const kycLevel = await getKYCLevel(userId);
+  const gates = FEATURE_GATES[feature];
+  return gates.includes(kycLevel);
+}
+Acceptance Criteria:
+
+✅ zKYC proofs generate correctly
+✅ Feature gating works per KYC level
+✅ No sensitive data exposed
+Deliverables:
+
+zKYC service implementation
+Feature gating system
+Proof verification system
+Epic 1.5: Complete EigenLayer Restaking Service
+Duration: 1 day Priority: 🟡 HIGH
+
+Tasks:
+
+Implement Restaking Operations (12 hours)
+
+File: packages/wallet-core/src/services/eigenlayer/restaking.ts
+Operations:
+Deposit ETH to EigenLayer
+Restake to operators
+Claim rewards
+Unstake
+Code Pattern:
+async function depositAndRestake(
+  amount: BigNumber,
+  operators: string[]
+): Promise<Transaction> {
+  // Approve EigenLayer
+  // Deposit ETH
+  // Restake to operators
+}
+Setup Operator Registry (4 hours)
+
+File: packages/wallet-core/src/services/eigenlayer/operators.ts
+Track: Available operators, their performance, APY
+Acceptance Criteria:
+
+✅ Restaking transactions execute
+✅ Rewards tracked
+✅ Unstaking process works
+Deliverables:
+
+EigenLayer restaking service
+Operator registry
+Phase 1 Deliverables
+✅ IKA MPC service fully functional
+✅ Admin dashboard foundation with real-time metrics
+✅ Chainbase portfolio integration
+✅ zKYC/zkPass feature gating
+✅ EigenLayer restaking service
+PHASE 2: MULTI-CHAIN & DEFI (1.5 Weeks)
+Objective: Complete multi-chain infrastructure and DeFi protocols
+
+Epic 2.1: Complete SwapService with Intelligent Routing
+Duration: 2 days Priority: 🔴 CRITICAL
+
+Tasks:
+
+0x Integration (12 hours)
+
+File: packages/wallet-core/src/services/swap/0x-adapter.ts (create new)
+Features:
+Quote generation
+Swap routing
+Gas optimization
+Code Pattern:
+async function get0xQuote(params: SwapParams): Promise<SwapQuote> {
+  const response = await fetch(`https://api.0x.org/swap/v1/quote`, {
+    params: {
+      sellToken: params.from,
+      buyToken: params.to,
+      sellAmount: params.amount,
+    }
+  });
+  return response.json();
+}
+1inch Integration (12 hours)
+
+File: packages/wallet-core/src/services/swap/1inch-adapter.ts (create new)
+Features:
+Multi-route swaps
+Gas estimates
+Best price finding
+Smart Routing Engine (12 hours)
+
+File: packages/wallet-core/src/services/swap/routing-engine.ts (create new)
+Logic:
+Compare quotes from multiple sources
+Optimal path finding
+Slippage calculation
+Gas cost factoring
+Code Pattern:
+async function findBestRoute(params: SwapParams): Promise<OptimalRoute> {
+  const quotes = await Promise.all([
+    get0xQuote(params),
+    get1inchQuote(params),
+  ]);
+  return selectBestQuote(quotes, params.slippage);
+}
+Price Impact Calculation (8 hours)
+
+File: packages/wallet-core/src/services/swap/price-impact.ts (create new)
+Calculate: Slippage, price impact, execution price
+Acceptance Criteria:
+
+✅ 0x and 1inch routes work
+✅ Smart routing finds best prices
+✅ Slippage accurately calculated
+✅ Swaps execute successfully
+Deliverables:
+
+SwapService implementation
+Multi-DEX routing engine
+Price impact calculator
+Epic 2.2: Implement DeFi Protocols
+Duration: 2 days Priority: 🟡 HIGH
+
+Subepic 2.2a: EVM Protocols (Aave, Compound)
+
+Aave Integration (16 hours)
+
+File: packages/wallet-core/src/services/defi/aave.ts (create new)
+Operations:
+Supply assets
+Borrow against collateral
+Repay loans
+Withdraw collateral
+Claim rewards
+Code Pattern:
+async function supplyToAave(
+  asset: Token,
+  amount: BigNumber,
+  chain: ChainId
+): Promise<Transaction> {
+  // Get Aave contract
+  // Approve token
+  // Call deposit
+  return tx;
+}
+Compound Integration (12 hours)
+
+File: packages/wallet-core/src/services/defi/compound.ts (create new)
+Operations:
+Supply collateral
+Borrow funds
+Repay loans
+Liquidation handling
+Subepic 2.2b: Sui Protocols (Cetus, DeepBook, Aftermath)
+
+Cetus AMM Integration (12 hours)
+
+File: packages/wallet-core/src/adapters/sui/protocols/cetus.ts (create new)
+Features:
+Liquidity pool interactions
+Position management
+Fee tier optimization
+DeepBook Orderbook (12 hours)
+
+File: packages/wallet-core/src/adapters/sui/protocols/deepbook.ts (create new)
+Features:
+Order placement
+Matching engine interaction
+Position management
+Aftermath Finance (8 hours)
+
+File: packages/wallet-core/src/adapters/sui/protocols/aftermath.ts (create new)
+Features: Yield farming, liquidity provision
+Subepic 2.2c: Solana Protocols (Raydium, Orca)
+
+Raydium AMM (12 hours)
+
+File: packages/wallet-core/src/adapters/solana/protocols/raydium.ts (create new)
+Features:
+Swap routing
+AcceleRaytor farming
+Position management
+Orca Integration (8 hours)
+
+File: packages/wallet-core/src/adapters/solana/protocols/orca.ts (create new)
+Features: Whirlpools, liquidity provision
+Acceptance Criteria:
+
+✅ All protocols deposit/withdraw works
+✅ Position tracking accurate
+✅ Rewards claimed correctly
+✅ Multi-chain support verified
+Deliverables:
+
+Aave + Compound services
+Sui protocol implementations
+Solana protocol implementations
+Epic 2.3: Complete Bridge Services
+Duration: 1.5 days Priority: 🟡 HIGH
+
+Tasks:
+
+Enhance Stargate Integration (12 hours)
+
+File: packages/wallet-core/src/services/bridges/stargate.ts
+Features:
+Multi-chain bridging
+Quote generation
+Route finding
+Optimization for gas
+Enhance Wormhole Integration (12 hours)
+
+File: packages/wallet-core/src/services/bridges/wormhole.ts
+Features:
+Token bridge
+Message bridge
+xAsset handling
+Implement Axelar Bridge (10 hours)
+
+File: packages/wallet-core/src/services/bridges/axelar.ts (create new)
+Features:
+Cross-chain transactions
+Asset routing
+Fee calculation
+Implement Hop Protocol (10 hours)
+
+File: packages/wallet-core/src/services/bridges/hop.ts (create new)
+Features:
+Liquidity bridge
+Low-cost transfers
+Multi-chain support
+Acceptance Criteria:
+
+✅ All bridges functional
+✅ Multi-chain transfers work
+✅ Quotes accurate
+✅ Fees calculated correctly
+Deliverables:
+
+Bridge service implementations
+Multi-bridge routing
+Epic 2.4: Complete Pyth Oracle Integration
+Duration: 1 day Priority: 🟡 HIGH
+
+Tasks:
+
+Implement Price Feeds (8 hours)
+
+File: packages/wallet-core/src/services/oracles/pyth.ts
+Features:
+Real-time price feeds
+Historical data
+Confidence intervals
+Multi-chain support
+Setup Caching (4 hours)
+
+Cache prices with 1-2 second TTL
+Fallback to cached data if unavailable
+Acceptance Criteria:
+
+✅ Prices accurate and current
+✅ Multi-chain support works
+✅ Fallback mechanism works
+Deliverables:
+
+Pyth oracle service
+Price caching system
+Epic 2.5: Implement Theme System with Microcopy Support
+Duration: 1 day Priority: 🟡 MEDIUM
+
+Tasks:
+
+Setup Theme System (8 hours)
+
+File: packages/wallet-core/src/theme/theme-engine.ts (create new)
+Features:
+Multiple themes
+Dark/light mode
+Branding customization
+Real-time theme switching
+Implement Microcopy System (8 hours)
+
+File: packages/wallet-core/src/i18n/microcopy.ts (create new)
+Features:
+Contextual messaging
+Customizable strings
+Multi-language support
+Admin override capability
+Acceptance Criteria:
+
+✅ Themes apply correctly
+✅ Microcopy customizable via admin
+✅ Real-time updates work
+Deliverables:
+
+Theme engine
+Microcopy system
+Phase 2 Deliverables
+✅ SwapService with intelligent routing (0x + 1inch)
+✅ DeFi protocols (Aave, Compound, Cetus, DeepBook, Aftermath, Raydium, Orca)
+✅ Bridge services (Stargate, Wormhole, Axelar, Hop)
+✅ Pyth oracle integration
+✅ Theme and microcopy system
+PHASE 3: PAYMENTS & CARDS (1.5 Weeks)
+Objective: Complete payment infrastructure and card issuance
+
+Epic 3.1: Implement MoonPay On-Ramp
+Duration: 1 day Priority: 🔴 CRITICAL
+
+Tasks:
+
+Setup MoonPay Integration (8 hours)
+
+File: packages/wallet-core/src/services/onramp/moonpay.ts (create new)
+Features:
+Fiat to crypto
+Quote generation
+KYC handling
+Transaction tracking
+Implement Checkout Flow (8 hours)
+
+File: apps/web/app/onramp/moonpay/page.tsx (create new)
+Flow:
+Amount input
+Currency selection
+KYC verification
+Payment processing
+Status tracking
+Acceptance Criteria:
+
+✅ On-ramp flow works end-to-end
+✅ Funds received in wallet
+✅ Transaction history tracked
+Deliverables:
+
+MoonPay integration
+On-ramp UI flow
+Epic 3.2: Enhance Stripe Card Payments
+Duration: 1 day Priority: 🔴 CRITICAL
+
+Tasks:
+
+Enhance Payment Processing (12 hours)
+
+File: packages/wallet-core/src/services/payments/stripe.ts
+Features:
+Advanced fraud detection
+3D Secure handling
+Subscription management
+Webhook handling
+Implement Recurring Payments (4 hours)
+
+Support: Subscriptions and recurring charges
+Code Pattern:
+async function createRecurringPayment(
+  customerId: string,
+  amount: number,
+  interval: 'daily' | 'weekly' | 'monthly'
+): Promise<Subscription> {
+  // Create subscription in Stripe
+}
+Acceptance Criteria:
+
+✅ Payments process securely
+✅ Subscriptions work
+✅ Webhooks processed correctly
+Deliverables:
+
+Enhanced Stripe integration
+Subscription management
+Epic 3.3: Implement Lithic Virtual & Physical Card Issuance
+Duration: 2 days Priority: 🟡 HIGH
+
+Tasks:
+
+Virtual Card Issuance (16 hours)
+
+File: packages/wallet-core/src/services/cards/lithic.ts (create new)
+Features:
+Card creation
+PAN generation
+Transaction controls
+Real-time authorization
+Code Pattern:
+async function createVirtualCard(config: {
+  holderName: string;
+  spendLimit: BigNumber;
+  validity: TimeRange;
+}): Promise<VirtualCard> {
+  // Call Lithic API
+  // Create card
+  // Return card details
+}
+Physical Card Issuance (12 hours)
+
+Features:
+Fulfillment setup
+Address verification
+Card activation
+Tracking
+Velocity Controls (12 hours)
+
+File: packages/wallet-core/src/services/cards/velocity-engine.ts (create new)
+Controls:
+Daily spend limits
+Transaction rate limits
+Merchant category restrictions
+Real-time monitoring
+Dashboard Integration (8 hours)
+
+File: apps/admin/app/cards/page.tsx (create new)
+Display:
+Card inventory
+Velocity rules
+Transaction monitoring
+Card status
+Acceptance Criteria:
+
+✅ Virtual cards issue and function
+✅ Physical cards fulfill
+✅ Velocity controls enforce
+✅ Dashboard shows card metrics
+Deliverables:
+
+Lithic card service
+Velocity control engine
+Card management dashboard
+Epic 3.4: Add Ramp & Transak On-Ramps
+Duration: 1 day Priority: 🟡 HIGH
+
+Tasks:
+
+Ramp Integration (8 hours)
+
+File: packages/wallet-core/src/services/onramp/ramp.ts (create new)
+Features:
+Fiat on/off-ramp
+Quote generation
+Multi-chain support
+Transak Integration (8 hours)
+
+File: packages/wallet-core/src/services/onramp/transak.ts (create new)
+Features:
+Fiat to crypto
+Compliance integration
+Multi-currency support
+Acceptance Criteria:
+
+✅ All three on-ramps functional
+✅ User can select preferred provider
+✅ Funds received correctly
+Deliverables:
+
+Ramp + Transak integrations
+On-ramp provider selector
+Epic 3.5: Complete QR Payment System
+Duration: 0.5 day Priority: 🟡 MEDIUM
+
+Tasks:
+
+Generate QR Codes (4 hours)
+
+File: packages/wallet-core/src/services/payments/qr-generator.ts (create new)
+Features:
+QR encoding
+Deep linking
+Payment data embedding
+QR Scanner Integration (4 hours)
+
+File: apps/mobile/app/scanner/page.tsx (create new)
+Features:
+Camera access
+QR parsing
+Auto-payment initiation
+Acceptance Criteria:
+
+✅ QR codes generate correctly
+✅ Scanner parses codes
+✅ Payments auto-initiate
+Deliverables:
+
+QR payment system
+Mobile scanner UI
+Phase 3 Deliverables
+✅ MoonPay on-ramp functional
+✅ Stripe payment processing enhanced
+✅ Lithic card issuance (virtual + physical)
+✅ Velocity controls implemented
+✅ Ramp + Transak on-ramps available
+✅ QR payment system
+PHASE 4: ADVANCED INTEGRATIONS & COMPLIANCE (1.5 Weeks)
+Objective: Enterprise features, compliance, and monitoring
+
+Epic 4.1: Install & Wire Dynamic.xyz
+Duration: 1.5 days Priority: 🟡 HIGH
+
+Tasks:
+
+Install @dynamic-labs Packages (4 hours)
+
+Dependencies:
+@dynamic-labs/sdk-react-core
+@dynamic-labs/sdk-react (UI)
+@dynamic-labs/wagmi-connector
+Command: pnpm add @dynamic-labs/sdk-react-core @dynamic-labs/sdk-react
+Verify: No package conflicts
+Setup Dynamic Provider (8 hours)
+
+File: apps/web/lib/dynamic-config.ts
+Configuration:
+import { DynamicContextProvider, DynamicWidget } from '@dynamic-labs/sdk-react';
+
+export const dynamicConfig = {
+  environmentId: process.env.NEXT_PUBLIC_DYNAMIC_ENV_ID,
+  walletConnectorExtensions: [],
+  evmNetworks: [/* supported chains */],
+};
+Integrate with Auth Flow (8 hours)
+
+File: apps/web/app/auth/page.tsx
+Connect: Dynamic login → ORŸA wallet creation
+Flow:
+User authenticates via Dynamic
+Wallet created or linked
+Session established
+Redirect to dashboard
+Institutional Onboarding (8 hours)
+
+File: apps/web/app/onboarding/institutional/page.tsx (create new)
+Features:
+Team setup
+Multi-signature requirements
+Compliance documentation
+Admin role assignment
+Acceptance Criteria:
+
+✅ Dynamic login works
+✅ Institutional onboarding flow complete
+✅ Multi-sig wallets supported
+✅ Admin functions accessible
+Deliverables:
+
+Dynamic.xyz integration
+Institutional onboarding flow
+Epic 4.2: Implement Babylon Bitcoin Staking
+Duration: 1 day Priority: 🟡 HIGH
+
+Tasks:
+
+Setup Babylon Integration (8 hours)
+
+File: packages/wallet-core/src/services/staking/babylon.ts (create new)
+Features:
+Bitcoin staking
+Restaking to validators
+Unbonding process
+Reward claims
+Staking UI (8 hours)
+
+File: apps/web/app/staking/babylon/page.tsx (create new)
+Display:
+Available Bitcoin
+Staking form
+Validator selection
+APY information
+Position tracking
+Acceptance Criteria:
+
+✅ Bitcoin staking works
+✅ Validators listed and selectable
+✅ Rewards tracked
+✅ Unbonding functional
+Deliverables:
+
+Babylon staking service
+Bitcoin staking UI
+Epic 4.3: Complete KYC Provider Integrations
+Duration: 1.5 days Priority: 🟡 HIGH
+
+Tasks:
+
+Sumsub Integration (12 hours)
+
+File: packages/wallet-core/src/services/kyc/sumsub.ts (create new)
+Features:
+Document verification
+Liveness detection
+AML/sanctions screening
+Applicant management
+Code Pattern:
+async function startSumsubVerification(userId: string): Promise<VerificationUrl> {
+  const applicant = await createApplicant(userId);
+  const verificationUrl = await generateVerificationUrl(applicant);
+  return verificationUrl;
+}
+Persona Integration (12 hours)
+
+File: packages/wallet-core/src/services/kyc/persona.ts (create new)
+Features:
+Document verification
+Phone verification
+Address verification
+Results tracking
+KYC Status Dashboard (8 hours)
+
+File: apps/admin/app/compliance/kyc/page.tsx (create new)
+Display:
+Pending verifications
+Verification status
+Document reviews
+Rejection reasons
+Resubmission handling
+Acceptance Criteria:
+
+✅ Both KYC providers functional
+✅ User verification flow works
+✅ Admin can review KYC status
+✅ Compliance data tracked
+Deliverables:
+
+Sumsub + Persona integrations
+KYC dashboard
+Epic 4.4: Implement Gelato Automation & RPC Failover
+Duration: 1.5 days Priority: 🟡 HIGH
+
+Tasks:
+
+Install Gelato (4 hours)
+
+Command: pnpm add @gelatonetwork/gelato-sdk
+Setup: Gelato provider registration
+Configuration: Task creation
+Implement RPC Failover (16 hours)
+
+File: packages/wallet-core/src/services/rpc/failover.ts (create new)
+Features:
+Primary/secondary RPC management
+Health monitoring
+Automatic failover
+Response time tracking
+Code Pattern:
+export class RpcFailoverManager {
+  private primaryRpc: RpcProvider;
+  private fallbackRpcs: RpcProvider[];
+  
+  async call(method: string, params: unknown[]): Promise<unknown> {
+    try {
+      return await this.primaryRpc.request({ method, params });
+    } catch (error) {
+      return await this.tryFallbacks(method, params);
+    }
+  }
+}
+Automation Tasks (12 hours)
+
+File: packages/wallet-core/src/services/automation/tasks.ts (create new)
+Tasks:
+Reward harvesting
+Rebalancing
+Liquidation checks
+Staking operations
+Task Dashboard (8 hours)
+
+File: apps/admin/app/automation/page.tsx (create new)
+Display:
+Scheduled tasks
+Execution history
+Success rate
+Gas costs
+Acceptance Criteria:
+
+✅ RPC failover works seamlessly
+✅ Automated tasks execute on schedule
+✅ Admin can monitor automation
+✅ No transaction failures due to RPC issues
+Deliverables:
+
+RPC failover system
+Gelato automation setup
+Automation dashboard
+Epic 4.5: Setup Comprehensive Monitoring
+Duration: 1 day Priority: 🟡 HIGH
+
+Tasks:
+
+Sentry Integration (6 hours)
+
+Command: pnpm add @sentry/nextjs @sentry/react-native
+Setup: Error tracking
+Configuration: All apps (web, mobile, admin)
+Grafana Dashboards (12 hours)
+
+File: infrastructure/monitoring/grafana/dashboards/ (create new)
+Dashboards:
+System health
+RPC performance
+Transaction metrics
+User analytics
+Error rates
+Tenderly Integration (6 hours)
+
+File: packages/wallet-core/src/services/monitoring/tenderly.ts (create new)
+Features:
+Transaction debugging
+Simulation
+Gas estimation
+Acceptance Criteria:
+
+✅ Errors tracked in Sentry
+✅ Grafana dashboards display metrics
+✅ Tenderly integration works
+✅ Alerting configured
+Deliverables:
+
+Sentry error tracking
+Grafana monitoring dashboards
+Tenderly integration
+Epic 4.6: Implement Push Notifications
+Duration: 1 day Priority: 🟡 HIGH
+
+Tasks:
+
+Firebase FCM Setup (3 hours)
+
+Installation:
+Mobile: expo install expo-notifications
+Web: pnpm add firebase
+Configuration:
+Firebase console setup
+Service accounts
+APK/certificate configuration
+FCM Implementation (6 hours)
+
+File: packages/wallet-core/src/services/notifications/fcm.ts (create new)
+Features:
+export class FCMService {
+  async sendNotification(
+    userId: string,
+    notification: {
+      title: string;
+      body: string;
+      data?: Record<string, string>;
+    }
+  ): Promise<void> {
+    // Send via FCM
+  }
+  
+  async registerDevice(
+    userId: string,
+    fcmToken: string,
+    platform: 'ios' | 'android' | 'web'
+  ): Promise<void> {
+    // Store device token
+  }
+}
+Transaction Notifications (4 hours)
+
+File: packages/wallet-core/src/services/notifications/transaction-notifier.ts (create new)
+Events:
+Transaction sent
+Transaction confirmed
+Transaction failed
+Large transfer received
+Price alerts
+Code Pattern:
+async function notifyTransactionSent(
+  userId: string,
+  transaction: Transaction
+): Promise<void> {
+  await fcmService.sendNotification(userId, {
+    title: 'Transaction Sent',
+    body: `${transaction.amount} ${transaction.token} to ${transaction.to}`,
+    data: { txHash: transaction.hash },
+  });
+}
+Mobile Handler (2 hours)
+
+File: apps/mobile/lib/notifications/handler.ts (create new)
+Handle:
+Foreground notifications
+Background notifications
+Deep linking
+Action handling
+EPNS Integration (2 hours)
+
+File: packages/wallet-core/src/services/notifications/epns.ts (create new)
+Features:
+Decentralized push channel
+Optional notifications
+Web3 native delivery
+EPNS Channel Setup (1 hour)
+
+Action: Create ORŸA channel on EPNS
+Configuration: Channel details, icon, description
+Enable: User opt-in
+Acceptance Criteria:
+
+✅ FCM notifications send and receive on mobile
+✅ Transaction notifications trigger correctly
+✅ Web notifications work
+✅ EPNS channel created and functional
+✅ Users can opt-in to notifications
+✅ Deep linking opens correct app section
+Deliverables:
+
+FCM push notification system
+Transaction event notifications
+EPNS decentralized channel
+Mobile notification handling
+Phase 4 Deliverables
+✅ Dynamic.xyz institutional onboarding
+✅ Babylon Bitcoin staking
+✅ KYC integrations (Sumsub, Persona)
+✅ Gelato automation + RPC failover
+✅ Comprehensive monitoring (Sentry, Grafana, Tenderly)
+✅ Push notifications (FCM + EPNS)
+PHASE 5: POLISH & LAUNCH (1-2 Weeks)
+Objective: Complete remaining integrations, testing, security, and production readiness
+
+Epic 5.1: Complete Remaining Integrations
+Duration: 2 days Priority: 🟡 MEDIUM
+
+Tasks:
+
+Hyperlane Cross-Chain Messaging (12 hours)
+
+File: packages/wallet-core/src/services/messaging/hyperlane.ts (create new)
+Features:
+Cross-chain messages
+Interchain accounts
+Remote calls
+Railgun Privacy Protocol (12 hours)
+
+File: packages/wallet-core/src/services/privacy/railgun.ts (create new)
+Features:
+Private transactions
+Shield contracts
+Anonymity pools
+Insurace Protocol Integration (8 hours)
+
+File: packages/wallet-core/src/services/insurance/insurace.ts (create new)
+Features:
+Coverage products
+Claims
+Portfolio protection
+System9 Integration (8 hours)
+
+File: packages/wallet-core/src/services/integration/system9.ts (create new)
+Implementation: As specified in service inventory
+Acceptance Criteria:
+
+✅ All remaining integrations functional
+✅ Tests pass for each integration
+✅ Documentation updated
+Deliverables:
+
+All remaining service implementations
+Epic 5.2: Comprehensive Testing Suite
+Duration: 3 days Priority: 🔴 CRITICAL
+
+Tasks:
+
+Unit Tests (12 hours)
+
+Coverage: 80%+ for services
+Framework: Jest (Node), Vitest (TS)
+Files:
+packages/wallet-core/src/**/*.test.ts
+apps/web/app/**/*.test.tsx
+apps/mobile/**/*.test.tsx
+Integration Tests (12 hours)
+
+Test: Service interactions
+Database: Testcontainers for PostgreSQL
+Redis: Testcontainers for Redis
+Chains: Local blockchain forks
+End-to-End Tests (16 hours)
+
+Framework: Cypress (web), Detox (mobile)
+Scenarios:
+User signup and verification
+Wallet creation
+Token transfers
+Swap execution
+Card issuance
+Staking flow
+Performance Tests (8 hours)
+
+Tool: k6 for load testing
+Targets:
+API response times < 500ms
+Portal load times < 2s
+Mobile app startup < 3s
+Security Tests (8 hours)
+
+OWASP testing
+XSS prevention
+SQL injection checks
+Authentication bypass attempts
+Acceptance Criteria:
+
+✅ 80%+ code coverage
+✅ All integration tests pass
+✅ All E2E tests pass
+✅ Performance targets met
+✅ Security vulnerabilities identified and patched
+Deliverables:
+
+Complete test suite
+Test reports
+Performance benchmarks
+Epic 5.3: Security Audit & Hardening
+Duration: 2 days Priority: 🔴 CRITICAL
+
+Tasks:
+
+Smart Contract Audit (16 hours)
+
+Scope: All custom contracts
+Auditor: Engage external firm or internal review
+Focus:
+Reentrancy protection
+Overflow/underflow checks
+Access control
+Front-running prevention
+Backend Security Audit (12 hours)
+
+Focus:
+API security
+Authentication/authorization
+Data encryption
+Rate limiting
+CORS configuration
+Frontend Security Hardening (12 hours)
+
+Focus:
+XSS prevention
+CSP headers
+Dependency scanning
+Secret management
+Penetration Testing (12 hours)
+
+Scope: Full application
+Focus:
+User authentication
+Transaction flows
+Payment systems
+Admin panel
+Acceptance Criteria:
+
+✅ No critical vulnerabilities
+✅ All findings documented
+✅ Patches implemented
+✅ Audit report completed
+Deliverables:
+
+Security audit report
+Vulnerability fixes
+Hardening documentation
+Epic 5.4: Performance Optimization
+Duration: 1.5 days Priority: 🟡 HIGH
+
+Tasks:
+
+Frontend Optimization (12 hours)
+
+Bundle analysis
+Code splitting
+Lazy loading
+Image optimization
+Font optimization
+Backend Optimization (12 hours)
+
+Database indexing
+Query optimization
+Caching strategy
+Connection pooling
+Service scaling
+Mobile Optimization (8 hours)
+
+App size reduction
+Startup time optimization
+Memory usage reduction
+Battery optimization
+Acceptance Criteria:
+
+✅ Web page load time < 2s (Core Web Vitals)
+✅ Mobile app startup < 3s
+✅ API response < 500ms (p95)
+✅ Bundle size optimized
+Deliverables:
+
+Performance report
+Optimization documentation
+Epic 5.5: Production Readiness
+Duration: 2 days Priority: 🔴 CRITICAL
+
+Tasks:
+
+Infrastructure Validation (12 hours)
+
+Kubernetes manifests validated
+Load testing: Infrastructure scaling verified
+Backup and disaster recovery tested
+Database replication verified
+Monitoring/alerting configured
+Environment Configuration (8 hours)
+
+Production .env setup
+Secrets management (Vault/AWS Secrets Manager)
+CDN configuration
+DNS setup
+SSL/TLS certificates
+Deployment Pipeline (12 hours)
+
+CI/CD validation
+Automated testing in pipeline
+Staging environment setup
+Canary deployment strategy
+Rollback procedures
+Documentation Finalization (8 hours)
+
+Runbooks for common issues
+Incident response playbooks
+Architecture documentation
+API documentation
+User guides
+Launch Checklist (4 hours)
+
+Final verification of all systems
+Stakeholder review
+Go/no-go decision criteria
+Launch communication plan
+Acceptance Criteria:
+
+✅ Infrastructure production-ready
+✅ All services at 99.9% uptime (SLA met)
+✅ Monitoring and alerting operational
+✅ Runbooks completed
+✅ Team trained on operations
+✅ Incident response tested
+Deliverables:
+
+Production infrastructure
+Deployment documentation
+Operational runbooks
+Launch checklist completed
+Epic 5.6: Launch & Post-Launch Support
+Duration: 1 week Priority: 🔴 CRITICAL
+
+Tasks:
+
+Soft Launch (2-3 days)
+
+Limited beta users (100-500)
+Monitor metrics
+Fix critical issues
+Gather feedback
+Full Launch (1 day)
+
+Marketing announcement
+Public availability
+Press release
+Social media campaign
+Community update
+Post-Launch Monitoring (3-5 days)
+
+24/7 support coverage
+Real-time monitoring
+Quick issue resolution
+Performance monitoring
+User feedback collection
+Launch Retrospective (1 day)
+
+Team debrief
+Lessons learned
+Process improvements
+Documentation updates
+Acceptance Criteria:
+
+✅ No critical issues in production
+✅ 99.9% uptime maintained
+✅ User onboarding successful
+✅ Positive user feedback
+✅ Metrics on target
+Deliverables:
+
+Launch announcement
+Post-launch report
+Retrospective notes
+Phase 5 Deliverables
+✅ All remaining integrations completed
+✅ Comprehensive test coverage
+✅ Security audit passed
+✅ Performance optimized
+✅ Production infrastructure ready
+✅ Successful product launch
+✅ Post-launch support operational
+Risk Assessment & Mitigation
+Critical Risks
+| Risk | Probability | Impact | Mitigation | |------|-------------|--------|-----------| | Dependency conflicts | High | High | Weekly dependency audits, staged upgrades | | Blockchain RPC failures | Medium | High | Multi-RPC failover, local blockchain testing | | Security vulnerabilities | Medium | Critical | Early security audits, penetration testing | | Performance degradation | Medium | High | Load testing, caching strategy, CDN | | Team capacity | Low | High | Clear milestones, parallel workstreams |
+
+Mitigation Strategies
+Daily standups during Phase 0-1 for blocker resolution
+Weekly architecture reviews for technical decisions
+Bi-weekly stakeholder updates for progress tracking
+Security-first approach in all implementations
+Contingency buffer: +20% time on critical phases
+Success Metrics
+Development Metrics
+✅ 0 critical build errors
+✅ 80%+ code coverage
+✅ 0 TypeScript compilation errors
+✅ All tests passing
+Operational Metrics
+✅ 99.9% uptime SLA
+✅ <500ms API response time (p95)
+✅ <2s page load time (Core Web Vitals)
+✅ <3s mobile app startup
+User Metrics
+✅ Successful user onboarding
+✅ Positive app store ratings
+✅ Low error rate in user flows
+✅ Strong user engagement
+Business Metrics
+✅ Launch on schedule
+✅ Target user acquisition
+✅ Transaction volume targets
+✅ KYC completion rate targets
+Timeline Summary
+Week 1:   Phase 0 (Build Blockers) → Phase 1 (Core Services)
+Week 2:   Phase 1 Continuation → Start Phase 2
+Week 3:   Phase 2 (Multi-Chain & DeFi) → Phase 3 (Payments)
+Week 4:   Phase 3 Continuation
+Week 5:   Phase 4 (Advanced & Compliance)
+Week 6:   Phase 4 Continuation → Phase 5 (Polish)
+Week 7:   Phase 5 (Testing, Security, Optimization)
+Week 8:   Phase 5 (Production Readiness & Launch)
+Estimated Total Duration: 8-12 weeks (depending on team size and parallelization)
+
+Next Steps
+Immediate: Execute Phase 0 blockers
+Day 2: Begin Phase 1 parallel with Phase 0 if dependencies allow
+Weekly: Review progress against roadmap
+Bi-weekly: Stakeholder updates and course correction
+Daily: Team standups during critical phases
+Document Version: 1.0 Last Updated: November 2024 Status: Comprehensive roadmap ready for implementation EOF
+
+
+Now creating the Phase 0 blockers detailed guide:
+
+```bash
+cat > "e:\Users\ORYA-Wallet\orya-wallet-repo\md-js-json-py-files\PHASE-0-BLOCKERS.md" << 'EOF'
+# PHASE 0: Build Blockers - Detailed Fix Guide
+**Duration**: 1-2 days | **Priority**: 🔴 CRITICAL
+
+---
+
+## Overview
+
+Phase 0 focuses on unblocking the build pipeline. The project has 200+ TypeScript compilation errors preventing progress on all other phases. This document provides step-by-step fixes for each blocker.
+
+---
+
+## Blocker 1: @reown/appkit AppKitNetwork Export Issue
+
+### Problem
+Error: Cannot find name 'AppKitNetwork' Error: Cannot find 'AppKitNetwork' in @reown/appkit
+
+
+### Root Cause
+@reown/appkit v4+ changed how AppKitNetwork is exported. The code imports from an old path or relies on outdated API.
+
+### Fix Steps
+
+**Step 1**: Check current @reown/appkit version
+```bash
+cd apps/web
+pnpm info @reown/appkit
+Expected: v4.0.0+
+
+Step 2: Update apps/web/lib/wallet/appkit-config.ts
+
+Replace:
+
+import { AppKitNetwork } from '@reown/appkit';
+With:
+
+import { networks } from '@reown/appkit/networks';
+Step 3: Fix network configuration
+
+Old pattern:
+
+const networks = [
+  new AppKitNetwork('ethereum', 'Ethereum'),
+  new AppKitNetwork('polygon', 'Polygon'),
+];
+New pattern:
+
+const supportedNetworks = [
+  networks.ethereum,
+  networks.polygon,
+  networks.arbitrum,
+  networks.optimism,
+  networks.base,
+  // etc
+];
+Step 4: Test build
+
+cd apps/web
+pnpm typecheck
+Verification
+✅ No "Cannot find name 'AppKitNetwork'" errors
+✅ All network imports resolve
+✅ pnpm typecheck passes
+Blocker 2: ethers.js v6 HDNode Migration
+Problem
+Error: 'HDNode' does not exist in this release of ethers
+Error: Cannot find 'HDNode' in 'ethers'
+Root Cause
+ethers v6 removed the HDNode API. It was replaced with Mnemonic + HDNodeWallet.
+
+Files to Fix
+Search for all HDNode usage:
+
+grep -r "HDNode" packages/wallet-core/src --include="*.ts"
+Fix Steps
+File 1: packages/wallet-core/src/services/mnemonic.ts
+
+Old code:
+
+import { HDNode } from 'ethers';
+
+export async function derivePath(
+  mnemonic: string,
+  path: string
+): Promise<{ privateKey: string; address: string }> {
+  const hdNode = HDNode.fromMnemonic(mnemonic);
+  const derived = hdNode.derivePath(path);
+  return {
+    privateKey: derived.privateKey,
+    address: derived.address,
+  };
+}
+New code:
+
+import { Mnemonic, HDNodeWallet, ethers } from 'ethers';
+
+export async function derivePath(
+  phrase: string,
+  path: string = "m/44'/60'/0'/0/0"
+): Promise<{ privateKey: string; address: string }> {
+  const mnemonic = Mnemonic.fromPhrase(phrase);
+  const hdNode = HDNodeWallet.fromMnemonic(mnemonic, path);
+  return {
+    privateKey: hdNode.privateKey,
+    address: hdNode.address,
+  };
+}
+File 2: packages/wallet-core/src/services/wallet-generation.ts
+
+Old:
+
+const hdNode = HDNode.fromMnemonic(mnemonic);
+const child = hdNode.derivePath(`m/44'/60'/0'/0/${index}`);
+New:
+
+const mnemonic = Mnemonic.fromPhrase(mnemonicPhrase);
+const hdNode = HDNodeWallet.fromMnemonic(
+  mnemonic,
+  `m/44'/60'/0'/0/${index}`
+);
+File 3: Search for all other HDNode references
+
+find packages -name "*.ts" -exec grep -l "HDNode" {} \;
+For each file, apply the same pattern.
+
+Verification
+grep -r "HDNode" packages/wallet-core/src
+# Should return: 0 results
+
+pnpm --filter wallet-core typecheck
+# Should pass without HDNode errors
+Blocker 3: shared-types Missing Exports
+Problem
+Error: Cannot find name 'ChainId'
+Error: Cannot find name 'getChain'
+Error: Cannot find 'ChainId' in '@orya/shared-types'
+Root Cause
+Types are defined but not exported from the index.ts file, or are only partially exported.
+
+Fix Steps
+Step 1: Open `packages/shared-types/src/index.

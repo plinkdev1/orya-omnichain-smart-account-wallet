@@ -1,0 +1,558 @@
+{
+  "info": {
+    "_postman_id": "orya-wallet-user-graphql",
+    "name": "Orÿa Wallet - User GraphQL API",
+    "description": "Complete GraphQL API collection for Orÿa Wallet User Subgraph (Port 4002)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Sign Up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SignUp($email: String!, $password: String!) {\n  signup(email: $email, password: $password) {\n    user {\n      id\n      email\n      kycStatus\n      advancedMode\n      createdAt\n    }\n    accessToken\n    refreshToken\n    expiresIn\n  }\n}",
+                "variables": "{\n  \"email\": \"newuser@example.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation Login($email: String!, $password: String!) {\n  login(email: $email, password: $password) {\n    user {\n      id\n      email\n      advancedMode\n      kycStatus\n    }\n    accessToken\n    refreshToken\n    expiresIn\n  }\n}",
+                "variables": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"SecurePassword123!\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation RefreshToken($refreshToken: String!) {\n  refreshToken(refreshToken: $refreshToken) {\n    user { id email }\n    accessToken\n    refreshToken\n    expiresIn\n  }\n}",
+                "variables": "{\n  \"refreshToken\": \"{{REFRESH_TOKEN}}\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Profile",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetCurrentUser {\n  me {\n    id\n    email\n    privyId\n    firebaseUid\n    kycStatus\n    advancedMode\n    preferences {\n      defaultChain\n      hiddenTokens\n      favoriteProtocols\n      protocols {\n        chainId\n        feature\n        preferredProtocol\n        fallbackProtocols\n      }\n      autoSigning {\n        enabled\n        thresholdUSD\n        maxDailyAmountUSD\n      }\n    }\n    createdAt\n    updatedAt\n  }\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateProfile($input: UpdateProfileInput!) {\n  updateProfile(input: $input) {\n    id\n    email\n    advancedMode\n    updatedAt\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"email\": \"newemail@example.com\",\n    \"advancedMode\": true\n  }\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Update Preferences",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdatePreferences($input: UserPreferencesInput!) {\n  updatePreferences(input: $input) {\n    id\n    preferences {\n      defaultChain\n      hiddenTokens\n      favoriteProtocols\n    }\n  }\n}",
+                "variables": "{\n  \"input\": {\n    \"defaultChain\": \"ethereum\",\n    \"hiddenTokens\": [\"token1\", \"token2\"],\n    \"favoriteProtocols\": [\"uniswap-v3\", \"aave-v3\"]\n  }\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Protocol Preferences",
+      "item": [
+        {
+          "name": "Set Protocol Preference (Ethereum SWAP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SetProtocolPreference(\n  $chainId: String!\n  $feature: FeatureType!\n  $protocolId: String!\n  $fallbacks: [String!]\n) {\n  setProtocolPreference(\n    chainId: $chainId\n    feature: $feature\n    protocolId: $protocolId\n    fallbacks: $fallbacks\n  ) {\n    chainId\n    feature\n    preferredProtocol\n    fallbackProtocols\n    lastUpdated\n  }\n}",
+                "variables": "{\n  \"chainId\": \"ethereum\",\n  \"feature\": \"SWAP\",\n  \"protocolId\": \"uniswap-v3\",\n  \"fallbacks\": [\"uniswap-v2\", \"sushiswap\"]\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Set Protocol Preference (SUI SWAP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SetSuiSwap {\n  setProtocolPreference(\n    chainId: \"sui\"\n    feature: SWAP\n    protocolId: \"cetus\"\n    fallbacks: [\"aftermath\"]\n  ) {\n    chainId\n    feature\n    preferredProtocol\n  }\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Set Advanced Mode",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation SetAdvancedMode($enabled: Boolean!) {\n  setAdvancedMode(enabled: $enabled) {\n    id\n    advancedMode\n    preferences {\n      protocols {\n        chainId\n        feature\n        preferredProtocol\n      }\n    }\n  }\n}",
+                "variables": "{\n  \"enabled\": true\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auto-Signing",
+      "item": [
+        {
+          "name": "Enable Auto-Signing",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation UpdateAutoSigningConfig($config: AutoSigningConfigInput!) {\n  updateAutoSigningConfig(config: $config) {\n    id\n    preferences {\n      autoSigning {\n        enabled\n        thresholdUSD\n        maxDailyAmountUSD\n        requireBiometric\n      }\n    }\n  }\n}",
+                "variables": "{\n  \"config\": {\n    \"enabled\": true,\n    \"thresholdUSD\": 500,\n    \"expiryHours\": 48,\n    \"maxDailyAmountUSD\": 5000,\n    \"requireBiometric\": false,\n    \"whitelistedContracts\": []\n  }\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Disable Auto-Signing",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation DisableAutoSigning($config: AutoSigningConfigInput!) {\n  updateAutoSigningConfig(config: $config) {\n    id\n    preferences { autoSigning { enabled } }\n  }\n}",
+                "variables": "{\n  \"config\": {\n    \"enabled\": false,\n    \"thresholdUSD\": 0,\n    \"expiryHours\": 0,\n    \"maxDailyAmountUSD\": 0,\n    \"requireBiometric\": false,\n    \"whitelistedContracts\": []\n  }\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "KYC",
+      "item": [
+        {
+          "name": "Initiate KYC (Sumsub)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation InitiateKYC($provider: KYCProvider!) {\n  initiateKYC(provider: $provider) {\n    id\n    userId\n    provider\n    sessionId\n    externalUrl\n    status\n    createdAt\n    expiresAt\n  }\n}",
+                "variables": "{\n  \"provider\": \"SUMSUB\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Initiate KYC (Persona)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation InitiateKYC($provider: KYCProvider!) {\n  initiateKYC(provider: $provider) {\n    sessionId\n    externalUrl\n    status\n  }\n}",
+                "variables": "{\n  \"provider\": \"PERSONA\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Subscribe to KYC Status Changes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "subscription KYCStatusChanged($userId: ID!) {\n  kycStatusChanged(userId: $userId)\n}",
+                "variables": "{\n  \"userId\": \"user-123\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Operations",
+      "item": [
+        {
+          "name": "List All Users",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query ListUsers($first: Int, $after: String) {\n  users(pagination: { first: $first, after: $after }) {\n    edges {\n      node {\n        id\n        email\n        kycStatus\n        advancedMode\n      }\n      cursor\n    }\n    pageInfo {\n      hasNextPage\n      totalCount\n    }\n  }\n}",
+                "variables": "{\n  \"first\": 20,\n  \"after\": null\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Filter Users by KYC Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query FilterByKYC($status: KYCStatus) {\n  users(filter: { kycStatus: $status }, pagination: { first: 50 }) {\n    edges {\n      node {\n        id\n        email\n        kycStatus\n      }\n    }\n    totalCount\n  }\n}",
+                "variables": "{\n  \"status\": \"APPROVED\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        },
+        {
+          "name": "Search Users",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ADMIN_ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query SearchUsers($search: String) {\n  users(filter: { search: $search }, pagination: { first: 20 }) {\n    edges {\n      node {\n        id\n        email\n        privyId\n      }\n    }\n    totalCount\n  }\n}",
+                "variables": "{\n  \"search\": \"example\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "Subscribe to User Updates",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{ACCESS_TOKEN}}"
+              }
+            ],
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "subscription UserUpdated($userId: ID!) {\n  userUpdated(userId: $userId) {\n    id\n    email\n    advancedMode\n    updatedAt\n  }\n}",
+                "variables": "{\n  \"userId\": \"user-123\"\n}"
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/graphql",
+              "host": ["{{BASE_URL}}"],
+              "path": ["graphql"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:4002",
+      "type": "string"
+    },
+    {
+      "key": "ACCESS_TOKEN",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "REFRESH_TOKEN",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "ADMIN_ACCESS_TOKEN",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

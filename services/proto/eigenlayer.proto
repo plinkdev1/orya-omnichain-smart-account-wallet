@@ -1,0 +1,156 @@
+syntax = "proto3";
+
+package eigenlayer;
+
+service EigenLayer {
+    rpc GetRestakingPositions(GetRestakingPositionsRequest) returns (GetRestakingPositionsResponse);
+    rpc Restake(RestakeRequest) returns (RestakeResponse);
+    rpc QueueWithdrawal(QueueWithdrawalRequest) returns (QueueWithdrawalResponse);
+    rpc CompleteWithdrawal(CompleteWithdrawalRequest) returns (CompleteWithdrawalResponse);
+    rpc GetOperators(GetOperatorsRequest) returns (GetOperatorsResponse);
+    rpc GetRewards(GetRewardsRequest) returns (GetRewardsResponse);
+    rpc ClaimRewards(ClaimRewardsRequest) returns (ClaimRewardsResponse);
+    rpc GetStrategyAPY(GetStrategyAPYRequest) returns (GetStrategyAPYResponse);
+    rpc GetSlashingEvents(GetSlashingEventsRequest) returns (GetSlashingEventsResponse);
+    rpc DelegateToOperator(DelegateRequest) returns (DelegateResponse);
+}
+
+message GetRestakingPositionsRequest {
+    string user_id = 1;
+}
+
+message GetRestakingPositionsResponse {
+    repeated RestakingPosition positions = 1;
+    string total_value_staked = 2;
+    string total_rewards_earned = 3;
+}
+
+message RestakingPosition {
+    string id = 1;
+    string user_id = 2;
+    string strategy_address = 3;
+    string token_address = 4;
+    string amount = 5;
+    string shares = 6;
+    optional string operator_address = 7;
+    int64 staked_at = 8;
+    string status = 9;
+    optional double estimated_apy = 10;
+}
+
+message RestakeRequest {
+    string user_id = 1;
+    string strategy_address = 2;
+    string amount = 3;
+    string operator_address = 4;
+}
+
+message RestakeResponse {
+    string position_id = 1;
+    string tx_hash = 2;
+    string shares = 3;
+    double estimated_apy = 4;
+}
+
+message QueueWithdrawalRequest {
+    string position_id = 1;
+}
+
+message QueueWithdrawalResponse {
+    string withdrawal_root = 1;
+    int64 completion_timestamp = 2;
+    string tx_hash = 3;
+}
+
+message CompleteWithdrawalRequest {
+    string position_id = 1;
+}
+
+message CompleteWithdrawalResponse {
+    string tx_hash = 1;
+}
+
+message GetOperatorsRequest {
+    optional bool is_active = 1;
+    string min_delegated = 2;
+}
+
+message GetOperatorsResponse {
+    repeated Operator operators = 1;
+}
+
+message Operator {
+    string address = 1;
+    string metadata_uri = 2;
+    string delegation_approver = 3;
+    int32 staker_opt_out_window_blocks = 4;
+    bool is_active = 5;
+    string total_delegated = 6;
+}
+
+message GetRewardsRequest {
+    string user_id = 1;
+    optional bool claimed = 2;
+}
+
+message GetRewardsResponse {
+    repeated Reward rewards = 1;
+    string total_unclaimed = 2;
+}
+
+message Reward {
+    string id = 1;
+    string user_id = 2;
+    string strategy_address = 3;
+    string reward_amount = 4;
+    string reward_token = 5;
+    int64 earned_at = 6;
+    bool claimed = 7;
+    optional int64 claimed_at = 8;
+}
+
+message ClaimRewardsRequest {
+    repeated string reward_ids = 1;
+}
+
+message ClaimRewardsResponse {
+    string tx_hash = 1;
+    string total_claimed = 2;
+}
+
+message GetStrategyAPYRequest {
+    string strategy_address = 1;
+}
+
+message GetStrategyAPYResponse {
+    double apy = 1;
+}
+
+message GetSlashingEventsRequest {
+    optional string operator_address = 1;
+    optional int32 limit = 2;
+}
+
+message GetSlashingEventsResponse {
+    repeated SlashingEvent events = 1;
+}
+
+message SlashingEvent {
+    string id = 1;
+    string operator_address = 2;
+    string strategy_address = 3;
+    string slashed_amount = 4;
+    int32 event_block = 5;
+    int64 event_timestamp = 6;
+    string tx_hash = 7;
+}
+
+message DelegateRequest {
+    string user_id = 1;
+    string operator_address = 2;
+    string signature = 3;
+}
+
+message DelegateResponse {
+    bool success = 1;
+}

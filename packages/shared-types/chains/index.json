@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "vmFamilies": [
+    {
+      "name": "MoveVM",
+      "files": ["sui.json", "aptos.json", "movement.json"],
+      "description": "Move Virtual Machine - Asset-Oriented Programming"
+    },
+    {
+      "name": "EVM",
+      "files": ["evm.json"],
+      "description": "Ethereum Virtual Machine"
+    },
+    {
+      "name": "SVM",
+      "files": ["solana.json"],
+      "description": "Solana Virtual Machine"
+    },
+    {
+      "name": "Cosmos",
+      "files": ["cosmos.json"],
+      "description": "Cosmos SDK - Interchain Communication"
+    },
+    {
+      "name": "TonVM",
+      "files": ["ton.json"],
+      "description": "TON Virtual Machine"
+    },
+    {
+      "name": "NEAR",
+      "files": ["near.json"],
+      "description": "NEAR Protocol"
+    },
+    {
+      "name": "Tron",
+      "files": ["tron.json"],
+      "description": "TRON Virtual Machine"
+    },
+    {
+      "name": "Cardano",
+      "files": ["cardano.json"],
+      "description": "Cardano UTXO Model"
+    },
+    {
+      "name": "Substrate",
+      "files": ["substrate.json"],
+      "description": "Substrate Framework - Polkadot Ecosystem"
+    },
+    {
+      "name": "Bitcoin",
+      "files": ["bitcoin.json"],
+      "description": "Bitcoin - UTXO Model"
+    }
+  ],
+  "totalChains": 100,
+  "lastUpdated": "2025-11-20T00:00:00Z"
+}

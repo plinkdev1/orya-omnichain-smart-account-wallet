@@ -1,0 +1,92 @@
+federation_version: 2
+
+subgraphs:
+  user:
+    routing_url: http://localhost:4002/graphql
+    schema:
+      subgraph_url: http://localhost:4002/graphql
+      retry:
+        attempts: 3
+        backoff:
+          strategy: exponential
+          initial_delay: 100ms
+          max_delay: 2s
+
+  wallet:
+    routing_url: http://localhost:4001/graphql
+    schema:
+      subgraph_url: http://localhost:4001/graphql
+      retry:
+        attempts: 3
+        backoff:
+          strategy: exponential
+          initial_delay: 100ms
+          max_delay: 2s
+
+  transaction:
+    routing_url: http://localhost:4003/graphql
+    schema:
+      subgraph_url: http://localhost:4003/graphql
+      retry:
+        attempts: 3
+        backoff:
+          strategy: exponential
+          initial_delay: 100ms
+          max_delay: 2s
+
+  protocol:
+    routing_url: http://localhost:4004/graphql
+    schema:
+      subgraph_url: http://localhost:4004/graphql
+      retry:
+        attempts: 3
+        backoff:
+          strategy: exponential
+          initial_delay: 100ms
+          max_delay: 2s
+
+  defi:
+    routing_url: http://localhost:4005/graphql
+    schema:
+      subgraph_url: http://localhost:4005/graphql
+      retry:
+        attempts: 3
+        backoff:
+          strategy: exponential
+          initial_delay: 100ms
+          max_delay: 2s
+
+  portfolio:
+    routing_url: http://localhost:4006/graphql
+    schema:
+      subgraph_url: http://localhost:4006/graphql
+      retry:
+        attempts: 3
+        backoff:
+          strategy: exponential
+          initial_delay: 100ms
+          max_delay: 2s
+
+  fiat:
+    routing_url: http://localhost:4007/graphql
+    schema:
+      subgraph_url: http://localhost:4007/graphql
+      retry:
+        attempts: 3
+        backoff:
+          strategy: exponential
+          initial_delay: 100ms
+          max_delay: 2s
+
+include_subgraph_urls: false
+
+introspection:
+  enabled: true
+
+graph:
+  title: "ORYA Wallet SuperGraph"
+  description: "Protocol-agnostic, multi-chain wallet with user-selectable protocols. Unified GraphQL API federating all domain services."
+
+composition:
+  subgraph_error_inclusion: all
+  validate_supergraph_schema: true

@@ -1,0 +1,33 @@
+[package]
+name = "movement-adapter"
+version = "0.1.0"
+edition = "2021"
+description = "Movement blockchain adapter with bridge support"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+anyhow = "1.0"
+reqwest = { version = "0.11", features = ["json"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Movement SDK
+movement-sdk = "0.1"
+movement-types = "0.1"
+
+# Cryptography
+sha3 = "0.10"
+hex = "0.4"
+
+# Utilities
+uuid = { version = "1.0", features = ["v4", "serde"] }
+async-trait = "0.1"
+rust_decimal = "1.33"
+chrono = { version = "0.4", features = ["serde"] }
+
+[dev-dependencies]
+tokio-test = "0.4"
+mockito = "1.2"

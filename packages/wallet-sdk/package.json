@@ -1,0 +1,43 @@
+{
+  "name": "@orya/wallet-sdk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./generated": {
+      "types": "./dist/generated/index.d.ts",
+      "default": "./dist/generated/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "generate": "graphql-codegen",
+    "lint": "eslint src --ext .ts,.tsx"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.0",
+    "@orya/shared-types": "workspace:*",
+    "@mysten/sui": "^1.44.0",
+    "@mysten/dapp-kit": "^0.19.8",
+
+    "viem": "^2.5.0",
+    "wagmi": "^2.5.0",
+    "ethers": "^6.11.0",
+    "@solana/web3.js": "^1.91.0",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@graphql-codegen/cli": "^5.0.0"
+  },
+  "optionalDependencies": {
+    "graphql": "^16.8.0"
+  }
+}

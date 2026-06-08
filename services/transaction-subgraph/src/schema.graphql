@@ -1,0 +1,202 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0")
+
+scalar DateTime
+scalar JSON
+
+enum TransactionType {
+  SEND
+  RECEIVE
+  SWAP
+  STAKE
+  UNSTAKE
+  BRIDGE
+  FIAT_ONRAMP
+  FIAT_OFFRAMP
+}
+
+enum TransactionStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+  CANCELLED
+}
+
+enum IntentType {
+  SWAP
+  BRIDGE
+  STAKE
+  GENERIC
+}
+
+enum RoutingPreference {
+  BEST_PRICE
+  FASTEST
+  MOST_SECURE
+  USER_PREFERRED
+}
+
+type Transaction @key(fields: "id") {
+  id: ID!
+  userId: ID!
+  user: User @external
+  walletId: ID!
+  wallet: Wallet @external
+  chainId: String!
+  type: TransactionType!
+  status: TransactionStatus!
+  fromAddress: String!
+  toAddress: String!
+  amount: String!
+  tokenSymbol: String!
+  tokenAddress: String!
+  fee: String!
+  feeUSD: Float!
+  hash: String
+  blockNumber: Int
+  protocol: String!
+  intent: TransactionIntent
+  metadata: JSON
+  createdAt: DateTime!
+  confirmedAt: DateTime
+}
+
+type TransactionIntent {
+  type: IntentType!
+  description: String!
+  inputToken: String!
+  outputToken: String!
+  minOutputAmount: String!
+  maxSlippage: Float!
+  deadline: DateTime!
+  routingPreference: RoutingPreference!
+}
+
+type GasEstimate {
+  chainId: String!
+  gasPrice: String!
+  gasLimit: String!
+  estimatedFee: String!
+  estimatedFeeUSD: Float!
+}
+
+type SwapQuote {
+  id: ID!
+  protocol: String!
+  fromToken: String!
+  toToken: String!
+  fromAmount: String!
+  toAmount: String!
+  minAmountOut: String!
+  priceImpact: Float!
+  estimatedGas: String!
+  estimatedGasUSD: Float!
+  route: JSON!
+  validUntil: DateTime!
+  metadata: JSON
+}
+
+type TransactionConnection {
+  edges: [TransactionEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type TransactionEdge {
+  node: Transaction!
+  cursor: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+input Pagination {
+  first: Int
+  after: String
+  last: Int
+  before: String
+}
+
+input SwapIntent {
+  chainId: String!
+  inputToken: String!
+  outputToken: String!
+  amount: String!
+  minOutputAmount: String!
+  maxSlippage: Float!
+  deadline: DateTime!
+  routingPreference: RoutingPreference
+  description: String
+}
+
+input BridgeIntent {
+  sourceChainId: String!
+  destinationChainId: String!
+  token: String!
+  amount: String!
+  minReceiveAmount: String!
+  deadline: DateTime!
+  routingPreference: RoutingPreference
+}
+
+extend type Query {
+  transaction(id: ID!): Transaction
+  transactions(
+    walletId: ID
+    userId: ID
+    chainId: String
+    type: TransactionType
+    status: TransactionStatus
+    pagination: Pagination
+  ): TransactionConnection!
+  
+  estimateGas(
+    chainId: String!
+    from: String!
+    to: String!
+    amount: String!
+    tokenAddress: String!
+    protocol: String
+  ): GasEstimate!
+
+  swapQuote(
+    chainId: String!
+    protocol: String
+    fromToken: String!
+    toToken: String!
+    amount: String!
+    slippage: Float
+  ): SwapQuote!
+}
+
+extend type Mutation {
+  initiateSwap(intent: SwapIntent!): Transaction!
+  initiateBridge(intent: BridgeIntent!): Transaction!
+  
+  executeSwap(
+    chainId: String!
+    protocol: String
+    fromToken: String!
+    toToken: String!
+    amount: String!
+    slippage: Float!
+  ): Transaction!
+  
+  sendTokens(
+    walletId: ID!
+    toAddress: String!
+    amount: String!
+    tokenAddress: String!
+  ): Transaction!
+  
+  cancelTransaction(id: ID!): Transaction!
+}
+
+extend type Subscription {
+  transactionStatusChanged(transactionId: ID!): Transaction!
+  transactionConfirmed(userId: ID!): Transaction!
+}

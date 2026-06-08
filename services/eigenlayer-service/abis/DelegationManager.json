@@ -1,0 +1,84 @@
+[
+  {
+    "type": "function",
+    "name": "delegateTo",
+    "inputs": [
+      { "name": "operator", "type": "address" },
+      {
+        "name": "approverSignatureAndExpiry",
+        "type": "tuple",
+        "components": [
+          { "name": "signature", "type": "bytes" },
+          { "name": "expiry", "type": "uint256" }
+        ]
+      },
+      { "name": "approverSalt", "type": "bytes32" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "undelegate",
+    "inputs": [{ "name": "staker", "type": "address" }],
+    "outputs": [{ "name": "withdrawalRoot", "type": "bytes32" }],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "delegatedTo",
+    "inputs": [{ "name": "staker", "type": "address" }],
+    "outputs": [{ "name": "", "type": "address" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "isOperator",
+    "inputs": [{ "name": "operator", "type": "address" }],
+    "outputs": [{ "name": "", "type": "bool" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "operatorShares",
+    "inputs": [
+      { "name": "operator", "type": "address" },
+      { "name": "strategy", "type": "address" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "registerAsOperator",
+    "inputs": [
+      {
+        "name": "registeringOperatorDetails",
+        "type": "tuple",
+        "components": [
+          { "name": "earningsReceiver", "type": "address" },
+          { "name": "delegationApprover", "type": "address" },
+          { "name": "stakerOptOutWindowBlocks", "type": "uint32" }
+        ]
+      },
+      { "name": "metadataURI", "type": "string" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "StakerDelegated",
+    "inputs": [
+      { "name": "staker", "type": "address", "indexed": true },
+      { "name": "operator", "type": "address", "indexed": true }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "OperatorRegistered",
+    "inputs": [
+      { "name": "operator", "type": "address", "indexed": true }
+    ]
+  }
+]

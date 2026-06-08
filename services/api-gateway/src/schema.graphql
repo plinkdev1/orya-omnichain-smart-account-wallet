@@ -1,0 +1,280 @@
+# GraphQL Schema - ORŸA Wallet API Gateway
+# Main schema exported by Apollo Federation
+
+scalar DateTime
+scalar BigInt
+scalar JSON
+
+# ============ Wallet Type ============
+type Wallet {
+  id: ID!
+  userId: String!
+  address: String!
+  chainType: String! # "sui", "ethereum", "solana", "btcfi"
+  name: String
+  balance: Balance!
+  tokenBalances: [TokenBalance!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Balance {
+  symbol: String!
+  amount: BigInt!
+  decimals: Int!
+  valueUSD: Float!
+  chainType: String!
+  tokenAddress: String
+}
+
+type TokenBalance {
+  tokenId: String!
+  symbol: String!
+  name: String!
+  amount: BigInt!
+  decimals: Int!
+  valueUSD: Float!
+  price: Float!
+  change24h: Float
+  icon: String
+}
+
+# ============ Transaction Type ============
+type Transaction {
+  id: ID!
+  userId: String!
+  walletAddress: String!
+  chainType: String!
+  type: TransactionType!
+  status: TransactionStatus!
+  amount: BigInt!
+  token: String!
+  fromAddress: String!
+  toAddress: String!
+  txHash: String
+  timestamp: DateTime!
+  gasUsed: BigInt
+  gasFee: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum TransactionType {
+  SEND
+  RECEIVE
+  SWAP
+  STAKE
+  UNSTAKE
+  BRIDGE
+  DEPOSIT
+  WITHDRAW
+  APPROVAL
+}
+
+enum TransactionStatus {
+  PENDING
+  PROCESSING
+  CONFIRMED
+  FAILED
+  CANCELLED
+}
+
+# ============ Portfolio Type ============
+type Portfolio {
+  id: ID!
+  userId: String!
+  totalValueUSD: Float!
+  dailyChange: Float!
+  dailyChangePercent: Float!
+  weeklyChange: Float!
+  monthlyChange: Float!
+  allocations: [AssetAllocation!]!
+  riskProfile: RiskProfile!
+  metrics: PortfolioMetrics!
+  updatedAt: DateTime!
+}
+
+type AssetAllocation {
+  chainType: String!
+  percentage: Float!
+  valueUSD: Float!
+  count: Int!
+}
+
+type RiskProfile {
+  score: Float! # 0-100
+  level: RiskLevel! # LOW, MEDIUM, HIGH, VERY_HIGH
+  volatilityScore: Float
+  exposureScore: Float
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+}
+
+type PortfolioMetrics {
+  totalValueUSD: Float!
+  totalValueChange24h: Float!
+  totalValueChangePercent24h: Float!
+  bestPerformingAsset: String
+  worstPerformingAsset: String
+  diversificationScore: Float # 0-1
+  rebalanceRecommendation: String
+}
+
+# ============ Token Metadata ============
+type TokenMetadata {
+  id: ID!
+  address: String!
+  symbol: String!
+  name: String!
+  decimals: Int!
+  chainType: String!
+  icon: String
+  price: Float!
+  marketCap: BigInt
+  volume24h: BigInt
+  change24h: Float
+  change7d: Float
+  verified: Boolean!
+  updatedAt: DateTime!
+}
+
+# ============ User Type ============
+type User {
+  id: ID!
+  email: String!
+  displayName: String
+  profileImage: String
+  wallets: [Wallet!]!
+  portfolio: Portfolio
+  kyc: KYCStatus
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type KYCStatus {
+  status: KYCStatusEnum!
+  completedAt: DateTime
+  expiresAt: DateTime
+  level: Int! # 0 = none, 1 = basic, 2 = full
+}
+
+enum KYCStatusEnum {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+# ============ Queries ============
+type Query {
+  # User queries
+  user(id: ID!): User
+  currentUser: User
+  
+  # Wallet queries
+  wallet(id: ID!): Wallet
+  userWallets(userId: ID!): [Wallet!]!
+  walletBalance(address: String!, chainType: String!): Balance
+  
+  # Transaction queries
+  transactions(userId: ID!, limit: Int, offset: Int): [Transaction!]!
+  transaction(id: ID!): Transaction
+  userTransactionHistory(userId: ID!, chainType: String, limit: Int): [Transaction!]!
+  
+  # Portfolio queries
+  portfolio(userId: ID!): Portfolio
+  portfolioMetrics(userId: ID!): PortfolioMetrics
+  assetAllocations(userId: ID!): [AssetAllocation!]!
+  
+  # Token queries
+  token(id: ID!): TokenMetadata
+  tokens(chainType: String, limit: Int): [TokenMetadata!]!
+  tokensBySymbol(symbols: [String!]!): [TokenMetadata!]!
+  
+  # Market data
+  tokenPrice(symbol: String!, chainType: String): Float
+  marketData(chainType: String): JSON
+}
+
+# ============ Mutations ============
+type Mutation {
+  # User mutations
+  createUser(input: CreateUserInput!): User
+  updateUserProfile(input: UpdateUserInput!): User
+  
+  # Wallet mutations
+  addWallet(input: AddWalletInput!): Wallet
+  removeWallet(walletId: ID!): Boolean
+  renameWallet(walletId: ID!, name: String!): Wallet
+  
+  # Transaction mutations
+  createTransaction(input: CreateTransactionInput!): Transaction
+  approveTransaction(transactionId: ID!): Transaction
+  rejectTransaction(transactionId: ID!): Boolean
+  
+  # Portfolio mutations
+  updatePortfolio(userId: ID!): Portfolio
+  rebalancePortfolio(input: RebalanceInput!): Portfolio
+}
+
+input CreateUserInput {
+  email: String!
+  displayName: String
+  password: String!
+}
+
+input UpdateUserInput {
+  userId: ID!
+  displayName: String
+  profileImage: String
+}
+
+input AddWalletInput {
+  userId: ID!
+  address: String!
+  chainType: String!
+  name: String
+}
+
+input CreateTransactionInput {
+  userId: ID!
+  type: TransactionType!
+  fromAddress: String!
+  toAddress: String!
+  amount: BigInt!
+  token: String!
+  chainType: String!
+  gasLimit: BigInt
+  gasPrice: BigInt
+}
+
+input RebalanceInput {
+  userId: ID!
+  targetAllocations: [AllocationInput!]!
+}
+
+input AllocationInput {
+  chainType: String!
+  percentage: Float!
+}
+
+# ============ Subscriptions ============
+type Subscription {
+  # Real-time balance updates
+  balanceUpdated(walletAddress: String!): Balance!
+  
+  # Transaction status updates
+  transactionStatusChanged(transactionId: ID!): Transaction!
+  
+  # Portfolio updates
+  portfolioUpdated(userId: ID!): Portfolio!
+  
+  # Market data updates
+  priceUpdated(symbol: String!): Float!
+}

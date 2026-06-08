@@ -1,0 +1,30 @@
+{
+  "name": "@orya/aa-provider-alchemy",
+  "version": "1.0.0",
+  "description": "Alchemy Account Abstraction provider implementation",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@orya/wallet-core": "workspace:*",
+    "@orya/shared-types": "workspace:*",
+    "@alchemy/aa-core": "^2.0.0",
+    "ethers": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

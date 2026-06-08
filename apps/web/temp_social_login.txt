@@ -1,0 +1,192 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { usePrivy } from '@privy-io/react-auth';
+import { useOnboardingStore } from '@/lib/onboardingStore';
+import { OnboardingContainer } from '@/components/onboarding/OnboardingContainer';
+import { OnboardingButton } from '@/components/onboarding/OnboardingButton';
+import { ProgressBar } from '@/components/onboarding/ProgressBar';
+import { Mail, Chrome, Apple, Smartphone } from 'lucide-react';
+
+export default function NormieSocialLoginPage() {
+  const router = useRouter();
+  const { login } = usePrivy();
+  const { setAuthMethod, setStep, setError, error: storeError } = useOnboardingStore();
+  
+  const [loadingMethod, setLoadingMethod] = useState<string | null>(null);
+  const [buttonErrors, setButtonErrors] = useState<Record<string, string>>({});
+
+  const handleLogin = async (method: 'google' | 'apple' | 'email' | 'phone') => {
+    try {
+      setLoadingMethod(method);
+      setButtonErrors((prev) => ({ ...prev, [method]: '' }));
+
+      if (!login) {
+        throw new Error('Login method not available. Privy provider may not be configured.');
+      }
+
+      await login({ loginMethods: [method] });
+
+      setAuthMethod(method);
+      setStep(3);
+      setError(null);
+
+      router.push('/onboarding/normie/card-setup');
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : `${method} sign-in failed`;
+      setButtonErrors((prev) => ({ ...prev, [method]: errorMessage }));
+      setError(errorMessage);
+      setLoadingMethod(null);
+    }
+  };
+
+  return (
+    <OnboardingContainer showBackButton onBack={() => router.back()}>
+      <div className="min-h-screen py-8 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className="mb-12">
+            <ProgressBar currentStep={2} totalSteps={9} style="linear" />
+          </div>
+
+          <div className="mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-deep-charcoal dark:text-bone-white mb-3">
+              Sign in to your ORŸA wallet
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Fast, secure, and private. Choose your preferred method.
+            </p>
+          </div>
+
+          {storeError && (
+            <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+              <p className="text-red-600 dark:text-red-400 text-sm">
+                {storeError}
+              </p>
+            </div>
+          )}
+
+          <div className="space-y-3 mb-8">
+            <button
+              onClick={() => handleLogin('google')}
+              disabled={loadingMethod !== null}
+              className={`w-full p-4 rounded-2xl border-2 transition-all duration-200 flex items-center gap-4 text-left ${
+                loadingMethod === 'google'
+                  ? 'border-pale-gold dark:border-neon-gold bg-pale-gold/5 dark:bg-neon-gold/5'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-pale-gold/40 dark:hover:border-neon-gold/40'
+              } ${loadingMethod !== null && loadingMethod !== 'google' ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <div className="flex-shrink-0">
+                <Chrome className="w-6 h-6 text-blue-500" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-deep-charcoal dark:text-bone-white">
+                  Google
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Quick sign-up with your Google account
+                </p>
+              </div>
+              {buttonErrors.google && (
+                <p className="text-xs text-red-600 dark:text-red-400">{buttonErrors.google}</p>
+              )}
+            </button>
+
+            <button
+              onClick={() => handleLogin('apple')}
+              disabled={loadingMethod !== null}
+              className={`w-full p-4 rounded-2xl border-2 transition-all duration-200 flex items-center gap-4 text-left ${
+                loadingMethod === 'apple'
+                  ? 'border-pale-gold dark:border-neon-gold bg-pale-gold/5 dark:bg-neon-gold/5'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-pale-gold/40 dark:hover:border-neon-gold/40'
+              } ${loadingMethod !== null && loadingMethod !== 'apple' ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <div className="flex-shrink-0">
+                <Apple className="w-6 h-6 text-black dark:text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-deep-charcoal dark:text-bone-white">
+                  Apple
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Quick sign-up with your Apple ID
+                </p>
+              </div>
+              {buttonErrors.apple && (
+                <p className="text-xs text-red-600 dark:text-red-400">{buttonErrors.apple}</p>
+              )}
+            </button>
+
+            <button
+              onClick={() => handleLogin('email')}
+              disabled={loadingMethod !== null}
+              className={`w-full p-4 rounded-2xl border-2 transition-all duration-200 flex items-center gap-4 text-left ${
+                loadingMethod === 'email'
+                  ? 'border-pale-gold dark:border-neon-gold bg-pale-gold/5 dark:bg-neon-gold/5'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-pale-gold/40 dark:hover:border-neon-gold/40'
+              } ${loadingMethod !== null && loadingMethod !== 'email' ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <div className="flex-shrink-0">
+                <Mail className="w-6 h-6 text-amber-500" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-deep-charcoal dark:text-bone-white">
+                  Email
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Sign up with your email address
+                </p>
+              </div>
+              {buttonErrors.email && (
+                <p className="text-xs text-red-600 dark:text-red-400">{buttonErrors.email}</p>
+              )}
+            </button>
+
+            <button
+              onClick={() => handleLogin('phone')}
+              disabled={loadingMethod !== null}
+              className={`w-full p-4 rounded-2xl border-2 transition-all duration-200 flex items-center gap-4 text-left ${
+                loadingMethod === 'phone'
+                  ? 'border-pale-gold dark:border-neon-gold bg-pale-gold/5 dark:bg-neon-gold/5'
+                  : 'border-gray-200 dark:border-gray-700 hover:border-pale-gold/40 dark:hover:border-neon-gold/40'
+              } ${loadingMethod !== null && loadingMethod !== 'phone' ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              <div className="flex-shrink-0">
+                <Smartphone className="w-6 h-6 text-green-500" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-deep-charcoal dark:text-bone-white">
+                  Phone
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Sign up with your phone number
+                </p>
+              </div>
+              {buttonErrors.phone && (
+                <p className="text-xs text-red-600 dark:text-red-400">{buttonErrors.phone}</p>
+              )}
+            </button>
+          </div>
+
+          <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 mb-8">
+            <p className="text-sm text-blue-900 dark:text-blue-200">
+              <strong>🔒 Security:</strong> Your credentials are encrypted and never stored on our servers. We partner with Privy for secure authentication.
+            </p>
+          </div>
+
+          <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+            <p className="text-xs text-gray-600 dark:text-gray-400 text-center mb-4">
+              By signing in, you agree to our Terms of Service and Privacy Policy
+            </p>
+            <button
+              onClick={() => router.back()}
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 dark:border-gray-700 text-deep-charcoal dark:text-bone-white hover:border-pale-gold dark:hover:border-neon-gold transition-colors font-medium"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </OnboardingContainer>
+  );
+}

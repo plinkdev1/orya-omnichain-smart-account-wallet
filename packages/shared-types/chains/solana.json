@@ -1,0 +1,130 @@
+{
+  "vmFamily": "SVM",
+  "chains": [
+    {
+      "id": "solana:mainnet",
+      "name": "Solana",
+      "symbol": "SOL",
+      "type": "solana",
+      "icon": "/icons/chains/solana.svg",
+      "rpcUrl": "https://api.mainnet-beta.solana.com",
+      "explorerUrl": "https://solscan.io",
+      "nativeCurrency": {
+        "name": "Solana",
+        "symbol": "SOL",
+        "decimals": 9
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 6,
+      "status": "healthy",
+      "gasConfig": {
+        "lamportsPerSignature": 5000
+      },
+      "features": {
+        "spl": true,
+        "tokenExtensions": true
+      }
+    },
+    {
+      "id": "solana:devnet",
+      "name": "Solana Devnet",
+      "symbol": "SOL",
+      "type": "solana",
+      "icon": "/icons/chains/solana.svg",
+      "rpcUrl": "https://api.devnet.solana.com",
+      "explorerUrl": "https://explorer.solana.com",
+      "nativeCurrency": {
+        "name": "Solana",
+        "symbol": "SOL",
+        "decimals": 9
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 7,
+      "status": "healthy",
+      "gasConfig": {
+        "lamportsPerSignature": 5000
+      },
+      "features": {
+        "spl": true,
+        "tokenExtensions": true
+      }
+    },
+    {
+      "id": "sonic:mainnet",
+      "name": "Sonic",
+      "symbol": "S",
+      "type": "solana",
+      "icon": "/icons/chains/sonic.svg",
+      "rpcUrl": "https://rpc.sonic.game",
+      "explorerUrl": "https://explorer.sonic.game",
+      "nativeCurrency": {
+        "name": "Sonic",
+        "symbol": "S",
+        "decimals": 9
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 50,
+      "status": "healthy",
+      "gasConfig": {
+        "lamportsPerSignature": 5000
+      },
+      "features": {
+        "spl": true,
+        "gaming": true
+      }
+    },
+    {
+      "id": "eclipse:mainnet",
+      "name": "Eclipse",
+      "symbol": "ECL",
+      "type": "solana",
+      "icon": "/icons/chains/eclipse.svg",
+      "rpcUrl": "https://mainnetbeta-rpc.eclipse.xyz",
+      "explorerUrl": "https://explorer.eclipse.xyz",
+      "nativeCurrency": {
+        "name": "Eclipse",
+        "symbol": "ECL",
+        "decimals": 9
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 51,
+      "status": "healthy",
+      "gasConfig": {
+        "lamportsPerSignature": 5000
+      },
+      "features": {
+        "spl": true,
+        "modular": true
+      }
+    },
+    {
+      "id": "orca:mainnet",
+      "name": "Orca (Solana)",
+      "symbol": "SOL",
+      "type": "solana",
+      "icon": "/icons/chains/solana.svg",
+      "rpcUrl": "https://api.mainnet-beta.solana.com",
+      "explorerUrl": "https://solscan.io",
+      "nativeCurrency": {
+        "name": "Solana",
+        "symbol": "SOL",
+        "decimals": 9
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 52,
+      "status": "healthy",
+      "gasConfig": {
+        "lamportsPerSignature": 5000
+      },
+      "features": {
+        "spl": true,
+        "amm": true
+      }
+    }
+  ]
+}

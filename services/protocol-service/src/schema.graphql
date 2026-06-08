@@ -1,0 +1,126 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.0")
+
+scalar DateTime
+scalar JSON
+
+enum ProtocolTier {
+  CORE
+  VERIFIED
+  COMMUNITY
+}
+
+enum FeatureType {
+  SWAP
+  STAKE
+  LEND
+  BRIDGE
+  AGGREGATOR
+}
+
+type Protocol @key(fields: "id") {
+  id: ID!
+  name: String!
+  chainId: String!
+  type: FeatureType!
+  version: String!
+  logoUrl: String!
+  isActive: Boolean!
+  isAudited: Boolean!
+  auditors: [String!]!
+  tier: ProtocolTier!
+  metadata: ProtocolMetadata!
+  health: ProtocolHealth
+}
+
+type ProtocolMetadata {
+  website: String!
+  docs: String!
+  tvl: Float!
+  volume24h: Float!
+  fees: FeeStructure!
+  securityRating: Int!
+  supportedTokens: [String!]!
+}
+
+type FeeStructure {
+  protocolFee: Float!
+  platformFee: Float!
+  totalFee: Float!
+  feeBreakdown: String!
+}
+
+type ProtocolHealth {
+  isOperational: Boolean!
+  latency: Int!
+  lastChecked: DateTime!
+  issues: [String!]
+}
+
+type ProtocolPreference {
+  chainId: String!
+  feature: FeatureType!
+  preferredProtocol: String!
+  fallbackProtocols: [String!]!
+  lastUpdated: DateTime!
+}
+
+type TransactionIntent {
+  type: String!
+  description: String!
+  inputToken: String!
+  outputToken: String!
+  minOutputAmount: String!
+  maxSlippage: Float!
+  deadline: DateTime!
+  routingPreference: String!
+  chainId: String!
+}
+
+input RegisterProtocolInput {
+  name: String!
+  chainId: String!
+  type: FeatureType!
+  version: String!
+  logoUrl: String!
+  tier: ProtocolTier!
+  website: String!
+  docs: String!
+  securityRating: Int!
+  supportedTokens: [String!]!
+  protocolFee: Float!
+  platformFee: Float!
+}
+
+input UpdateProtocolInput {
+  name: String
+  logoUrl: String
+  tier: ProtocolTier
+  website: String
+  docs: String
+  securityRating: Int
+  supportedTokens: [String!]
+  tvl: Float
+  volume24h: Float
+  protocolFee: Float
+  platformFee: Float
+}
+
+extend type Query {
+  protocols(chainId: String!, feature: FeatureType!): [Protocol!]!
+  protocol(id: ID!): Protocol
+  protocolHealth(id: ID!): ProtocolHealth!
+  userProtocolPreferences(userId: ID!): [ProtocolPreference!]!
+  bestProtocolForIntent(intent: TransactionIntent!): Protocol!
+}
+
+extend type Mutation {
+  registerProtocol(input: RegisterProtocolInput!): Protocol!
+  updateProtocol(id: ID!, input: UpdateProtocolInput!): Protocol!
+  activateProtocol(id: ID!): Protocol!
+  deactivateProtocol(id: ID!): Protocol!
+}
+
+extend type Subscription {
+  protocolHealthChanged(protocolId: ID!): ProtocolHealth!
+}

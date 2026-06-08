@@ -1,0 +1,223 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: orya-postgres-dev
+    environment:
+      POSTGRES_DB: orya_dev
+      POSTGRES_USER: orya_user
+      POSTGRES_PASSWORD: dev_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+      - ../services/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orya_user -d orya_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: orya-redis-dev
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass redis_password_123
+    volumes:
+      - redis_data_dev:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+
+  # NATS Message Bus
+  nats:
+    image: nats:latest
+    container_name: orya-nats-dev
+    ports:
+      - "4222:4222"
+      - "6222:6222"
+      - "8222:8222"
+    command: -js -sd /data
+    volumes:
+      - nats_data_dev:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8222/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ../services/api-gateway
+      dockerfile: Dockerfile
+    container_name: orya-api-gateway-dev
+    environment:
+      RUST_LOG: debug
+      DATABASE_URL: postgres://orya_user:dev_password_123@postgres:5432/orya_dev
+      REDIS_URL: redis://:redis_password_123@redis:6379
+      NATS_URL: nats://nats:4222
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+      user-service:
+        condition: service_started
+      wallet-service:
+        condition: service_started
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # User Service
+  user-service:
+    build:
+      context: ../services/user-service
+      dockerfile: Dockerfile
+    container_name: orya-user-service-dev
+    environment:
+      RUST_LOG: debug
+      DATABASE_URL: postgres://orya_user:dev_password_123@postgres:5432/orya_dev
+      REDIS_URL: redis://:redis_password_123@redis:6379
+      NATS_URL: nats://nats:4222
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Wallet Service
+  wallet-service:
+    build:
+      context: ../services/wallet-service
+      dockerfile: Dockerfile
+    container_name: orya-wallet-service-dev
+    environment:
+      RUST_LOG: debug
+      DATABASE_URL: postgres://orya_user:dev_password_123@postgres:5432/orya_dev
+      REDIS_URL: redis://:redis_password_123@redis:6379
+      NATS_URL: nats://nats:4222
+    ports:
+      - "3010:3010"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3010/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Transaction Service
+  transaction-service:
+    build:
+      context: ../services/transaction-service
+      dockerfile: Dockerfile
+    container_name: orya-transaction-service-dev
+    environment:
+      RUST_LOG: debug
+      DATABASE_URL: postgres://orya_user:dev_password_123@postgres:5432/orya_dev
+      REDIS_URL: redis://:redis_password_123@redis:6379
+      NATS_URL: nats://nats:4222
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Portfolio Service
+  portfolio-service:
+    build:
+      context: ../services/portfolio-service
+      dockerfile: Dockerfile
+    container_name: orya-portfolio-service-dev
+    environment:
+      RUST_LOG: debug
+      DATABASE_URL: postgres://orya_user:dev_password_123@postgres:5432/orya_dev
+      REDIS_URL: redis://:redis_password_123@redis:6379
+      NATS_URL: nats://nats:4222
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+    networks:
+      - orya-dev-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data_dev:
+    driver: local
+  redis_data_dev:
+    driver: local
+  nats_data_dev:
+    driver: local
+
+networks:
+  orya-dev-network:
+    driver: bridge

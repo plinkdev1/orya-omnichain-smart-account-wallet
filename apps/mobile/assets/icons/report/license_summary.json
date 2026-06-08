@@ -1,0 +1,95 @@
+{
+  "summary": {
+    "total_icons": 29,
+    "icons_with_real_sources": 0,
+    "fallback_icons": 29,
+    "license_types": {
+      "fallback": 29,
+      "mit": 0,
+      "apache-2.0": 0,
+      "cc0": 0,
+      "isc": 0,
+      "other": 0
+    }
+  },
+  "sources": {
+    "ErikThiart": {
+      "name": "cryptocurrency-icons",
+      "url": "https://github.com/ErikThiart/cryptocurrency-icons",
+      "license": "MIT",
+      "license_url": "https://github.com/ErikThiart/cryptocurrency-icons/blob/master/LICENSE",
+      "icons_used": 0,
+      "description": "Collection of high-resolution cryptocurrency icons"
+    },
+    "spothq": {
+      "name": "cryptocurrency-icons",
+      "url": "https://github.com/spothq/cryptocurrency-icons",
+      "license": "CC0 (Public Domain)",
+      "license_url": "https://github.com/spothq/cryptocurrency-icons/blob/master/LICENSE",
+      "icons_used": 0,
+      "description": "32x32 and 128x128 cryptocurrency icons in SVG format"
+    },
+    "LedgerHQ": {
+      "name": "crypto-icons",
+      "url": "https://github.com/LedgerHQ/crypto-icons",
+      "license": "MIT",
+      "license_url": "https://github.com/LedgerHQ/crypto-icons/blob/master/LICENSE",
+      "icons_used": 0,
+      "description": "Official Ledger crypto icons"
+    },
+    "cryptocoins-icons": {
+      "name": "cryptocoins-icons",
+      "url": "https://www.npmjs.com/package/cryptocoins-icons",
+      "license": "Multiple (See package)",
+      "cdn_url": "https://www.jsdelivr.com/package/npm/cryptocoins-icons",
+      "icons_used": 0,
+      "description": "Cryptoicons via jsDelivr CDN"
+    }
+  },
+  "license_text": {
+    "MIT": "MIT License - Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.",
+    "CC0": "CC0 1.0 Universal (CC0 1.0) Public Domain Dedication - The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law."
+  },
+  "compliance_notes": {
+    "commercial_use": "All source icons are licensed under permissive licenses (MIT or CC0), allowing commercial use.",
+    "attribution": "Attribution is appreciated but not required for CC0 icons; recommended for MIT icons.",
+    "modifications": "All source licenses permit creation of derivative works and modifications.",
+    "distribution": "All source licenses permit free distribution of the icons.",
+    "trademark": "No trademarked assets are included; all icons are generic representations."
+  },
+  "icons_by_source": {
+    "fallback": [
+      "bitcoin",
+      "ethereum",
+      "binancecoin",
+      "ripple",
+      "litecoin",
+      "cardano",
+      "polkadot",
+      "solana",
+      "avalanche",
+      "tron",
+      "dogecoin",
+      "monero",
+      "chainlink",
+      "polygon",
+      "algorand",
+      "tezos",
+      "bitcoin-cash",
+      "stellar",
+      "filecoin",
+      "zcash",
+      "near",
+      "sui",
+      "aptos",
+      "optimism",
+      "arbitrum",
+      "fantom",
+      "klaytn",
+      "hedera",
+      "cosmos"
+    ]
+  },
+  "timestamp": "2025-01-11T00:00:00Z",
+  "status": "All icons currently use fallback SVG generation. To obtain high-quality production icons, run: npm run fetch-icons"
+}

@@ -1,0 +1,57 @@
+{
+  "vmFamily": "MoveVM",
+  "chains": [
+    {
+      "id": "aptos:mainnet",
+      "name": "Aptos Mainnet",
+      "symbol": "APT",
+      "type": "aptos",
+      "icon": "/icons/chains/aptos.svg",
+      "rpcUrl": "https://fullnode.mainnet.aptoslabs.com",
+      "explorerUrl": "https://explorer.aptoslabs.com",
+      "nativeCurrency": {
+        "name": "Aptos",
+        "symbol": "APT",
+        "decimals": 8
+      },
+      "isTestnet": false,
+      "isEnabled": true,
+      "priority": 45,
+      "status": "healthy",
+      "gasConfig": {
+        "gasUnitPrice": 100,
+        "maxGasAmount": 100000
+      },
+      "features": {
+        "programmableObjects": true,
+        "parallelExecution": true
+      }
+    },
+    {
+      "id": "aptos:testnet",
+      "name": "Aptos Testnet",
+      "symbol": "APT",
+      "type": "aptos",
+      "icon": "/icons/chains/aptos.svg",
+      "rpcUrl": "https://fullnode.testnet.aptoslabs.com",
+      "explorerUrl": "https://explorer.testnet.aptoslabs.com",
+      "nativeCurrency": {
+        "name": "Aptos",
+        "symbol": "APT",
+        "decimals": 8
+      },
+      "isTestnet": true,
+      "isEnabled": true,
+      "priority": 46,
+      "status": "healthy",
+      "gasConfig": {
+        "gasUnitPrice": 100,
+        "maxGasAmount": 100000
+      },
+      "features": {
+        "programmableObjects": true,
+        "parallelExecution": true
+      }
+    }
+  ]
+}

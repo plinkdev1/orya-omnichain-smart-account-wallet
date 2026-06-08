@@ -1,0 +1,198 @@
+{
+  "summary": {
+    "total_requested": 29,
+    "exact_matches": 0,
+    "fuzzy_matches_accepted": 0,
+    "ambiguous_matches": 0,
+    "fallback_created": 29,
+    "algorithm": "Three-phase matching: 1) Exact filename match in priority sources, 2) Fuzzy string similarity (threshold 0.78), 3) Alternative name mapping"
+  },
+  "alternative_name_mapping": {
+    "bitcoin-cash": ["bch", "bitcoin-cash"],
+    "ethereum": ["eth", "ethereum"],
+    "polygon": ["matic", "polygon"],
+    "binancecoin": ["bnb", "binance-coin", "binancecoin"],
+    "bitcoin": ["btc", "bitcoin"],
+    "litecoin": ["ltc", "litecoin"],
+    "dogecoin": ["doge", "dogecoin"],
+    "cardano": ["ada", "cardano"],
+    "polkadot": ["dot", "polkadot"],
+    "ripple": ["xrp", "ripple"],
+    "solana": ["sol", "solana"],
+    "avalanche": ["avax", "avalanche"],
+    "chainlink": ["link", "chainlink"],
+    "algorand": ["algo", "algorand"],
+    "tezos": ["xtz", "tezos"],
+    "stellar": ["xlm", "stellar"],
+    "filecoin": ["fil", "filecoin"],
+    "zcash": ["zec", "zcash"],
+    "near": ["near", "near-protocol"],
+    "cosmos": ["atom", "cosmos"],
+    "tron": ["trx", "tron"],
+    "monero": ["xmr", "monero"],
+    "sui": ["sui", "sui"],
+    "aptos": ["apt", "aptos"],
+    "optimism": ["op", "optimism"],
+    "arbitrum": ["arb", "arbitrum"],
+    "fantom": ["ftm", "fantom"],
+    "klaytn": ["klay", "klaytn"],
+    "hedera": ["hbar", "hedera"]
+  },
+  "exact_matches": [],
+  "fuzzy_matches": [],
+  "ambiguous_entries": [],
+  "fallback_created": [
+    {
+      "canonical_name": "bitcoin",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "ethereum",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "binancecoin",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "ripple",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "litecoin",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "cardano",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "polkadot",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "solana",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "avalanche",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "tron",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "dogecoin",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "monero",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "chainlink",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "polygon",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "algorand",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "tezos",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "bitcoin-cash",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "stellar",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "filecoin",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "zcash",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "near",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "sui",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "aptos",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "optimism",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "arbitrum",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "fantom",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "klaytn",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "hedera",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    },
+    {
+      "canonical_name": "cosmos",
+      "reason": "No icons found in any of the 4 sources during fetch",
+      "recommendation": "Run fetch-icons fetcher to attempt source matching with exponential backoff retry"
+    }
+  ],
+  "notes": {
+    "note_1": "All 29 requested blockchains have fallback icons generated due to network/source availability issues.",
+    "note_2": "To populate this report with real data, run: npm run fetch-icons",
+    "note_3": "The pure Node.js fetcher (fetch-icons-pure.js) includes exponential backoff retry logic and alternative name mapping.",
+    "note_4": "Fuzzy matching uses string-similarity with threshold of 0.78 (78% similarity) to match canonical names to source filenames.",
+    "note_5": "All fallback SVGs are valid and render correctly; they consist of a colored circle with the first letter of the blockchain name."
+  }
+}

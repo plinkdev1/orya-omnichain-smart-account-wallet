@@ -1,0 +1,466 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// USER & AUTHENTICATION ENTITIES
+// ============================================================================
+
+model User {
+  id                String @id @default(uuid())
+  email             String @unique
+  passwordHash      String?
+  privyId           String @unique
+  firebaseUid       String @unique
+  kycStatus         KYCStatus @default(NONE)
+  kycProvider       KYCProvider?
+  advancedMode      Boolean @default(false)
+  
+  // Relations
+  preferences       UserPreferences?
+  protocolPreferences ProtocolPreference[]
+  wallets           Wallet[]
+  transactions      Transaction[]
+  stakingPositions  StakingPosition[]
+  lendingPositions  LendingPosition[]
+  fiatTransactions  FiatTransaction[]
+  notifications     Notification[]
+  auditLogs         AuditLog[]
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([email])
+  @@index([privyId])
+  @@index([firebaseUid])
+  @@map("users")
+}
+
+model UserPreferences {
+  id                String @id @default(uuid())
+  userId            String @unique
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  autoSigning       AutoSigningConfig?
+  defaultChain      String @default("sui")
+  hiddenTokens      String[] @default([])
+  favoriteProtocols String[] @default([])
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+  @@map("user_preferences")
+}
+
+model AutoSigningConfig {
+  id                String @id @default(uuid())
+  userPrefId        String @unique
+  userPreferences   UserPreferences @relation(fields: [userPrefId], references: [id], onDelete: Cascade)
+  
+  enabled           Boolean @default(false)
+  thresholdUSD      Float @default(100.0)
+  whitelistedContracts String[] @default([])
+  expiryHours       Int @default(24)
+  maxDailyAmountUSD Float @default(10000.0)
+  requireBiometric  Boolean @default(true)
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("auto_signing_configs")
+}
+
+model ProtocolPreference {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  chainId           String
+  feature           String // 'swap' | 'stake' | 'lend' | 'bridge' | 'aggregator'
+  preferredProtocol String
+  fallbackProtocols String[] @default([])
+  
+  lastUpdated       DateTime @updatedAt
+
+  @@unique([userId, chainId, feature])
+  @@index([userId])
+  @@index([userId, chainId, feature])
+  @@map("protocol_preferences")
+}
+
+// ============================================================================
+// WALLET & BALANCE ENTITIES
+// ============================================================================
+
+model Wallet {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type              WalletType
+  chainType         String // 'sui', 'ethereum', 'solana', 'bitcoin'
+  address           String
+  publicKey         String?
+  encryptedPrivateKey String?
+  mpcKeyId          String?
+  
+  // Relations
+  balances          Balance[]
+  nfts              NFT[]
+  transactions      Transaction[]
+  
+  createdAt         DateTime @default(now())
+  lastSyncedAt      DateTime @updatedAt
+
+  @@unique([address, chainType])
+  @@index([userId])
+  @@index([address, chainType])
+  @@map("wallets")
+}
+
+model Balance {
+  id                String @id @default(uuid())
+  walletId          String
+  wallet            Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  tokenAddress      String
+  symbol            String
+  decimals          Int
+  amount            String // BigNumber as string
+  amountUSD         Float
+  
+  lastUpdated       DateTime @updatedAt
+
+  @@unique([walletId, tokenAddress])
+  @@index([walletId])
+  @@index([walletId, tokenAddress])
+  @@map("balances")
+}
+
+model NFT {
+  id                String @id @default(uuid())
+  walletId          String
+  wallet            Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  chainId           String
+  contractAddress   String
+  tokenId           String
+  name              String?
+  description       String?
+  imageUrl          String?
+  metadata          Json?
+  
+  createdAt         DateTime @default(now())
+
+  @@unique([walletId, contractAddress, tokenId])
+  @@index([walletId])
+  @@map("nfts")
+}
+
+// ============================================================================
+// TRANSACTION ENTITIES
+// ============================================================================
+
+model Transaction {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  walletId          String
+  wallet            Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  
+  chainId           String
+  type              TransactionType
+  status            TransactionStatus
+  
+  fromAddress       String
+  toAddress         String
+  amount            String // BigNumber as string
+  tokenSymbol       String
+  tokenAddress      String
+  
+  fee               String
+  feeUSD            Float
+  hash              String?
+  blockNumber       Int?
+  
+  protocol          String? // Which protocol was used
+  intent            TransactionIntent? @relation("TransactionToIntent")
+  metadata          Json?
+  
+  createdAt         DateTime @default(now())
+  confirmedAt       DateTime?
+
+  @@index([walletId])
+  @@index([userId])
+  @@index([createdAt])
+  @@index([status])
+  @@index([hash])
+  @@index([chainId, protocol])
+  @@map("transactions")
+}
+
+model TransactionIntent {
+  id                String @id @default(uuid())
+  transactionId     String @unique
+  transaction       Transaction @relation("TransactionToIntent", fields: [transactionId], references: [id], onDelete: Cascade)
+  
+  type              String // 'SWAP' | 'BRIDGE' | 'STAKE' | 'GENERIC'
+  description       String
+  inputToken        String
+  outputToken       String
+  minOutputAmount   String
+  maxSlippage       Float
+  deadline          DateTime
+  routingPreference String // 'BEST_PRICE' | 'FASTEST' | 'MOST_SECURE' | 'USER_PREFERRED'
+  
+  createdAt         DateTime @default(now())
+
+  @@index([transactionId])
+  @@map("transaction_intents")
+}
+
+// ============================================================================
+// PROTOCOL ENTITIES
+// ============================================================================
+
+model Protocol {
+  id                String @id @default(uuid())
+  protocolId        String @unique // 'sui-aftermath-swap'
+  name              String
+  chainId           String
+  type              String // 'swap' | 'stake' | 'lend' | 'bridge' | 'aggregator'
+  version           String
+  logoUrl           String?
+  
+  isActive          Boolean @default(true)
+  isAudited         Boolean @default(false)
+  auditors          String[] @default([])
+  tier              String @default("community") // 'core' | 'verified' | 'community'
+  
+  metadata          ProtocolMetadata?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([protocolId, chainId])
+  @@index([chainId])
+  @@index([type])
+  @@map("protocols")
+}
+
+model ProtocolMetadata {
+  id                String @id @default(uuid())
+  protocolId        String @unique
+  protocol          Protocol @relation(fields: [protocolId], references: [protocolId], onDelete: Cascade)
+  
+  website           String?
+  docs              String?
+  tvl               Float @default(0)
+  volume24h         Float @default(0)
+  fees              Json? // FeeStructure
+  securityRating    Float @default(0)
+  supportedTokens   String[] @default([])
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("protocol_metadata")
+}
+
+// ============================================================================
+// DEFI POSITIONS
+// ============================================================================
+
+model StakingPosition {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  chainId           String
+  protocol          String
+  validator         String?
+  stakedToken       String
+  stakedAmount      String
+  stakedAmountUSD   Float
+  
+  rewardToken       String
+  estimatedReward   String
+  apy               Float
+  status            String // 'active', 'pending', 'completed'
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+  @@index([chainId, protocol])
+  @@map("staking_positions")
+}
+
+model LendingPosition {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  chainId           String
+  protocol          String
+  collateralToken   String
+  collateralAmount  String
+  collateralAmountUSD Float
+  
+  borrowToken       String
+  borrowAmount      String
+  borrowAmountUSD   Float
+  
+  healthFactor      Float
+  interestRate      Float
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+  @@index([chainId, protocol])
+  @@map("lending_positions")
+}
+
+// ============================================================================
+// FIAT & PAYMENT ENTITIES
+// ============================================================================
+
+model FiatTransaction {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type              FiatType // 'ONRAMP' | 'OFFRAMP'
+  status            FiatStatus
+  provider          String // 'MOONPAY' | 'STRIPE' | 'COINBASE' | 'RAMP' | 'BANXA'
+  
+  fiatAmount        Float
+  fiatCurrency      String
+  cryptoAmount      String
+  cryptoToken       String
+  cryptoChain       String
+  
+  walletAddress     String
+  externalTxId      String?
+  metadata          Json?
+  
+  createdAt         DateTime @default(now())
+  completedAt       DateTime?
+
+  @@index([userId])
+  @@index([status])
+  @@map("fiat_transactions")
+}
+
+// ============================================================================
+// NOTIFICATIONS & AUDIT
+// ============================================================================
+
+model Notification {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  type              String
+  title             String
+  message           String
+  actionUrl         String?
+  
+  isRead            Boolean @default(false)
+  readAt            DateTime?
+  
+  createdAt         DateTime @default(now())
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
+}
+
+model AuditLog {
+  id                String @id @default(uuid())
+  userId            String
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  action            String
+  entityType        String
+  entityId          String
+  changes           Json?
+  
+  ipAddress         String?
+  userAgent         String?
+  
+  createdAt         DateTime @default(now())
+
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@map("audit_logs")
+}
+
+// ============================================================================
+// ENUMS
+// ============================================================================
+
+enum KYCStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum KYCProvider {
+  SUMSUB
+  PERSONA
+}
+
+enum WalletType {
+  CUSTODIAL
+  SELF_CUSTODY
+  EXTERNAL
+  MPC
+}
+
+enum TransactionType {
+  SEND
+  RECEIVE
+  SWAP
+  STAKE
+  UNSTAKE
+  BRIDGE
+  FIAT_ONRAMP
+  FIAT_OFFRAMP
+  LEND
+  BORROW
+  REPAY
+}
+
+enum TransactionStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+  CANCELLED
+}
+
+enum FiatType {
+  ONRAMP
+  OFFRAMP
+}
+
+enum FiatStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}

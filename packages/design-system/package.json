@@ -1,0 +1,43 @@
+{
+  "name": "@orya/design-system",
+  "version": "1.0.0",
+  "description": "Design system facade - platform-agnostic component exports",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./web": {
+      "import": "./dist/web.js",
+      "types": "./dist/web.d.ts"
+    },
+    "./native": {
+      "import": "./dist/native.js",
+      "types": "./dist/native.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch"
+  },
+  "keywords": [
+    "design-system",
+    "components",
+    "facade",
+    "orya"
+  ],
+  "author": "ORŸA Team",
+  "license": "MIT",
+  "dependencies": {
+    "@orya/design-system-web": "workspace:*",
+    "@orya/design-system-native": "workspace:*",
+    "@orya/design-tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  }
+}

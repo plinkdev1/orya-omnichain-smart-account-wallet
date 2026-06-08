@@ -1,0 +1,69 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+rule_files: []
+
+scrape_configs:
+  # Prometheus itself
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # NATS monitoring
+  - job_name: 'nats'
+    static_configs:
+      - targets: ['nats:8222']
+    metrics_path: '/metrics'
+
+  # API Gateway service
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['localhost:3000']
+    metrics_path: '/metrics'
+
+  # User Service
+  - job_name: 'user-service'
+    static_configs:
+      - targets: ['localhost:3001']
+    metrics_path: '/metrics'
+
+  # Transaction Service
+  - job_name: 'transaction-service'
+    static_configs:
+      - targets: ['localhost:3002']
+    metrics_path: '/metrics'
+
+  # Portfolio Service
+  - job_name: 'portfolio-service'
+    static_configs:
+      - targets: ['localhost:3003']
+    metrics_path: '/metrics'
+
+  # Ledger Service (NEW)
+  - job_name: 'ledger-service'
+    static_configs:
+      - targets: ['localhost:3007']
+    metrics_path: '/metrics'
+
+  # FX Routing Engine (NEW)
+  - job_name: 'fx-routing-engine'
+    static_configs:
+      - targets: ['localhost:3008']
+    metrics_path: '/metrics'
+
+  # SUI MPC AA Service (NEW)
+  - job_name: 'sui-mpc-aa-service'
+    static_configs:
+      - targets: ['localhost:3009']
+    metrics_path: '/metrics'
+
+  # Redis exporter
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
