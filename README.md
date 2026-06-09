@@ -13,7 +13,7 @@
 
 </div>
 
-> **Related:** UI prototype -> [orya-wallet-ui-prototype](https://github.com/plinkdev1/orya-wallet-ui-prototype)
+> **Related:** UI prototype -> [smart-account-wallet-ui-prototype](https://github.com/plinkdev1/smart-account-wallet-ui-prototype)
 
 ---
 
@@ -64,7 +64,7 @@ User ──▶ ORYA smart account (ERC-4337)
 ## Project Structure
 
 ```
-orya-omnichain-smart-account-wallet/
+omnichain-smart-account-wallet/
 .github/
    instructions/
    workflows/
@@ -165,7 +165,7 @@ npx next dev
 
 ## Notes
 
-Shared as a portfolio artifact demonstrating product and system design. Early prototype, not a finished product. The UI prototype lives in [orya-wallet-ui-prototype](https://github.com/plinkdev1/orya-wallet-ui-prototype).
+Shared as a portfolio artifact demonstrating product and system design. Early prototype, not a finished product. The UI prototype lives in [smart-account-wallet-ui-prototype](https://github.com/plinkdev1/smart-account-wallet-ui-prototype).
 
 <div align="center">
 
