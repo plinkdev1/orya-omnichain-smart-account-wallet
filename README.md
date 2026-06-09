@@ -7,20 +7,19 @@
 [![ERC-4337](https://img.shields.io/badge/ERC--4337-627EEA)]()
 [![Next.js](https://img.shields.io/badge/Next.js-000?logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 [![Status](https://img.shields.io/badge/status-MVP-orange)]()
 
 *A smart-account wallet built on account abstraction: one account, many chains, no seed-phrase friction.*
 
 </div>
 
+> **Related:** UI prototype -> [orya-wallet-ui-prototype](https://github.com/plinkdev1/orya-wallet-ui-prototype)
+
 ---
 
 ## What Is This?
 
-ORYA is an omnichain smart-account wallet built on ERC-4337 account abstraction. Instead of a single externally-owned account, users get a programmable smart account that can batch transactions, pay gas in flexible ways, and recover socially - across multiple chains from one interface.
-
-> **One smart account. Every chain. No seed-phrase headaches.**
+ORYA is an omnichain smart-account wallet built on ERC-4337 account abstraction. Instead of a single externally-owned account, users get a programmable smart account that can batch transactions, pay gas flexibly, and recover socially - across multiple chains from one interface.
 
 ---
 
@@ -164,18 +163,9 @@ npx next dev
 
 ---
 
-## Roadmap
-
-- Live ERC-4337 accounts on testnet
-- Paymaster-sponsored gasless flows
-- Social recovery
-- Broader omnichain support
-
----
-
 ## Notes
 
-Shared as a portfolio artifact demonstrating product and system design. Early prototype, not a finished product. Part of the ORYA project (paired with the wallet UI prototype repo).
+Shared as a portfolio artifact demonstrating product and system design. Early prototype, not a finished product. The UI prototype lives in [orya-wallet-ui-prototype](https://github.com/plinkdev1/orya-wallet-ui-prototype).
 
 <div align="center">
 
