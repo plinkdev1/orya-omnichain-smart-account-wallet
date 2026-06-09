@@ -1,116 +1,184 @@
-﻿# ORYA Wallet — Omnichain Smart-Account Wallet Platform
+﻿<div align="center">
 
-![pnpm](https://img.shields.io/badge/pnpm-monorepo-F69220) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6) ![Sui](https://img.shields.io/badge/Sui-MPC-6FBCF0) ![EVM](https://img.shields.io/badge/EVM-AA-627EEA) ![Solana](https://img.shields.io/badge/Solana-✓-14F195) ![Bitcoin](https://img.shields.io/badge/Bitcoin-BTCfi-F7931A) ![NATS](https://img.shields.io/badge/NATS-microservices-27AAE1)
+# ORYA
 
-> An omnichain, smart-account wallet platform spanning EVM, Sui, Solana, and Bitcoin — a pnpm monorepo with a 30+ service microservices backend, account abstraction across four providers, on-chain MPC (IKA 2PC-MPC on Sui), DeFi/bridge/fiat routing, and zero-knowledge KYC.
+**An omnichain smart-account wallet - account abstraction, gasless, recoverable**
 
-**Two repositories, one product.** This repo is the **platform and architecture**. The runnable product UI lives in **[plinkdev1/orya-wallet-app](https://github.com/plinkdev1/orya-wallet-app)** (private until release) — a navigable front-end prototype on mock data.
+[![ERC-4337](https://img.shields.io/badge/ERC--4337-627EEA)]()
+[![Next.js](https://img.shields.io/badge/Next.js-000?logo=next.js&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Status](https://img.shields.io/badge/status-MVP-orange)]()
 
-## System Overview
+*A smart-account wallet built on account abstraction: one account, many chains, no seed-phrase friction.*
 
-ORYA is one pnpm workspace in three layers:
+</div>
 
-1. **Apps** — the clients (web, mobile, admin).
-2. **Packages** — shared SDKs the apps and services build on (wallet core, account-abstraction providers, protocol adapters, the cross-platform design system).
-3. **Services** — 30+ independently-deployable microservices behind an API gateway, communicating over NATS, each owning a domain.
+---
 
-A typical request flows **client → API gateway → NATS → domain service(s) → chain adapters / subgraphs → response**. Signing for enhanced accounts is delegated to the MPC service, which coordinates 2PC-MPC on Sui rather than custodying keys.
+## What Is This?
 
-## Apps (apps/)
+ORYA is an omnichain smart-account wallet built on ERC-4337 account abstraction. Instead of a single externally-owned account, users get a programmable smart account that can batch transactions, pay gas in flexible ways, and recover socially - across multiple chains from one interface.
 
-| App | Description |
-|---|---|
-| web | Browser wallet (Next.js) |
-| mobile | React Native mobile wallet |
-| admin | Operations and support dashboard |
+> **One smart account. Every chain. No seed-phrase headaches.**
 
-## Packages (packages/)
+---
 
-**Account abstraction** — a unified smart-account layer: aa-provider-alchemy, aa-provider-biconomy, aa-provider-openzeppelin, zkSync-aa-contracts, zkSync-aa-sdk.
+## Features
 
-**Wallet & protocol core** — wallet-core, wallet-sdk, protocol-core, protocol-adapters (chain-agnostic engine plus per-network adapters).
+| Feature | Description | Status |
+|---|---|:---:|
+| Wallet dashboard | Unified balances and activity | ✅ |
+| Smart accounts | ERC-4337 account abstraction | 🚧 |
+| Omnichain view | Assets across multiple chains | 🚧 |
+| Gasless / sponsored tx | Paymaster-backed transactions | 🚧 |
+| Batched transactions | Multiple actions in one signature | 🚧 |
+| Social recovery | Recover access without a seed phrase | Roadmap |
 
-**Design system** — design-tokens feeding design-system, design-system-web, and design-system-native (one token source, web + native components).
+---
 
-**Shared & data** — database, shared-types, shared-utils, shared-ui, sui-subgraph, human-network-sdk, copy-framework.
+## How It Works
 
-## Services (services/)
+```
+User ──▶ ORYA smart account (ERC-4337)
+              │
+     bundler · paymaster (gasless)
+              │
+     ┌────────┼────────┐
+     ▼        ▼        ▼
+  chain A  chain B  chain C   (omnichain)
+```
 
-**Core ledger & accounts** — api-gateway, user-service, wallet-service, transaction-service, portfolio-service, ledger-service.
-
-**DeFi & markets** — defi-service, staking-service, oracles-service, fx-routing-engine, eigenlayer-service.
-
-**Cross-chain & BTCfi** — crosschain-service, btcfi-service, sui-mpc-aa-service (MPC account abstraction on Sui).
-
-**Payments & fiat** — fiat-bridge-service, payment-routing-service, payment-terminal-service.
-
-**Trust & safety** — security-service, fraud-engine.
-
-**Platform** — analytics-service, notification-service, concierge-service, plugin-service, provider-adapters, chainbase-service.
-
-**Indexing subgraphs** — defi-subgraph, transaction-subgraph, user-subgraph, wallet-subgraph.
-
-## Multichain & Integrations
-
-| Domain | Integrations |
-|---|---|
-| Chains | EVM, Sui, Solana, Bitcoin / BTCfi |
-| RPC | Alchemy, QuickNode, Infura |
-| Account abstraction | Alchemy, Biconomy, OpenZeppelin, zkSync |
-| MPC | IKA 2PC-MPC (Sui) |
-| Bridges | LayerZero, Hop, Axelar, Wormhole |
-| DeFi | Aave, Compound, Cetus, DeepBook, Aftermath, Raydium, Orca, Bluefin, Navi |
-| Oracles | Chainlink, Pyth, RedStone |
-| Fiat & cards | MoonPay, Stripe, Coinbase, Ramp, Banxa; Lithic, Marqeta |
-| zkKYC | zkPass, zKYC, Gitcoin Passport, Human Network |
-| Storage | Pinata/IPFS, Arweave, Cloudflare R2, AWS S3 |
-
-## Engineering Highlights
-
-- **On-chain MPC zero-trust** — enhanced accounts sign via IKA 2PC-MPC on Sui; the platform never custodies raw keys.
-- **Provider-agnostic account abstraction** — four AA providers behind one adapter interface, so the wallet is never locked to a single vendor.
-- **Domain-driven microservices** — 30+ services over NATS behind an API gateway, each independently scoped and deployable.
-- **Adapter pattern throughout** — chains, bridges, oracles, fiat ramps, and AA providers are all pluggable behind common interfaces.
-- **Cross-platform design system** — a single token source generates both web and native component libraries.
-- **GraphQL indexing** — per-domain subgraphs for fast reads over on-chain data.
-- **Zero-knowledge KYC** — proof-of-humanity and credential verification with configurable thresholds.
+---
 
 ## Tech Stack
 
 | Layer | Technology |
-|---|---|
-| Monorepo | pnpm workspaces |
-| Languages | TypeScript; React (web), React Native (mobile) |
-| Messaging | NATS |
-| Data | PostgreSQL / Neon, Redis |
-| Indexing | The Graph / subgraphs |
-| Smart accounts | Alchemy, Biconomy, OpenZeppelin, zkSync AA |
-| MPC | IKA 2PC-MPC (Sui) |
+|-------|------------|
+| Frontend | Next.js, React, TypeScript |
+| Styling | Tailwind CSS, shadcn/ui |
+| Web3 | viem / wagmi, ERC-4337 (bundler + paymaster) |
+| Omnichain | Cross-chain messaging |
 
-## Repository Layout
-apps/        web · mobile · admin
-packages/    wallet-core · wallet-sdk · protocol-core · protocol-adapters
-aa-provider-{alchemy,biconomy,openzeppelin} · zkSync-aa-{contracts,sdk}
-design-tokens · design-system{,-web,-native} · shared-{types,ui,utils}
-database · sui-subgraph · human-network-sdk
-services/    api-gateway · user · wallet · transaction · portfolio · ledger
-defi · staking · oracles · fx-routing · eigenlayer · crosschain · btcfi
-fiat-bridge · payment-routing · payment-terminal · security · fraud-engine
-analytics · notification · concierge · plugin · *-subgraph
+---
+
+## Project Structure
+
+```
+orya-omnichain-smart-account-wallet/
+.github/
+   instructions/
+   workflows/
+.vscode/
+   settings.json
+.zencoder/
+   rules/
+   templates/
+adapters/
+   algorand-adapter/
+   aptos-adapter/
+   arbitrum-adapter/
+   avax-adapter/
+   base-adapter/
+   bitcoin-adapter/
+apollo-router/
+   scripts/
+   src/
+   .env.example
+   .gitignore
+   COMPLETION_SUMMARY.md
+   docker-compose.yml
+apps/
+   admin/
+   mobile/
+   web/
+   README.md
+docs/
+   security/
+infrastructure/
+   kubernetes/
+   migrations/
+   docker-compose.dev.yml
+   docker-compose.yml
+   postgres-init.sql
+   prometheus.yml
+packages/
+   aa-provider-alchemy/
+   aa-provider-biconomy/
+   aa-provider-openzeppelin/
+   copy-framework/
+   database/
+   design-system/
+scripts/
+   generate-encryption-key.js
+   health-check.bat
+   health-check.ps1
+   health-check.sh
+   start-all-services.bat
+   start-all-services.ps1
+services/
+   analytics-service/
+   api-gateway/
+   chainbase-service/
+   concierge-service/
+   crosschain-service/
+   defi-service/
+tests/
+   integration/
+   adapters-integration.test.ts
+   authgate-verification.test.ts
+   firebase-verification.test.ts
+   routing-verification.test.ts
+   store-verification.test.ts
+tools/
+   cli/
+   convert-svg-to-png.mjs
+   create-png-fallbacks.js
+   fetch-icons-enhanced.mjs
+   fetch-icons-pure.js
+   fetch-icons-standalone.mjs
+.env.example
+.gitignore
+build.bat
+docker-compose.yml
+Makefile
+pnpm-lock.yaml
+pnpm-workspace.yaml
+README.md
+```
+
+---
+
+## Screenshots
+
+_Screenshots coming soon._
+
+---
 
 ## Getting Started
 
 ```bash
-pnpm install
-pnpm --filter "./apps/web" dev
+npm install --legacy-peer-deps --ignore-scripts
+npx next dev
 ```
 
-Copy `.env.example` to `.env` first — it documents every integration the platform can use.
+---
 
-## Status
+## Roadmap
 
-Prototype / in active development. This repository represents the system and protocol architecture for an omnichain smart-account wallet; it is not audited and is experimental.
+- Live ERC-4337 accounts on testnet
+- Paymaster-sponsored gasless flows
+- Social recovery
+- Broader omnichain support
 
-## Related
+---
 
-The runnable front-end prototype: **[plinkdev1/orya-wallet-app](https://github.com/plinkdev1/orya-wallet-app)** (private until release).
+## Notes
+
+Shared as a portfolio artifact demonstrating product and system design. Early prototype, not a finished product. Part of the ORYA project (paired with the wallet UI prototype repo).
+
+<div align="center">
+
+MIT
+
+</div>
