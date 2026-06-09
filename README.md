@@ -1,6 +1,6 @@
-﻿<div align="center">
+<div align="center">
 
-# ORYA
+# Omnichain Smart-Account Wallet
 
 **An omnichain smart-account wallet - account abstraction, gasless, recoverable**
 
