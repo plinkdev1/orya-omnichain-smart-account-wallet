@@ -47,7 +47,7 @@ license = "MIT"
 tokio = { version = "1.35", features = ["full"] }
 
 # GraphQL (5.0 is stable mid-version, 7.0 available but has breaking changes)
-async-graphql = "5.0"
+async-graphql = "7.0"
 async-graphql-axum = "5.0"
 
 # Web framework
